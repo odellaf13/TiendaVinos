@@ -1,5 +1,5 @@
 <?php
-include "Conexion.php";
+include "../Conexion.php";
 ?>
 
 <!DOCTYPE html>

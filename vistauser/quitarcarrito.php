@@ -1,6 +1,6 @@
 <?php
 session_start();
-include "Conexion.php";
+include "../Conexion.php";
 
 // Este if verifica si se proporciona un ID a eliminar del carrito
 if (isset($_GET['id'])) {

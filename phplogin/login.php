@@ -1,5 +1,5 @@
 <?php
-    include "Conexion2.php";
+include "../Conexion.php";
 
     if(isset($_POST['submit'])){
 

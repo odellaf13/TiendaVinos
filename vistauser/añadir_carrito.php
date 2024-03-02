@@ -1,5 +1,5 @@
 <?php
-include "Conexion.php";
+include "../Conexion.php";
 
 // Este if verifica si se proporciona un ID y una cantidad a añadir
 if (isset($_GET['id']) && isset($_GET['cantidad'])) {

@@ -18,7 +18,7 @@
     <h3 class="text-center text-secondary">Formulario de registro</h3>
 
     <?php
-    include "Conexion.php";
+    include "../Conexion.php";
     include "controlador_registrousuario.php";
     ?>
 

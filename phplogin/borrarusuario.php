@@ -18,7 +18,7 @@
     <h3 class="text-center text-secondary">Ingrese su usuario y contraseña para eliminar</h3>
 
     <?php
-    include "Conexion.php";
+    include "../Conexion.php";
     include "controlador_borrarusuario.php";
     ?>
 

@@ -1,5 +1,5 @@
 <?php
-include "Conexion.php";
+include "../Conexion.php";
 $id = $_GET["id"];
 
 $sql = $conexion->query(" select * from producto where producto_id=$id ");

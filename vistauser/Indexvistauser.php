@@ -22,7 +22,7 @@ document.getElementById('ver_carrito').style.display = 'block';
   
     <?php
     session_start();
-    include "Conexion.php";
+    include "../Conexion.php";
 
     if(isset($_SESSION['username'])) {
         $user = $_SESSION['username'];
@@ -61,7 +61,7 @@ document.getElementById('ver_carrito').style.display = 'block';
                 <?php
 
 
-                    include "Conexion.php";
+    include "../Conexion.php";
 
                     $sql = $conexion->query("SELECT * FROM producto");
                                 if (!$sql) {
