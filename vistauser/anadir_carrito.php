@@ -1,6 +1,6 @@
 <?php
 include "../Conexion.php";
-
+session_start();
 // Este if verifica si se proporciona un ID y una cantidad a añadir
 if (isset($_GET['id']) && isset($_GET['cantidad'])) {
     $producto_id = $_GET['id'];
@@ -24,13 +24,13 @@ if (isset($_GET['id']) && isset($_GET['cantidad'])) {
 
             if ($actualizar_stock) {
                 // Añade el producto al carrito del usuario
-                session_start();
                 $_SESSION['carrito'][] = array(
                     'id' => $producto_id,
                     'nombre' => $nombre_producto,
                     'cantidad' => $cantidad
                 );
 
+                // Establecer el mensaje de éxito
                 $_SESSION['mensaje'] = "Producto '$nombre_producto' añadido al carrito correctamente.";
             } else {
                 $_SESSION['mensaje'] = "Error al actualizar el stock en la base de datos.";
@@ -41,11 +41,11 @@ if (isset($_GET['id']) && isset($_GET['cantidad'])) {
     } else {
         $_SESSION['mensaje'] = "Producto no encontrado.";
     }
-} else {
-    $_SESSION['mensaje'] = "ID del producto o cantidad no proporcionados.";
 }
 
+// Redirige a Indexvistauser.php
 header("Location: Indexvistauser.php");
 exit();
 ?>
+
 

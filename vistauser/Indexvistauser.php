@@ -78,7 +78,7 @@ document.getElementById('ver_carrito').style.display = 'block';
                             <td>
 
                             <a href="categoria_productouser.php?id=<?= $datos->producto_id ?>"><i class="bi bi-arrow-up-right-square-fill"></i>Ficha del producto</a>
-                            <a href="añadir_carrito.php?id=<?= $datos->producto_id ?>&cantidad=1" class="btn-warning"><i class="bi bi-cart-plus-fill"></i>Añadir al carrito</a>
+                            <a href="anadir_carrito.php?id=<?= $datos->producto_id ?>&cantidad=1" class="btn-warning"><i class="bi bi-cart-plus-fill"></i>Añadir al carrito</a>
                             <a href="quitarcarrito.php?id=<?= $datos->producto_id ?>&cantidad=1" class="btn-warning"><i class="bi bi-cart-x-fill"></i>Eliminar del carrito</a>
                             
 
@@ -136,7 +136,7 @@ document.getElementById('ver_carrito').style.display = 'block';
     ?>
     </div>
     </div>
-  
+
     </form>
     
 </body>

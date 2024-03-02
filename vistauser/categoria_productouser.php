@@ -19,6 +19,7 @@ if (!$sql) {
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
     <title>categoria_producto</title>
+    <link rel="stylesheet" type="text/css" href="estilovistauser.css">
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 </head>
@@ -37,6 +38,10 @@ if (!$sql) {
 
         
 while ($datos = $sql->fetch_object()) { ?>
+
+            <div class="mb-3">
+            <img src="<?= $datos->url_imagen ?>" class="rounded mx-auto d-block img-vinos" alt="...">
+            </div>
 
             <div class="mb-3">
                 <label for="exampleInputEmail1" class="form-label">Nombre</label>
