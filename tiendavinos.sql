@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1:3307:3307
--- Tiempo de generación: 26-02-2024 a las 11:07:23
+-- Tiempo de generación: 02-03-2024 a las 11:43:15
 -- Versión del servidor: 10.4.28-MariaDB
 -- Versión de PHP: 8.2.4
 
@@ -33,13 +33,6 @@ CREATE TABLE `linea_pedido` (
   `cantidad` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Volcado de datos para la tabla `linea_pedido`
---
-
-INSERT INTO `linea_pedido` (`fk_pedido`, `fk_producto`, `cantidad`) VALUES
-(1, 0, 3);
-
 -- --------------------------------------------------------
 
 --
@@ -53,13 +46,6 @@ CREATE TABLE `pedido` (
   `fk_usuario` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Volcado de datos para la tabla `pedido`
---
-
-INSERT INTO `pedido` (`pedido_id`, `fecha`, `total`, `fk_usuario`) VALUES
-(1, '2024-02-24 12:28:05', 0.00, 1);
-
 -- --------------------------------------------------------
 
 --
@@ -70,7 +56,7 @@ CREATE TABLE `producto` (
   `producto_id` int(11) NOT NULL,
   `nombre` varchar(60) NOT NULL,
   `pvp` decimal(4,2) NOT NULL,
-  `cantidad` int(11) NOT NULL,
+  `stock` int(11) NOT NULL,
   `do` varchar(60) NOT NULL,
   `descripcion` varchar(350) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -79,15 +65,15 @@ CREATE TABLE `producto` (
 -- Volcado de datos para la tabla `producto`
 --
 
-INSERT INTO `producto` (`producto_id`, `nombre`, `pvp`, `cantidad`, `do`, `descripcion`) VALUES
+INSERT INTO `producto` (`producto_id`, `nombre`, `pvp`, `stock`, `do`, `descripcion`) VALUES
 (0, 'Beronia', 10.00, 9, 'Rioja', 'Intenso color cereza picota, limpio y muy brillante. Intensa nariz rica en matices donde destacan notas de frutas rojas y aromas florales perfectamente ensamblados con toques minerales y cacao. Equilibrado, goloso persistente y bien estructurado, destacan la fruta y el regaliz sobre un fondo de chocolate y café.'),
-(1, 'Ébano', 11.00, 2, 'Ribera del Duero', 'Un vino joven con la expresión frutal muy presente. La crianza de 6 meses en roble francés permite que exprese su carácter ribereño junto a un paladar envolvente, untuoso y muy largo.'),
-(2, 'Arbocala', 11.25, 1, 'Toro', 'Aromas de fruta roja madura (fresa y cereza), notas florales todavía presentes y aromas propios de su paso por madera (vainilla, café y coco). Tanino sedoso, que hace su paso por boca largo y agradable. La crianza en roble americano y francés le aporta esa golosidad y estructura equilibrada con la fruta.'),
-(3, 'OchoDosDos', 9.25, 1, 'Ribera del Duero', 'Su color rojo intenso anuncia una experiencia inigualable. En nariz, se despliegan notas de frutos rojos maduros, como la mora y la cereza, acompañados de matices especiados y toques sutiles de roble. En boca, la textura sedosa se combina con taninos elegantes y una acidez equilibrada.'),
-(4, 'Fuentespina', 8.00, 1, 'Ribera del Duero', 'Crianza de 12 meses en barricas de Roble Francés y Americano nuevas. Color cereza con borde granate. Aroma de fruta confitada y chocolate, tostado, especiado. En boca presenta buena acidez, es sabroso, con taninos maduros y ah'),
-(5, 'Conde de Siruela', 8.75, 1, 'Ribera del Duero', 'Aroma Limpio y franco, intenso, con aromas primarios persistentes a fruta madura y notas de vainilla.\r\nBoca Ligero, carnoso y aterciopelado, importante aportación glicérica, muy equilibrado, el paso en boca es largo, suave y con elegantes tonos de crianza.'),
-(6, 'Condes de Albarei', 9.00, 1, 'Albariño', 'De color amarillo dorado con reflejos verdosos. En nariz presenta una intensidad media-alta, con aromas florales y matices de frutas blancas. Se trata de un aroma limpio y elegante. En boca, el vino es fresco, amplio, redondo y con una marcada persistencia aromática.'),
-(7, 'Marqués de Cáceres', 9.00, 12, 'Rioja', 'Color rubí con capa y ribete de intensidad media. Nariz profunda de fruta negra que alterna con un entramado balsámico, de madera fina y delicada, perfectamente integrada.Maticesque jueganunapartiduradehábil armonía. Buquédesuavesnotasdecuerofinoydealgunanotamentoladaquebrinda frescuraalacata.');
+(1, 'Ébano', 11.00, 10, 'Ribera del Duero', 'Un vino joven con la expresión frutal muy presente. La crianza de 6 meses en roble francés permite que exprese su carácter ribereño junto a un paladar envolvente, untuoso y muy largo.'),
+(2, 'Arbocala', 11.25, 10, 'Toro', 'Aromas de fruta roja madura (fresa y cereza), notas florales todavía presentes y aromas propios de su paso por madera (vainilla, café y coco). Tanino sedoso, que hace su paso por boca largo y agradable. La crianza en roble americano y francés le aporta esa golosidad y estructura equilibrada con la fruta.'),
+(3, 'OchoDosDos', 9.25, 10, 'Ribera del Duero', 'Su color rojo intenso anuncia una experiencia inigualable. En nariz, se despliegan notas de frutos rojos maduros, como la mora y la cereza, acompañados de matices especiados y toques sutiles de roble. En boca, la textura sedosa se combina con taninos elegantes y una acidez equilibrada.'),
+(4, 'Fuentespina', 8.00, 10, 'Ribera del Duero', 'Crianza de 12 meses en barricas de Roble Francés y Americano nuevas. Color cereza con borde granate. Aroma de fruta confitada y chocolate, tostado, especiado. En boca presenta buena acidez, es sabroso, con taninos maduros y ah'),
+(5, 'Conde de Siruela', 8.75, 9, 'Ribera del Duero', 'Aroma Limpio y franco, intenso, con aromas primarios persistentes a fruta madura y notas de vainilla.\r\nBoca Ligero, carnoso y aterciopelado, importante aportación glicérica, muy equilibrado, el paso en boca es largo, suave y con elegantes tonos de crianza.'),
+(6, 'Condes de Albarei', 9.00, 0, 'Albariño', 'De color amarillo dorado con reflejos verdosos. En nariz presenta una intensidad media-alta, con aromas florales y matices de frutas blancas. Se trata de un aroma limpio y elegante. En boca, el vino es fresco, amplio, redondo y con una marcada persistencia aromática.'),
+(7, 'Marqués de Cáceres', 10.00, 10, 'Rioja', 'Bonita capa con destellos luminosos. Nariz de finas notas de madera tostada y especias, que engarzan con una fruta roja confitada sobre fondo de regaliz. En boca destaca una amplia sensación de volumen, con un fondo de fruta madura y unos taninos suaves y elegantes. Final de cata largo y sedoso. Temperatura de servicio 16 ºC. ');
 
 -- --------------------------------------------------------
 
@@ -107,8 +93,10 @@ CREATE TABLE `usuario` (
 --
 
 INSERT INTO `usuario` (`usuario_id`, `username`, `password`, `rol`) VALUES
-(1, 'oscar', 'oscar', 'user'),
-(2, 'vladi', 'vladi', 'admin');
+(2, 'laura', '1234', 'user'),
+(3, 'lucia', 'lucia', 'user'),
+(4, 'sinu', 'sinu', 'user'),
+(5, 'vladi', 'vladi', 'user');
 
 --
 -- Índices para tablas volcadas
@@ -138,7 +126,8 @@ ALTER TABLE `producto`
 -- Indices de la tabla `usuario`
 --
 ALTER TABLE `usuario`
-  ADD PRIMARY KEY (`usuario_id`);
+  ADD PRIMARY KEY (`usuario_id`),
+  ADD KEY `rol` (`rol`) USING BTREE;
 
 --
 -- Restricciones para tablas volcadas
