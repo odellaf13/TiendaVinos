@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Index.php</title>
+    <link rel="stylesheet" type="text/css" href="estilovistauser.css">
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+</head>
+
+<script>function mostrarF(){
+
+document.getElementById('ver_carrito').style.display = 'block';
+}
+</script>
+
+
+<body id="body">
+
+  
+    <?php
+    session_start();
+    include "Conexion.php";
+
+    if(isset($_SESSION['username'])) {
+        $user = $_SESSION['username'];
+        echo '<div class="text-center d-flex flex-column align-items-center" style="margin-top: 20px;">
+        <h3 class="text-secondary mb-3"><i class="bi bi-person-check" style="color: #3498db !important;"></i>
+            Bienvenido/a, ' . $user . ', a la tienda de vinos selectos
+        </h3>';
+        echo '<a href="cerrarsesion.php" class="btn btn-danger">Cerrar Sesión</a>
+        </div>';
+    }
+
+    ?>
+
+    <div class="container-fluid row">
+
+        <div class="col-8 p-4 mx-auto">
+
+        <table class="table table-success table-striped mx-auto">
+
+                <thead>
+                   <tr>
+                        <th scope="col">ID</th>
+                        <th scope="col">Nombre del Producto</th>
+                        <th scope="col">Precio/PVP</th>
+                        <th scope="col">Stock</th>
+                        <th scope="col">D.O</th>
+            
+                    </tr>
+                </thead>
+
+                <tbody>
+                <?php
+
+
+                    include "Conexion.php";
+
+                    $sql = $conexion->query("SELECT * FROM producto");
+                                if (!$sql) {
+                                die("Error en la consulta: " . $conexion->error);
+                                }
+
+                   while ($datos = $sql->fetch_object()) { ?>
+
+                            <tr>
+                            <td><?= $datos->producto_id ?></td>
+                            <td><?= $datos->nombre ?></td>
+                            <td><?= $datos->pvp ?></td>
+                            <td><?= $datos->stock ?></td>
+                            <td><?= $datos->do ?></td>
+                            <td>
+
+                            <a href="categoria_productouser.php?id=<?= $datos->producto_id ?>"><i class="bi bi-arrow-up-right-square-fill"></i>Ficha del producto</a>
+                            <a href="añadir_carrito.php?id=<?= $datos->producto_id ?>&cantidad=1" class="btn-warning"><i class="bi bi-cart-plus-fill"></i>Añadir al carrito</a>
+                            <a href="quitarcarrito.php?id=<?= $datos->producto_id ?>&cantidad=1" class="btn-warning"><i class="bi bi-cart-x-fill"></i>Eliminar del carrito</a>
+                            
+
+                            </td>
+                    </tr> 
+                    <?php
+                   }
+                    ?>
+                </tbody>
+                </table>
+                
+                <button class="btn btn-primary" onclick="mostrarF()">Ver carrito</button>
+
+            </div>
+        </div>
+        <div class="container-fluid row">
+
+        <form id="ver_carrito" class="col-3 mx-auto" method="POST" style="display: none;">
+
+        <?php
+        
+        //Verifica si el carrito existe en la sesión
+        if (!isset($_SESSION['carrito'])) {
+        $_SESSION['carrito'] = array(); //Inicializa el carrito si no existe
+        }
+
+        //Puedes imprimir o procesar la información del carrito aquí
+        $carrito = $_SESSION['carrito'];
+        ?>
+
+        <div class="mb-3">
+        <h3>Carrito de la compra</h3>
+
+        <?php
+            //Puedes imprimir o procesar la información del carrito aquí
+            foreach ($carrito as $producto) {
+                echo 'Nombre del Producto: ' . $producto['nombre'] . ', Cantidad: ' . $producto['cantidad'] . '<br>';
+                // Aquí puedes mostrar más detalles del producto si es necesario
+            }
+            ?>
+    </div>
+    
+    <div class="mb-3">
+    <label for="producto_seleccionado" class="form-label">Seleccionar Producto</label>
+    <select class="form-select" id="producto_seleccionado" onchange="actualizarCampos()">
+        <?php
+        // Mostrar opciones para cada producto en el carrito
+        foreach ($carrito as $producto) {
+            echo '<option value="' . $producto['nombre'] . '">' . $producto['nombre'] . ' - ' . $producto['cantidad'] . '</option>';
+        }
+        ?>
+    </select>
+    </div>
+
+
+
+    <div class="mb-3">
+    <label for="exampleInputEmail1" class="form-label">Nombre del producto</label>
+    <input type="text" class="form-control" name="nombre" />
+    </div>
+
+    <div class="mb-3">
+    <label for="exampleInputEmail1" class="form-label">Cantidad</label>
+    <input type="number" class="form-control" name="cantidad" />
+    </div>
+
+    </form>
+
+    <script>
+    function actualizarCampos() {
+    var seleccionado = document.getElementById('producto_seleccionado').value;
+    var partes = seleccionado.split(' - ');
+    document.getElementsByName('nombre')[0].value = partes[0];
+    document.getElementsByName('cantidad')[0].value = partes[1];
+    }
+    </script>
+       
+</body>
+</html>
+
+
+<div class="mb-3">
+    <h3>Carrito de la compra</h3>
+
+    <select class="form-select" name="producto_seleccionado">
+        <?php
+        // Puedes imprimir o procesar la información del carrito aquí
+        foreach ($carrito as $producto) {
+            echo '<option value="' . $producto['nombre'] . '">' . $producto['nombre'] . ' - ' . $producto['cantidad'] . '</option>';
+        }
+        ?>
+    </select>
+</div>
+
+<div class="mb-3">
+    <label for="exampleInputEmail1" class="form-label">Cantidad</label>
+    <input type="number" class="form-control" name="cantidad" />
+</div>
+
+
+
+
+<?php
+// Verificar si el carrito existe en la sesión
+if (!isset($_SESSION['carrito'])) {
+    $_SESSION['carrito'] = array(); // Inicializar el carrito si no existe
+}
+
+// Puedes imprimir o procesar la información del carrito aquí
+$carrito = $_SESSION['carrito'];
+
+// Puedes iterar sobre los productos en el carrito y mostrarlos
+foreach ($carrito as $producto) {
+    echo 'ID del Producto: ' . $producto['id'] . ', Nombre del Producto: ' . $producto['nombre'] . ', Cantidad: ' . $producto['cantidad'] . '<br>';
+
+}
+
+?>
+
+
+<?php
+
+if (!isset($_SESSION['carrito'])) {
+    $_SESSION['carrito'] = array();
+}
+$carrito = $_SESSION['carrito'];
+
+//Array para almacenar la cantidad total por ID de producto
+$sumatorioPorID = array();
+
+//Para cada producto en el carrito
+foreach ($carrito as $producto) {
+    $idProducto = $producto['id'];
+    $nombreProducto = $producto['nombre'];
+    $cantidadProducto = $producto['cantidad'];
+    //Si el ID del producto ya está en el array, sumar la cantidad
+    if (isset($sumatorioPorID[$idProducto])) {
+        $sumatorioPorID[$idProducto]['cantidad'] += $cantidadProducto;
+    } else {
+        //Si no existe, agregar una nueva entrada
+        $sumatorioPorID[$idProducto] = array(
+            'nombre' => $nombreProducto,
+            'cantidad' => $cantidadProducto
+        );
+    }
+}
+//Mostrar el sumatorio
+foreach ($sumatorioPorID as $idProducto => $productoSumado) {
+    echo 'ID del Producto: ' . $idProducto . ', Nombre del Producto: ' . $productoSumado['nombre'] . ', Cantidad: ' . $productoSumado['cantidad'] . '<br>';
+}
+?>
+
+
+
+<?php
+include "Conexion.php";
+
+// Este if verifica si se proporciona un ID y una cantidad a añadir
+if (isset($_GET['id']) && isset($_GET['cantidad'])) {
+    $producto_id = $_GET['id'];
+    $cantidad = $_GET['cantidad'];
+
+    // Obtener información del producto
+    $consulta_producto = $conexion->query("SELECT nombre FROM producto WHERE producto_id = $producto_id");
+    $datos_producto = $consulta_producto->fetch_assoc();
+
+    if ($datos_producto) {
+        $nombre_producto = $datos_producto['nombre'];
+
+        // Recupera el stock actual del producto con el query y select
+        $consulta_stock = $conexion->query("SELECT stock FROM producto WHERE producto_id = $producto_id");
+        $datos_stock = $consulta_stock->fetch_assoc();
+
+        if ($datos_stock) {
+            $stock_actual = $datos_stock['stock'];
+
+            // Calcula el nuevo stock después de añadir la cantidad
+            $nuevo_stock = $stock_actual - $cantidad;
+
+            if ($nuevo_stock >= 0) {
+                // Actualiza el stock en la base de datos
+                $actualizar_stock = $conexion->query("UPDATE producto SET stock = $nuevo_stock WHERE producto_id = $producto_id");
+
+                if ($actualizar_stock) {
+                    // Añade el producto al carrito del usuario
+                    session_start();
+                    $_SESSION['carrito'][] = array(
+                        'id' => $producto_id,
+                        'nombre' => $nombre_producto,
+                        'cantidad' => $cantidad
+                    );
+
+                    echo "Producto '$nombre_producto' añadido al carrito correctamente.";
+                } else {
+                    echo "Error al actualizar el stock en la base de datos.";
+                }
+            } else {
+                echo "Otro borracho ha comprado botellas, y ya no hay.";
+            }
+        } else {
+            echo "Error al obtener el stock del producto.";
+        }
+    } else {
+        echo "Producto no encontrado.";
+    }
+} else {
+    echo "ID del producto o cantidad no proporcionados.";
+}
+
+header("Location: Indexvistauser.php");
+exit();
+
+?>
