@@ -44,10 +44,12 @@
   </div>
 </nav>
 
-<?php
-        include "carrito.php";
+        <?php
+       
         include "navcarrito.php";
+        include "modalcarrito.php";
         ?>
+
         <div class="center mt-5">
 
         <div class="card pt-3">
@@ -81,20 +83,15 @@
                                     <div class="card-body">
                                         <h5 class="card-title"><?php echo $resultado["nombre"]; ?></h5>
                                         <p><?php echo $resultado["descripcion"]; ?></p>
-                                        <button class="btn btn-primary" type="submit" ><i class="fas fa-shopping-cart"></i> Añadir al carrito</button>
+                                        <button class="btn btn-primary" type="submit" ><i class="bi bi-cart-plus-fill"></i>Añadir al carrito</button>
 
                                     </div>
                             </div>
                         </div>
                     </form>
                     <?php   }  ?>
-                
                 </div>
-
         </div>
-
         </div>
-      
-    
 </body>
 </html>
