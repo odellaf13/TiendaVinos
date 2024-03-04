@@ -36,7 +36,7 @@
             Productos
           </a>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="vistauser/Indexvistauser.php">Nuestros vinos</a></li>
+            <li><a class="dropdown-item" href="vistauser/productossinlogin.php">Nuestros vinos</a></li>
             <li><a class="dropdown-item" href="#">Another action</a></li>
             <li><hr class="dropdown-divider"></li>
             <li><a class="dropdown-item" href="#">Something else here</a></li>

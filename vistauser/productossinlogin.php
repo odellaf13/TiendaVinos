@@ -59,21 +59,6 @@ document.getElementById('ver_carrito').style.display = 'block';
     <?php
     include "../Conexion.php";
 
-    if(isset($_SESSION['username'])) {
-        $user = $_SESSION['username'];
-        echo '<div class="text-center d-flex flex-column align-items-center" style="margin-top: 20px;">
-        <h3 class="text-secondary mb-3"><i class="bi bi-person-check" style="color: #3498db !important;"></i>
-            Bienvenido/a, ' . $user . ', a la tienda de vinos desde casa
-        </h3>';
-        echo '<a href="cerrarsesion.php" class="btn btn-danger">Cerrar Sesión</a>
-        </div>';
-    }
-
-    if (isset($_SESSION['mensaje'])) {
-        echo '<div class="alert alert-info">' . $_SESSION['mensaje'] . '</div>';
-        unset($_SESSION['mensaje']); // Limpiar el mensaje después de mostrarlo
-    }
-
     ?>
 
     <div class="container-fluid row">
@@ -113,8 +98,7 @@ document.getElementById('ver_carrito').style.display = 'block';
                             <td>
 
                             <a href="categoria_productouser.php?id=<?= $datos->producto_id ?>"><i class="bi bi-arrow-up-right-square-fill"></i>Ficha del producto</a>
-                            <a href="anadir_carrito.php?id=<?= $datos->producto_id ?>&cantidad=1" class="btn-warning"><i class="bi bi-cart-plus-fill"></i>Añadir al carrito</a>
-                            <a href="quitarcarrito.php?id=<?= $datos->producto_id ?>&cantidad=1" class="btn-warning"><i class="bi bi-cart-x-fill"></i>Eliminar del carrito</a>
+                            <a href="/TiendaVinos/phplogin/indexlogin.php" class="btn-warning"><i class="bi bi-cart-plus-fill"></i>Añadir al carrito</a>
                             
 
                             </td>
@@ -125,53 +109,13 @@ document.getElementById('ver_carrito').style.display = 'block';
                 </tbody>
                 </table>
 
-                <a href="/TiendaVinos/menuvistauser.php" class="btn btn-primary">Volver a menú y cerrar sesión</a></br></br>
+                <a href="/TiendaVinos/menuvistauser.php" class="btn btn-primary">Volver a menú</a></br></br>
                 
-                <button class="btn btn-primary" onclick="mostrarF()">Ver carrito</button>
 
             </div>
         </div>
-        <div class="container-fluid row">
 
-        <form id="ver_carrito" class="col-3 mx-auto" method="POST" style="display: none;">
-        <div class="mb-3">
-        <h3>Carrito de la compra</h3>
-        <?php
-        //Verifica si el carrito existe en la sesión e inicializa
-        if (!isset($_SESSION['carrito'])) {
-        $_SESSION['carrito'] = array();
-        }
-
-        //Para obtener el carrito de la sesión
-        $carrito = $_SESSION['carrito'];
-        $sumatorioPorID = array();
-
-    // Iterar sobre los productos en el carrito
-    foreach ($carrito as $producto) {
-        $idProducto = $producto['id'];
-        $nombreProducto = $producto['nombre'];
-        $cantidadProducto = $producto['cantidad'];
-
-        // Si el ID del producto ya está en el array, sumar la cantidad
-        if (isset($sumatorioPorID[$idProducto])) {
-            $sumatorioPorID[$idProducto]['cantidad'] += $cantidadProducto;
-        } else {
-            // Si no existe, agregar una nueva entrada con el nombre
-            $sumatorioPorID[$idProducto] = array(
-                'nombre' => $nombreProducto,
-                'cantidad' => $cantidadProducto
-            );
-        }
-    }
-
-    // Mostrar el sumatorio consolidado
-    foreach ($sumatorioPorID as $productoSumado) {
-        echo 'Nombre del Producto: ' . $productoSumado['nombre'] . ', Cantidad: ' . $productoSumado['cantidad'] . '<br>';
-    }
-    ?>
-    </div>
-    </div>
-
+       
     </form>
     
 </body>
