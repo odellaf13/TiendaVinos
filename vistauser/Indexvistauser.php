@@ -90,7 +90,7 @@ document.getElementById('ver_carrito').style.display = 'block';
                 </tbody>
                 </table>
 
-                
+                <a href="/TiendaVinos/menuvistauser.php" class="btn btn-primary">Volver a menú</a></br></br>
                 
                 <button class="btn btn-primary" onclick="mostrarF()">Ver carrito</button>
 

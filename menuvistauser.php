@@ -41,9 +41,12 @@
             <li><hr class="dropdown-divider"></li>
             <li><a class="dropdown-item" href="#">Something else here</a></li>
           </ul>
+          <li class="nav-item">
+          <a class="nav-link" href="/TiendaVinos/phplogin/indexlogin.php">Pedidos</a>
+
         </li>
         <li class="nav-item">
-          <a class="nav-link">Contáctanos</a>
+          <a class="nav-link active" aria-current="page" href="vistauser/contactanos.php">Contáctanos</a>
         </li>
       </ul>
       <form class="d-flex" role="search">
@@ -54,7 +57,5 @@
   </div>
 </nav>
 
-
-
-
 </body>
+</html>

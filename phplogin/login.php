@@ -30,7 +30,7 @@ include "../Conexion.php";
     } else {
         echo '<script>
         window.location.href = "indexlogin.php";
-        alert("Registro fallido. Usuario o contraseña no válido");
+        alert("Usuario no registrado o contraseña no válida");
         </script>';
     }
     
