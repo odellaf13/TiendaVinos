@@ -27,11 +27,6 @@
         <li class="nav-item">
           <a class="nav-link active" aria-current="page" href="quienessomos.php">Quiénes somos</a>
         </li>
-
-          <li class="nav-item">
-          <a class="nav-link" href="/TiendaVinos/phplogin/indexlogin.php">Pedidos</a>
-
-        </li>
         <li class="nav-item">
           <a class="nav-link active" aria-current="page" href="contactanos.php">Contáctanos</a>
         </li>
@@ -62,14 +57,14 @@
 
                 <?php while ($resultado = mysqli_fetch_assoc($busqueda)) { ?>
                     <div class="blog-post">
-                        <form id="formulariocarrito" method="POST" action="/TiendaVinos/vistauser/carrito.php" onsubmit="alert('Formulario enviado');">
+                        <form id="formulariocarrito" method="POST" action="/TiendaVinos/vistauser/carrito.php" onsubmit="alert('Producto añadido al carrito');" enctype="multipart/form-data">
                             <img src="<?php echo $resultado["url_imagen"]; ?>">
                             <a class="category">
                                 <?php echo $resultado["pvp"]; ?> €
                             </a>
 
                             <div class="text-content">
-                                <input name="id" type="hidden" value="<?php echo $resultado["producto_id"]; ?>" />
+                                <input name="producto_id" type="hidden" value="<?php echo $resultado["producto_id"]; ?>" />
                                 <input name="nombre" type="hidden" value="<?php echo $resultado["nombre"]; ?>" />
                                 <input name="pvp" type="hidden" value="<?php echo $resultado["pvp"]; ?>" />
                                 <input name="stock" type="hidden" value="<?php echo $resultado["stock"]; ?>" />
@@ -77,15 +72,15 @@
                                 <input name="descripcion" type="hidden" value="<?php echo $resultado["descripcion"]; ?>" />
                                 <input name="url_imagen" type="hidden" value="<?php echo $resultado["url_imagen"]; ?>" />
                                 <input name="cantidad" type="hidden" value="1" class="pl-2" />
-                                <button class="btn btn-primary" type="submit"><i class="bi bi-cart-plus-fill"></i>Añadir al carrito</button>
+                            
                             </div>
-                                </form>
-                                <div class="card-body">
+                               
+                            <div class="card-body">
                                     <h5 class="card-title"><?php echo $resultado["nombre"]; ?></h5>
                                     <p><?php echo $resultado["descripcion"]; ?></p>
                                     <button class="btn btn-primary" type="submit"><i class="bi bi-cart-plus-fill"></i>Añadir al carrito</button>
-                                </div>
-                            
+                            </div>
+                        </form>
                         </div>
             </div>
         </div>

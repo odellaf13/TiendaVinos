@@ -14,7 +14,7 @@
                             <?php
 if (isset($_SESSION["carrito"])) {
     $total = 0;
-    foreach ($carritomio as $producto) {
+    foreach ($_SESSION["carrito"] as $producto) {
         if (!empty($producto)) {
 ?>
             <li class="list-group-item d-flex justify-content-between lh-condensed">
