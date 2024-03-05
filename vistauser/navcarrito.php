@@ -1,16 +1,16 @@
 <?php
 
-if(isset($_SESSION['carrito'])){
+if(isset($_SESSION["carrito"])){
         $carritomio=$_SESSION['carrito'];
     }
 //contamos la cantidad de nuestro carrito
 
-if (isset($_SESSION['carrito'])){
+if (isset($_SESSION["carrito"])){
     for($i=0 ;$i<=count($carritomio)-1; $i ++) {
         if(isset($carritomio[$i])){
             if($carritomio[$i]!=NULL){
-                if(!isset($carritomio['stock'])){$carritomio['stock'] = '0';}else{ $carritomio['stock'] = $carritomio['stock'];}
-                $total_cantidad = $carritomio['stock'];
+                if(!isset($carritomio["stock"])){$carritomio["stock"] = '0';}else{ $carritomio["stock"] = $carritomio["stock"];}
+                $total_cantidad = $carritomio["stock"];
                 $total_cantidad ++;
                 if(!isset($totalcantidad)){$totalcantidad = '0';}else{ $totalcantidad = $totalcantidad;}
                 $totalcantidad += $total_cantidad;

@@ -36,62 +36,64 @@
           <a class="nav-link active" aria-current="page" href="contactanos.php">Contáctanos</a>
         </li>
       </ul>
-      <form class="d-flex" role="search">
-        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-        <button class="btn btn-outline-success" type="submit">Search</button>
+      <form class="d-flex" role="search" action="buscador.php">
+        <button class="btn btn-outline-success" type="submit" action="buscador.php">Search</button>
       </form>
     </div>
   </div>
 </nav>
 
-        <?php
-       
-        include "navcarrito.php";
-        include "modalcarrito.php";
-        ?>
+<?php
+    include "navcarrito.php";
+    include "modalcarrito.php";
+    ?>
 
-        <div class="center mt-5">
-
+<div class="center mt-5">
         <div class="card pt-3">
-        <p style="font-weight:  bold; color: #0F6BB7; font-size: 22px;">Carrito de la compra</p>
-                   <div class="container-fluid p-2" style="background-color: ghostwhite;">
+            <p style="font-weight: bold; color: #0F6BB7; font-size: 22px;">Carrito de la compra</p>
+            <div class="container-fluid p-2" style="background-color: ghostwhite;">
 
-                   <?php $busqueda=mysqli_query($conexion, "Select * from producto ");
-                   $numero = mysqli_num_rows($busqueda); ?>
+                <?php
+                $busqueda = mysqli_query($conexion, "SELECT * FROM producto ");
+                $numero = mysqli_num_rows($busqueda);
+                ?>
 
-                   <h5 class="card-tittle">Resultados (<?php echo $numero; ?>)</h5>
+                <h5 class="card-tittle">Resultados (<?php echo $numero; ?>)</h5>
 
-                   <?php while ($resultado = mysqli_fetch_assoc($busqueda)) { ?>
-
-                    <form id="formulario" name="formulario" method="POST" action="carrito.php">
-                        <div class="blog-post ">
-                      
-                        <img src=" <?php echo $resultado["url_imagen"]; ?>">
-                        <a class="category">
-                            <?php echo $resultado["pvp"]; ?> €
+                <?php while ($resultado = mysqli_fetch_assoc($busqueda)) { ?>
+                    <div class="blog-post">
+                        <form id="formulariocarrito" method="POST" action="/TiendaVinos/vistauser/carrito.php" onsubmit="alert('Formulario enviado');">
+                            <img src="<?php echo $resultado["url_imagen"]; ?>">
+                            <a class="category">
+                                <?php echo $resultado["pvp"]; ?> €
                             </a>
 
                             <div class="text-content">
-                                <input name="id" type="hidden" id="id" value="<?php echo $resultado["producto_id"]; ?>" />
-                                <input name="nombre" type="hidden" id="nombre" value="<?php echo $resultado["nombre"]; ?>" />
-                                <input name="pvp" type="hidden" id="pvp" value="<?php echo $resultado["pvp"]; ?>" />
-                                <input name="stock" type="hidden" id="stock" value="<?php echo $resultado["stock"]; ?>" />
-                                <input name="do" type="hidden" id="do" value="<?php echo $resultado["do"]; ?>" />
-                                <input name="descripcion" type="hidden" id="descripcion" value="<?php echo $resultado["descripcion"]; ?>" />
-                                <input name="url_imagen" type="hidden" id="url_imagen" value="<?php echo $resultado["url_imagen"]; ?>" />
-                                <input name="cantidad" type="hidden" id="cantidad" value="1" class="pl-2" />
-                                    <div class="card-body">
-                                        <h5 class="card-title"><?php echo $resultado["nombre"]; ?></h5>
-                                        <p><?php echo $resultado["descripcion"]; ?></p>
-                                        <button class="btn btn-primary" type="submit" ><i class="bi bi-cart-plus-fill"></i>Añadir al carrito</button>
-
-                                    </div>
+                                <input name="id" type="hidden" value="<?php echo $resultado["producto_id"]; ?>" />
+                                <input name="nombre" type="hidden" value="<?php echo $resultado["nombre"]; ?>" />
+                                <input name="pvp" type="hidden" value="<?php echo $resultado["pvp"]; ?>" />
+                                <input name="stock" type="hidden" value="<?php echo $resultado["stock"]; ?>" />
+                                <input name="do" type="hidden" value="<?php echo $resultado["do"]; ?>" />
+                                <input name="descripcion" type="hidden" value="<?php echo $resultado["descripcion"]; ?>" />
+                                <input name="url_imagen" type="hidden" value="<?php echo $resultado["url_imagen"]; ?>" />
+                                <input name="cantidad" type="hidden" value="1" class="pl-2" />
+                                <button class="btn btn-primary" type="submit"><i class="bi bi-cart-plus-fill"></i>Añadir al carrito</button>
                             </div>
+                                </form>
+                                <div class="card-body">
+                                    <h5 class="card-title"><?php echo $resultado["nombre"]; ?></h5>
+                                    <p><?php echo $resultado["descripcion"]; ?></p>
+                                    <button class="btn btn-primary" type="submit"><i class="bi bi-cart-plus-fill"></i>Añadir al carrito</button>
+                                </div>
+                            
                         </div>
-                    </form>
-                    <?php   }  ?>
-                </div>
+            </div>
         </div>
-        </div>
+                        
+                    
+                <?php } ?>
+</div>
+
 </body>
+
 </html>
