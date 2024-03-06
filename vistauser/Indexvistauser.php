@@ -57,7 +57,7 @@
 
                 <?php while ($resultado = mysqli_fetch_assoc($busqueda)) { ?>
                     <div class="blog-post">
-                        <form id="formulariocarrito" method="POST" action="/TiendaVinos/vistauser/carrito.php" onsubmit="alert('Producto añadido al carrito');" enctype="multipart/form-data">
+                        <form id="formulariocarrito" method="POST" action="carrito.php" onsubmit="alert('Producto añadido al carrito');" enctype="multipart/form-data">
                             <img src="<?php echo $resultado["url_imagen"]; ?>">
                             <a class="category">
                                 <?php echo $resultado["pvp"]; ?> €

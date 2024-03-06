@@ -50,7 +50,7 @@ if (isset($_SESSION["carrito"])) {
 
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                <a type="button" class="btn btn-secondary" href="../borrarcarro.php">Vaciar el carrito</a>
+                <a type="button" class="btn btn-secondary" href="borrarcarrito.php">Vaciar el carrito</a>
                 <a type="button" class="btn btn-secondary" href="Indexvistauser.php">Continuar el pedido</a>
             </div>
         </div>
