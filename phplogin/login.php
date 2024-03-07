@@ -10,8 +10,6 @@ include "../Conexion.php";
 
     $result = mysqli_query($conexion, $sql);
     $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
-    
-
     if ($row) {
         session_start();
 

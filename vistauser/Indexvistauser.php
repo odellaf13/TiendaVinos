@@ -39,6 +39,25 @@
 </nav>
 
 <?php
+
+if(isset($_SESSION['username'])) {
+  $user = $_SESSION['username'];
+    //clases de bootstrap para centrar el botón de contenido y proporcionar un boton para cerrar la sesión
+    echo '<div class="text-center d-flex flex-column align-items-center" style="margin-top: 20px;">
+    <h3 class="text-secondary mb-3"><i class="bi bi-person-check" style="color: #3498db !important;"></i>
+        Bienvenido/a, ' . $user . ', a la tienda de vinos selectos
+    </h3>';
+
+    //botón de cierre sesión
+    echo '<a href="cerrarsesion.php" class="btn btn-danger">Cerrar Sesión</a></br></br>
+    </div>';  
+}
+
+?>
+
+
+
+<?php
     include "navcarrito.php";
     include "modalcarrito.php";
     ?>
@@ -55,10 +74,11 @@
 
                 <h5 class="card-tittle">Resultados (<?php echo $numero; ?>)</h5>
 
+                <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3">
                 <?php while ($resultado = mysqli_fetch_assoc($busqueda)) { ?>
-                    <div class="blog-post">
+                    <div class="col mb-4">
                         <form id="formulariocarrito" method="POST" action="carrito.php" onsubmit="alert('Producto añadido al carrito');" enctype="multipart/form-data">
-                            <img src="<?php echo $resultado["url_imagen"]; ?>">
+                            <img src="<?php echo $resultado["url_imagen"]; ?>" style="max-width: 150%; max-height: 250px; object-fit: contain;">
                             <a class="category">
                                 <?php echo $resultado["pvp"]; ?> €
                             </a>
@@ -77,16 +97,15 @@
                                
                             <div class="card-body">
                                     <h5 class="card-title"><?php echo $resultado["nombre"]; ?></h5>
-                                    <p><?php echo $resultado["descripcion"]; ?></p>
+                                    <p class="card-text" style="max-height: 100px; overflow: hidden;"><?php echo $resultado["descripcion"]; ?></p>
                                     <button class="btn btn-primary" type="submit"><i class="bi bi-cart-plus-fill"></i>Añadir al carrito</button>
                             </div>
                         </form>
                         </div>
             </div>
-        </div>
-                        
-                    
+        </div>   
                 <?php } ?>
+</div>
 </div>
 
 </body>
