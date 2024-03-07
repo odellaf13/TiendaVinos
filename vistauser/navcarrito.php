@@ -38,3 +38,4 @@ if(!isset($totalcantidad)){$totalcantidad = '';}else{ $totalcantidad = $totalcan
         </div>
     </div>
 </nav>
+

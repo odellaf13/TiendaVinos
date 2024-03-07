@@ -28,7 +28,7 @@
           <a class="nav-link active" aria-current="page" href="quienessomos.php">Quiénes somos</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/TiendaVinos/phplogin/indexlogin.php">Pedidos</a>
+          <a class="nav-link" href="/TiendaVinos/vistauser/pedidos.php">Pedidos</a>
         </li>
         <li class="nav-item">
           <a class="nav-link active" aria-current="page" href="contactanos.php">Contáctanos</a>
@@ -57,14 +57,10 @@ if(isset($_SESSION['username'])) {
 }
 
 ?>
-
-
-
 <?php
     include "navcarrito.php";
     include "modalcarrito.php";
     ?>
-
 <style>
     .custom-row {
         display: flex;
@@ -117,7 +113,7 @@ if(isset($_SESSION['username'])) {
                                 <input name="do" type="hidden" value="<?php echo $resultado["do"]; ?>" />
                                 <input name="descripcion" type="hidden" value="<?php echo $resultado["descripcion"]; ?>" />
                                 <input name="url_imagen" type="hidden" value="<?php echo $resultado["url_imagen"]; ?>" />
-                                <input name="cantidad" type="hidden" value="1" class="pl-2" />
+                                <input name="cantidad" type="number" value="1" class="pl-2" min="1" required />
                             
                             </div>
                         </form>
