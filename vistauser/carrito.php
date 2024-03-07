@@ -23,7 +23,7 @@ if (isset($_POST["producto_id"])) {
 
     // Verificamos si el producto ya está en el carrito
     $encontrado = false;
-    foreach ($_SESSION["carrito"] as &$producto) {
+    foreach ($_SESSION["carrito"] as $producto) {
         if ($producto["producto_id"] == $producto_id) {
             $producto["stock"] += $cantidad;
             $encontrado = true;
@@ -48,38 +48,39 @@ if (isset($_POST["producto_id"])) {
     $query = "UPDATE producto SET stock = stock - $cantidad WHERE producto_id = $producto_id";
     mysqli_query($conexion, $query);
 
-// Imprimir el valor de $stock para verificar
-echo "Stock a restar: $stock";
+    // Imprimir el valor de $stock para verificar
+    echo "Stock a restar: $stock";
 
-// Insertar el pedido en la base de datos
-$username = $_SESSION['username'];
+    // Insertar el pedido en la base de datos
+    $username = $_SESSION['username'];
 
+    // Consulta SQL para obtener el usuario_id basado en el nombre de usuario
+    $consultaUsuario = mysqli_query($conexion, "SELECT usuario_id FROM usuario WHERE username = '$username'");
+    $filaUsuario = mysqli_fetch_assoc($consultaUsuario);
 
-// Consulta SQL para obtener el usuario_id basado en el nombre de usuario
-$consultaUsuario = mysqli_query($conexion, "SELECT usuario_id FROM usuario WHERE username = '$username'");
-$filaUsuario = mysqli_fetch_assoc($consultaUsuario);
+    // Verificar si se encontró el usuario y obtener el usuario_id
+    if ($filaUsuario) {
+        $usuario_id = $filaUsuario['usuario_id'];
+        $fecha = date('Y-m-d H:i:s');
 
-// Verificar si se encontró el usuario y obtener el usuario_id
-if ($filaUsuario) {
-    $usuario_id = $filaUsuario['usuario_id'];
-    $fecha = date('Y-m-d H:i:s');
-    
-    // Calcular el total sumando los productos en el carrito
-    $total = 0;
-    foreach ($_SESSION["carrito"] as $producto) {
-        $total += $producto["pvp"] * $producto["stock"];
-    }
+        // Calcular el total sumando los productos en el carrito
+        $total = 0;
+        foreach ($_SESSION["carrito"] as $producto) {
+            $total += $producto["pvp"] * $producto["cantidad"];
+        }
 
-    $query = "INSERT INTO pedido (fecha, total, fk_usuario) VALUES ('$fecha', $total, $usuario_id)";
-    mysqli_query($conexion, $query);
+        // Insertar el pedido en la tabla 'pedido'
+        $query = "INSERT INTO pedido (fecha, total, fk_usuario) VALUES ('$fecha', $total, $usuario_id)";
+        mysqli_query($conexion, $query);
 
-    // Obtener el id del pedido recién insertado
-    $pedido_id = mysqli_insert_id($conexion);
+        // Obtener el id del pedido recién insertado
+        $pedido_id = mysqli_insert_id($conexion);
 
-   // Insertar las líneas de pedido en la base de datos
+        // Insertar las líneas de pedido en la tabla 'linea_pedido'
+      // Insertar las líneas de pedido en la tabla 'linea_pedido'
 foreach ($_SESSION["carrito"] as $producto) {
     $producto_id = $producto["producto_id"];
-    $cantidad = $producto["stock"]; // Usar la cantidad del carrito
+    $cantidad = $producto["stock"];
 
     // Verificar si ya existe una línea de pedido para este producto
     $consultaExistencia = mysqli_query($conexion, "SELECT * FROM linea_pedido WHERE fk_pedido = $pedido_id AND fk_producto = $producto_id");
@@ -97,16 +98,34 @@ foreach ($_SESSION["carrito"] as $producto) {
     mysqli_query($conexion, $query);
 }
 
-// Restablecer el carrito después de completar la compra
-
-
-    // Redireccionar a la página del carrito
-    header("Location: /TiendaVinos/vistauser/Indexvistauser.php");
-    exit();
+// Recalcular el total utilizando la información de la tabla 'linea_pedido'
+$total = 0;
+$consultaLineasPedido = mysqli_query($conexion, "SELECT * FROM linea_pedido WHERE fk_pedido = $pedido_id");
+while ($lineaPedido = mysqli_fetch_assoc($consultaLineasPedido)) {
+    $producto_id = $lineaPedido["fk_producto"];
+    $cantidad = $lineaPedido["cantidad"];
+    $consultaProducto = mysqli_query($conexion, "SELECT pvp FROM producto WHERE producto_id = $producto_id");
+    $producto = mysqli_fetch_assoc($consultaProducto);
+    $total += $producto["pvp"] * $cantidad;
 }
 
-else {
-    // Manejar el caso en el que no se pudo obtener el usuario_id
-    echo "Error al obtener el usuario_id.";
+// Actualizar el total en la tabla 'pedido'
+mysqli_query($conexion, "UPDATE pedido SET total = $total WHERE pedido_id = $pedido_id");
+
+        // Restablecer el carrito después de completar la compra
+      
+
+        // Redireccionar a la página del carrito
+        header("Location: /TiendaVinos/vistauser/Indexvistauser.php");
+        exit();
+    } else {
+        // Manejar el caso en el que no se pudo obtener el usuario_id
+        echo "Error al obtener el usuario_id.";
+    }
+} else {
+    // Manejar el caso en el que no se envió información del producto
+    echo "Error: No se ha proporcionado información del producto.";
 }
-}
+echo "Contenido de la variable de sesión después de actualizar: ";
+print_r($_SESSION["carrito"]);
+?>

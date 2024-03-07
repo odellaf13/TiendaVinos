@@ -8,9 +8,21 @@
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+  <style>
+        .wine-images-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+        }
+        .wine-image {
+            width: 1000px;
+            height: 650px;
+            border-radius: 10px;
+        }
+    </style>
 </head>
 <body>
-
 <?php
     session_start();
     include "Conexion.php";
@@ -51,6 +63,10 @@
     </div>
   </div>
 </nav>
-
+<nav class="navbar navbar-expand-lg" style="background-color: #e3f2fd;">
+</nav>
+<div class="wine-images-container">
+    <img src="6b3786a9-f191-4d49-ad0f-0f2d863119eb_alta-aspect-ratio_default_0.jpg" class="wine-image rounded mx-auto d-block" alt="vino1">
+</div>
 </body>
 </html>

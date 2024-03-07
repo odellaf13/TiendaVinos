@@ -11,7 +11,6 @@
 </head>
 
 <?php
-    session_start();
     include "../Conexion.php";
 ?>
 <nav class="navbar navbar-expand-lg" style="background-color: #e3f2fd;">
@@ -25,14 +24,14 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="quienessomos.php">Quiénes somos</a>
+          <a class="nav-link active" aria-current="page" href="quienessomossinlogin.php">Quiénes somos</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="contactanos.php">Contáctanos</a>
+          <a class="nav-link active" aria-current="page" href="contactanossinlogin.php">Contáctanos</a>
         </li>
       </ul>
-      <form class="d-flex" role="search" action="buscador.php">
-        <button class="btn btn-outline-success" type="submit" action="buscador.php">Search</button>
+      <form class="d-flex" role="search" action="buscadorsinlogin.php">
+        <button class="btn btn-outline-success" type="submit" action="buscadorsinlogin.php">Search</button>
       </form>
     </div>
   </div>
@@ -95,7 +94,7 @@
                                 <input name="do" type="hidden" value="<?php echo $resultado["do"]; ?>" />
                                 <input name="descripcion" type="hidden" value="<?php echo $resultado["descripcion"]; ?>" />
                                 <input name="url_imagen" type="hidden" value="<?php echo $resultado["url_imagen"]; ?>" />
-                                <input name="cantidad" type="hidden" value="1" class="pl-2" />
+                                <input name="cantidad" type="number" value="1" class="pl-2" min="1" required />
                             
                             </div>
                         </form>

@@ -1,26 +1,25 @@
 <?php
+if(isset($_SESSION["carrito"])) {
+    $carritomio = $_SESSION['carrito'];
+    $total_cantidad = 0;
 
-if(isset($_SESSION["carrito"])){
-        $carritomio=$_SESSION['carrito'];
-    }
-//contamos la cantidad de nuestro carrito
-
-if (isset($_SESSION["carrito"])){
-    for($i=0 ;$i<=count($carritomio)-1; $i ++) {
-        if(isset($carritomio[$i])){
-            if($carritomio[$i]!=NULL){
-                if(!isset($carritomio["stock"])){$carritomio["stock"] = '0';}else{ $carritomio["stock"] = $carritomio["stock"];}
-                $total_cantidad = $carritomio["stock"];
-                $total_cantidad ++;
-                if(!isset($totalcantidad)){$totalcantidad = '0';}else{ $totalcantidad = $totalcantidad;}
-                $totalcantidad += $total_cantidad;
-            }
+    // Contamos la cantidad de productos en el carrito
+    foreach ($carritomio as $producto) {
+        if (isset($producto["stock"])) {
+            $total_cantidad += $producto["stock"];
         }
     }
+
+    if (!isset($totalcantidad)) {
+        $totalcantidad = 0;
+    }
+
+    $totalcantidad += $total_cantidad;
 }
 
-if(!isset($totalcantidad)){$totalcantidad = '';}else{ $totalcantidad = $totalcantidad;}
-
+if (!isset($totalcantidad)) {
+    $totalcantidad = 0;
+}
 ?>
 
 <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #112956;">
@@ -28,6 +27,9 @@ if(!isset($totalcantidad)){$totalcantidad = '';}else{ $totalcantidad = $totalcan
         <a class="navbar-brand" href="#">Mi tienda</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
             <i class="fas fa-shopping-cart"></i>
+            <?php if ($totalcantidad > 0): ?>
+                <span class="badge bg-danger"><?php echo $totalcantidad; ?></span>
+            <?php endif; ?>
         </button>
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
             <ul class="navbar-nav">
@@ -38,3 +40,4 @@ if(!isset($totalcantidad)){$totalcantidad = '';}else{ $totalcantidad = $totalcan
         </div>
     </div>
 </nav>
+
