@@ -4,7 +4,7 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Vista del usuario</title>
-    <link rel="stylesheet" type="text/css" href="estilovistauser.css">
+    <link rel="stylesheet" type="text/css" href="estilosearchsinlogin.css">
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <script src="bootstrap/js/bootstrap.min.js"></script>
@@ -27,7 +27,7 @@ if (isset($_POST["buscar"])) {
         <div class="card">
             <h4 class="card-title">Buscador</h4>
 
-            <form id="form2" name="form2" method="POST" action="buscador.php">
+            <form id="form2" name="form2" method="POST" action="buscadorsinlogin.php">
                 <div class="col-12 row">    
                     <div class="col-11">
                         <label class="form-label">Nombre del producto a buscar</label>
@@ -71,6 +71,6 @@ if (isset($_POST["buscar"])) {
 </div>
 </div></br>
 
-<a href="Indexvistauser.php" class="btn btn-primary">Volver</a>
+<a href="/TiendaVinos/menuvistauser.php" class="btn btn-primary">Volver</a>
 </body>
 </html>

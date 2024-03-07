@@ -28,30 +28,25 @@
         <li class="nav-item">
           <a class="nav-link active" aria-current="page" href="vistauser/quienessomos.php">Quiénes somos</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Link</a>
-        </li>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             Productos
           </a>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="vistauser/productossinlogin.php">Nuestros vinos</a></li>
-            <li><a class="dropdown-item" href="#">Another action</a></li>
+            <li><a class="dropdown-item" href="/TiendaVinos/productossinlogin/productossinlogin.php">Nuestros vinos</a></li>
             <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="#">Something else here</a></li>
+            <li><a class="dropdown-item" href="ofertas.php">Ofertas</a></li>
           </ul>
           <li class="nav-item">
           <a class="nav-link" href="/TiendaVinos/phplogin/indexlogin.php">Pedidos</a>
 
         </li>
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="vistauser/contactanos.php">Contáctanos</a>
+          <a class="nav-link active" aria-current="page" href="productossinlogin/contactanossinlogin.php">Contáctanos</a>
         </li>
       </ul>
-      <form class="d-flex" role="search">
-        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-        <button class="btn btn-outline-success" type="submit">Search</button>
+      <form class="d-flex" role="search" action="productossinlogin/buscadorsinlogin.php">
+        <button class="btn btn-outline-success" type="submit" action="productossinlogin/buscadorsinlogin.php">Search</button>
       </form>
     </div>
   </div>

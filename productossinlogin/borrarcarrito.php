@@ -6,7 +6,7 @@ if (isset($_SESSION["carrito"])) {
 }
 echo '<script>
     alert("Carrito vaciado correctamente");
-    window.location.href = "/TiendaVinos/vistauser/Indexvistauser.php";
+    window.location.href = "/TiendaVinos/productossinlogin/productossinlogin.php";
 </script>';
 exit();
 ?>
