@@ -98,7 +98,10 @@ if(isset($_SESSION['username'])) {
                                     <a class="category">
                                         <?php echo $resultado["pvp"]; ?> €
                                     </a>
-                                    <h5 class="card-title"><?php echo $resultado["nombre"]; ?></h5>
+                                    <h5 class="card-title"><?php echo $resultado["nombre"]; ?>
+                                    <small class="text-muted"><strong>(<?php echo $resultado["do"]; ?>)</strong>
+                                    </small>                              
+                                    </h5>
                                     <p class="card-text" style="max-height: 120px; overflow: hidden;"><?php echo $resultado["descripcion"]; ?></p>
                                     <button class="btn btn-primary" type="submit"><i class="bi bi-cart-plus-fill"></i>Añadir al carrito</button>
                                 </div>

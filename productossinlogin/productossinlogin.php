@@ -4,7 +4,7 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Vista del usuario</title>
-    <link rel="stylesheet" type="text/css" href="estilovistausersinlogin.css">
+    <link rel="stylesheet" type="text/css" href="/TiendaVinos/productossinlogin/estilovistausersinlogin.css">
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
@@ -29,9 +29,11 @@
         <li class="nav-item">
           <a class="nav-link active" aria-current="page" href="contactanossinlogin.php">Contáctanos</a>
         </li>
-      </ul>
-      <form class="d-flex" role="search" action="buscadorsinlogin.php">
-        <button class="btn btn-outline-success" type="submit" action="buscadorsinlogin.php">Search</button>
+      <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="/TiendaVinos/phplogin/indexlogin.php">Iniciar sesión</a>
+        </li></ul>
+      <form class="d-flex" role="search" action="/TiendaVinos/productossinlogin/buscadorsinlogin.php">
+        <button class="btn btn-outline-success" type="submit" action="/TiendaVinos/productossinlogin/buscadorsinlogin.php">Search</button>
       </form>
     </div>
   </div>
@@ -72,14 +74,17 @@
             <div class="row custom-row">
                 <?php while ($resultado = mysqli_fetch_assoc($busqueda)) { ?>
                     <div class="col mb-4 custom-card">
-                        <form id="formulariocarrito" method="POST" action="carritosinlogin.php" onsubmit="alert('Producto añadido al carrito');" enctype="multipart/form-data">
+                        <form id="formulariocarrito" method="POST" action="carritosinlogin.php" onsubmit="return addToCart()">
                             <div class="card">
                                 <img src="<?php echo $resultado["url_imagen"]; ?>" class="card-img-top" style="max-width: 100%; max-height: 150px; object-fit: contain;">
                                 <div class="card-body">
                                     <a class="category">
                                         <?php echo $resultado["pvp"]; ?> €
                                     </a>
-                                    <h5 class="card-title"><?php echo $resultado["nombre"]; ?></h5>
+                                    <h5 class="card-title"><?php echo $resultado["nombre"]; ?>
+                                    <small class="text-muted"><strong>(<?php echo $resultado["do"]; ?>)</strong>
+                                    </small>                     
+                                    </h5>
                                     <p class="card-text" style="max-height: 120px; overflow: hidden;"><?php echo $resultado["descripcion"]; ?></p>
                                     <button class="btn btn-primary" type="submit"><i class="bi bi-cart-plus-fill"></i>Añadir al carrito</button>
                                 </div>
@@ -104,5 +109,12 @@
         </div>
     </div>
 </div>
+<script>
+function addToCart() {
+    alert('Necesita iniciar sesión para comenzar su compra');
+    window.location.href = '/TiendaVinos/productossinlogin/productossinlogin.php';
+    return false;
+}
+</script>
 </body>
 </html>
