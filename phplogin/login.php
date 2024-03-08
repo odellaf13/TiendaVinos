@@ -2,8 +2,6 @@
 include "../Conexion.php";
 
     if(isset($_POST['submit'])){
-
-    
     $username = $_POST['user'];
     $password = $_POST['pass'];
     $sql = "select * from usuario where username = '$username' and password = '$password'";
@@ -13,11 +11,18 @@ include "../Conexion.php";
     if ($row) {
         session_start();
 
-        //Almacenamos el nombre del usuario en una variable sesión
+        //el username y rol lo guardamos en la variable SESSION
         $_SESSION['username'] = $username;
         $_SESSION['rol'] = $row['rol']; //campo en base de datos llamado rol     
         
-        
+           //Se sinicializa el carrito a 0 ()
+           $_SESSION['carrito'] = array();
+
+           //Si el usuario tiene un carrito al cerrar sesión, nos aseguramos que lo pierda
+           $usuario_id = $row['usuario_id'];
+           $queryEliminarPedido = "DELETE FROM pedido WHERE fk_usuario = $usuario_id AND total = 0";
+           mysqli_query($conexion, $queryEliminarPedido);
+
         if ($row['rol'] == 'admin') {
         header("Location: /TiendaVinos/Index.php"); //Vamos a Index como administrador
         exit();
