@@ -41,7 +41,6 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Seguir pedido</button>
                 <a type="button" class="btn btn-secondary" href="borrarcarrito.php" onsubmit="alert('Producto añadido al carrito');">Vaciar carrito</a>
-                <a type="button" class="btn btn-secondary" href="realizarpedido.php">Realizar el pedido</a>
             </div>
         </div>
     </div>

@@ -28,7 +28,7 @@
           <a class="nav-link active" aria-current="page" href="quienessomos.php">Quiénes somos</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/TiendaVinos/vistauser/pedidos.php">Pedidos</a>
+          <a class="nav-link" href="/TiendaVinos/vistauser/indexpedidos.php">Pedidos</a>
         </li>
         <li class="nav-item">
           <a class="nav-link active" aria-current="page" href="contactanos.php">Contáctanos</a>
@@ -95,7 +95,7 @@ if(isset($_SESSION['username'])) {
                             <div class="card">
                                 <img src="<?php echo $resultado["url_imagen"]; ?>" class="card-img-top" style="max-width: 100%; max-height: 150px; object-fit: contain;">
                                 <div class="card-body">
-                                    <a class="category">
+                                    <a class="category" style="color: #008080; font-size: 1.2em; font-weight: bold;">
                                         <?php echo $resultado["pvp"]; ?> €
                                     </a>
                                     <h5 class="card-title"><?php echo $resultado["nombre"]; ?>

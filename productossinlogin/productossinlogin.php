@@ -78,7 +78,7 @@
                             <div class="card">
                                 <img src="<?php echo $resultado["url_imagen"]; ?>" class="card-img-top" style="max-width: 100%; max-height: 150px; object-fit: contain;">
                                 <div class="card-body">
-                                    <a class="category">
+                                    <a class="category" style="color: #008080; font-size: 1.2em; font-weight: bold;">
                                         <?php echo $resultado["pvp"]; ?> €
                                     </a>
                                     <h5 class="card-title"><?php echo $resultado["nombre"]; ?>
