@@ -55,11 +55,15 @@ if(isset($_SESSION['username'])) {
     echo '<a href="cerrarsesion.php" class="btn btn-danger">Cerrar Sesión</a></br></br>
     </div>';  
 }
+if (isset($_GET['exito']) && $_GET['exito'] == 1) {
+    echo '<div class="alert alert-success" role="alert">
+            Producto añadido al carrito exitosamente.
+          </div>';
+}
 
 ?>
 <?php
     include "navcarrito.php";
-    include "modalcarrito.php";
     ?>
 <style>
     .custom-row {

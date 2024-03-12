@@ -1,11 +1,22 @@
 <?php
 // Inicializar totalcantidad
 $totalcantidad = 0;
+
 // Contamos la cantidad total de productos en el carrito
-if (isset($_SESSION["carrito"])) {
-    foreach ($_SESSION["carrito"] as $producto) {
-        if (isset($producto["stock"])) {
-            $totalcantidad += $producto["stock"];
+if (isset($_SESSION["username"])) {
+    $username = $_SESSION['username'];
+    $consultaUsuario = mysqli_query($conexion, "SELECT usuario_id FROM usuario WHERE username = '$username'");
+    $filaUsuario = mysqli_fetch_assoc($consultaUsuario);
+
+    if ($filaUsuario) {
+        $usuario_id = $filaUsuario['usuario_id'];
+
+        // Obtener la cantidad total del carrito desde la base de datos
+        $consultaCantidad = mysqli_query($conexion, "SELECT SUM(lp.cantidad) as total_cantidad FROM linea_pedido lp JOIN pedido p ON lp.fk_pedido = p.pedido_id WHERE p.fk_usuario = $usuario_id");
+        $filaCantidad = mysqli_fetch_assoc($consultaCantidad);
+
+        if ($filaCantidad && $filaCantidad['total_cantidad']) {
+            $totalcantidad = $filaCantidad['total_cantidad'];
         }
     }
 }
