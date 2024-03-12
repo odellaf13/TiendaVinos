@@ -135,7 +135,7 @@ if(isset($_SESSION['username'])) {
     function validarFormulario(stockDisponible) {
         //vemos la cantidad seleccionada
         var cantidadSeleccionada = parseInt(document.querySelector('.cantidadInput').value);
-
+        console.log('Cantidad seleccionada:', cantidadSeleccionada);
         //Hacemos con un if un cálculo de si la cantidad seleccionada es mayor al stock disponible (que será 0, si no hay productos)
         if (cantidadSeleccionada > stockDisponible) {
             alert('Lo sentimos. No hay stock disponible del producto');

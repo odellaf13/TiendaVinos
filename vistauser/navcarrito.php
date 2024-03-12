@@ -9,7 +9,6 @@ if (isset($_SESSION["carrito"])) {
         }
     }
 }
-
 ?>
 
 <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #112956;">
@@ -31,4 +30,3 @@ if (isset($_SESSION["carrito"])) {
         </div>
     </div>
 </nav>
-

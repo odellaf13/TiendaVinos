@@ -117,6 +117,6 @@
     echo 'Usuario no autenticado.';
 }
 ?>
-<a href="/TiendaVinos/menuvistauser.php" class="btn btn-primary">Volver a inicio</a>
+<a href="/TiendaVinos/vistauser/Indexvistauser.php" class="btn btn-primary">Volver a inicio</a>
 </body>
 </html>
