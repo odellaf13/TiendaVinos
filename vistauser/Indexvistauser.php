@@ -42,9 +42,8 @@
 </nav>
 
 <?php
-
-if(isset($_SESSION['username'])) {
-  $user = $_SESSION['username'];
+if(isset($_SESSION["username"])) {
+  $user = $_SESSION["username"];
     //clases de bootstrap para centrar el botón de contenido y proporcionar un boton para cerrar la sesión
     echo '<div class="text-center d-flex flex-column align-items-center" style="margin-top: 20px;">
     <h3 class="text-secondary mb-3"><i class="bi bi-person-check" style="color: #3498db !important;"></i>
@@ -62,7 +61,7 @@ if (isset($_GET['exito']) && $_GET['exito'] == 1) {
 }
 
 ?>
-<?php
+    <?php
     include "navcarrito.php";
     ?>
 <style>
@@ -149,7 +148,5 @@ if (isset($_GET['exito']) && $_GET['exito'] == 1) {
         return true; //Si es verdadero, que es > a 0, se envía todo a carrito.php
     }
 </script>
-
 </body>
-
 </html>

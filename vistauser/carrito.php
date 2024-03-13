@@ -15,7 +15,7 @@ if (isset($_POST["producto_id"])) {
     $cantidad = $_POST["cantidad"];
 
     // Obtener el id del usuario actual
-    $username = $_SESSION['username'];
+    $username = $_SESSION["username"];
     $consultaUsuario = mysqli_query($conexion, "SELECT usuario_id FROM usuario WHERE username = '$username'");
     $filaUsuario = mysqli_fetch_assoc($consultaUsuario);
 

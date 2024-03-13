@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Vista del usuario</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Vista del usuario</title>
     <link rel="stylesheet" type="text/css" href="estilovistauser.css">
-	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 </head>
 <body>
 <?php
@@ -53,7 +53,7 @@
                 Bienvenido/a, ' . $username . ', a la tienda de vinos selectos
             </h3>';
 
-        echo '<a href="cerrarsesion.php" class="btn btn-danger">Cerrar Sesión</a></br></br>
+        echo '<a href="cerrarsesion.php" class="btn btn-danger">Cerrar Sesión</a></br>
             </div>';
 
         $consultaPedidos = mysqli_query($conexion, "SELECT * FROM pedido WHERE fk_usuario = '$usuario_id'");
@@ -70,7 +70,7 @@
                 $total = $pedido['total'];
                 $fecha = $pedido['fecha'];
 
-                $consultaLineaPedido = mysqli_query($conexion, "SELECT p.nombre, lp.cantidad
+                $consultaLineaPedido = mysqli_query($conexion, "SELECT p.producto_id, p.nombre, lp.cantidad
                     FROM linea_pedido lp
                     JOIN producto p ON lp.fk_producto = p.producto_id
                     WHERE lp.fk_pedido = '$pedido_id'");
@@ -84,10 +84,15 @@
                     while ($linea = mysqli_fetch_assoc($consultaLineaPedido)) {
                         $nombre = $linea['nombre'];
                         $cantidad = $linea['cantidad'];
-
+                        $producto_id = $linea['producto_id']; // Asegúrate de obtener también el ID del producto
                         echo '<p>Producto: ' . $nombre . ', Cantidad: ' . $cantidad . '</p>';
+                        
+                        echo '<form action="eliminar_productopedido.php" method="POST">
+                                <input type="hidden" name="pedido_id" value="' . $pedido_id . '">
+                                <input type="hidden" name="producto_id" value="' . $producto_id . '">
+                                <button type="submit" class="btn btn-danger">Eliminar</button></br></br>
+                              </form>';
                     }
-
                     echo '<a href="borrarpedido.php?pedido_id=' . $pedido_id . '" class="btn btn-danger">Borrar Pedido</a>
                         <a href="pagar.php?pedido_id=' . $pedido_id . '" class="btn btn-success">Ir a Pagar</a>
                         </div>';

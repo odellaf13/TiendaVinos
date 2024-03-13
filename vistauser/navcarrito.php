@@ -1,10 +1,9 @@
 <?php
 // Inicializar totalcantidad
 $totalcantidad = 0;
-
 // Contamos la cantidad total de productos en el carrito
 if (isset($_SESSION["username"])) {
-    $username = $_SESSION['username'];
+    $username = $_SESSION["username"];
     $consultaUsuario = mysqli_query($conexion, "SELECT usuario_id FROM usuario WHERE username = '$username'");
     $filaUsuario = mysqli_fetch_assoc($consultaUsuario);
 
