@@ -13,7 +13,7 @@
             var cantidadInput = document.getElementById("nuevacantidad").value;
             if (isNaN(cantidadInput) || cantidadInput <= 0) {
                 //Si la cantidad no es un número, o es menor/igual a cero, mostrar
-                document.getElementById("errorCantidad").innerText = "La cantidad ingresada no es válida.";
+                document.getElementById("errorCantidad").innerText = "Lo sentimos. La cantidad ingresada no es correcta.";
                 return false; //y se impide enviar el formulario
             }
             return true; //si no, se envía a actualizarcantidad.php
@@ -72,8 +72,9 @@
         //Verificaremos si hay pedidos, y si no, te manda al else donde te dirá que no existen pedidos.
         if (mysqli_num_rows($consultaPedidos) > 0) {
             echo '<div class="center mt-5">
-                    <div class="card pt-3">
-                        <p style="font-weight: bold; color: #0F6BB7; font-size: 22px;">Pedidos</p>
+            <div class="card pt-3" style="max-width: 600px; margin: 0 auto; border: 2px solid #ccc; box-shadow: 2px 2px 20px 2px rgba(0,0,0,0.2);">
+            <div style="background-color: ghostwhite; padding: 10px;">
+            <p style="font-weight: bold; color: #0F6BB7; font-size: 22px;">Pedidos</p>
                         <div class="container-fluid p-2" style="background-color: ghostwhite;">';
 
             while ($pedido = mysqli_fetch_assoc($consultaPedidos)) {
@@ -110,9 +111,10 @@
                                 <input type="hidden" name="producto_id" value="' . $producto_id . '">
                                 <button type="submit" class="btn btn-danger">Eliminar</button></br></br>
                               </form>';
+                              echo '<hr style="border-top: solid #007bff;">'; //Línea que separa en la misma tarjeta, más de un producto
                     }
                     echo '<a href="borrarpedido.php?pedido_id=' . $pedido_id . '" class="btn btn-danger">Borrar Pedido</a>
-                        <a href="pagar.php?pedido_id=' . $pedido_id . '" class="btn btn-success">Ir a Pagar</a>
+                        <a href="indexpagar.php?pedido_id=' . $pedido_id . '" class="btn btn-success">Ir a Pagar</a>
                         </div>';
                 } else {
                     echo 'Error en la consulta';
@@ -137,7 +139,8 @@
     echo 'Fallo.Usuario no autenticado.';
 }
 ?>
-<a href="/TiendaVinos/vistauser/Indexvistauser.php" class="btn btn-primary">Volver a inicio</a>
+<div class="text-center mt-3">
+<a href="/TiendaVinos/vistauser/Indexvistauser.php" class="btn btn-primary">Volver a Productos</a>
 </body>
 </html>
 
