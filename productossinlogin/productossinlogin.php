@@ -37,8 +37,10 @@
       </form>
     </div>
   </div>
-</nav>
-
+</nav></br>
+<div class="text-center">
+<a href="/TiendaVinos/menuvistauser.php" class="btn btn-primary">Volver al inicio</a>
+</div></br>
 <?php
     include "navcarritosinlogin.php";
     include "modalcarritosinlogin.php";

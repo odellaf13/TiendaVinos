@@ -38,7 +38,7 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="vistauser/quienessomos.php">Quiénes somos</a>
+          <a class="nav-link active" aria-current="page" href="productossinlogin/quienessomossinlogin.php">Quiénes somos</a>
         </li>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -49,11 +49,9 @@
             <li><hr class="dropdown-divider"></li>
             <li><a class="dropdown-item" href="ofertas.php">Ofertas</a></li>
           </ul>
-          <li class="nav-item">
-          <a class="nav-link" href="/TiendaVinos/phplogin/indexlogin.php">Pedidos</a>
-        </li>
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="productossinlogin/contactanossinlogin.php">Contáctanos</a>
+          <a class="nav-link active" aria-current="page" href="/TiendaVinos/productossinlogin/contactanossinlogin.php">
+            <i class="bi bi-headset"></i>&nbsp; Contáctanos</a>
         </li>
         <li class="nav-item">
           <a class="nav-link active" aria-current="page" href="phplogin/indexlogin.php">Iniciar sesión</a>

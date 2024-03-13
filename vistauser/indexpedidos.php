@@ -39,7 +39,8 @@
           <a class="nav-link active" aria-current="page" href="quienessomos.php">Quiénes somos</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="contactanos.php">Contáctanos</a>
+          <a class="nav-link active" aria-current="page" href="contactanos.php">
+            <i class="bi bi-headset"></i>&nbsp; Contáctanos</a>
         </li>
       </ul>
       <form class="d-flex" role="search" action="buscador.php">
@@ -50,7 +51,7 @@
 </nav>
 
 <?php
- if (isset($_SESSION['username'])) {
+if (isset($_SESSION['username'])) {
     $username = $_SESSION['username'];
     //consulta para saber el nombre del usuario y obtener el id
     $queryUsuario = mysqli_query($conexion, "SELECT usuario_id FROM usuario WHERE username = '$username'");
@@ -69,78 +70,76 @@
 
         $consultaPedidos = mysqli_query($conexion, "SELECT * FROM pedido WHERE fk_usuario = '$usuario_id'");
 
+        echo '<div class="center mt-5">
+                <div class="card pt-3" style="max-width: 600px; margin: 0 auto; border: 2px solid #ccc; box-shadow: 2px 2px 20px 2px rgba(0,0,0,0.2);">
+                <div style="background-color: ghostwhite; padding: 10px;">
+                <p style="font-weight: bold; color: #0F6BB7; font-size: 22px;">
+                <i class="bi bi-card-list" style="font-size: 2em; margin-right: 10px;"></i>Pedidos</p>
+                <div class="container-fluid p-2" style="background-color: ghostwhite;">';
+
         //Verificaremos si hay pedidos, y si no, te manda al else donde te dirá que no existen pedidos.
         if (mysqli_num_rows($consultaPedidos) > 0) {
-            echo '<div class="center mt-5">
-            <div class="card pt-3" style="max-width: 600px; margin: 0 auto; border: 2px solid #ccc; box-shadow: 2px 2px 20px 2px rgba(0,0,0,0.2);">
-            <div style="background-color: ghostwhite; padding: 10px;">
-            <p style="font-weight: bold; color: #0F6BB7; font-size: 22px;">Pedidos</p>
-                        <div class="container-fluid p-2" style="background-color: ghostwhite;">';
-
             while ($pedido = mysqli_fetch_assoc($consultaPedidos)) {
                 $pedido_id = $pedido['pedido_id'];
                 $total = $pedido['total'];
                 $fecha = $pedido['fecha'];
 
-                $consultaLineaPedido = mysqli_query($conexion, "SELECT p.producto_id, p.nombre, lp.cantidad
+                $consultaLineaPedido = mysqli_query($conexion, "SELECT p.producto_id, p.nombre, p.pvp, lp.cantidad
                     FROM linea_pedido lp
                     JOIN producto p ON lp.fk_producto = p.producto_id
                     WHERE lp.fk_pedido = '$pedido_id'");
- //hacemos una consulta de linea_pedido
+
                 if ($consultaLineaPedido) {
                     echo '<div class="mb-3">
                             <h5>Pedido ID: ' . $pedido_id . '</h5>
-                            <p>Total: ' . $total . ' €</p>
                             <p>Fecha: ' . $fecha . '</p>';
-                        //hacemos una consulta de linea_pedido
                     while ($linea = mysqli_fetch_assoc($consultaLineaPedido)) {
-                        $nombre = $linea['nombre'];
-                        $cantidad = $linea['cantidad'];
-                        $producto_id = $linea['producto_id']; //llamamos también al id del producto
+                        $nombre = $linea["nombre"];
+                        $cantidad = $linea["cantidad"];
+                        $pvp = $linea["pvp"];
+                        $producto_id = $linea['producto_id'];
                         echo '<form action="actualizarcantidad.php" method="POST" onsubmit="return validarCantidad()">
                                 <input type="hidden" name="pedido_id" value="' . $pedido_id . '">
                                 <input type="hidden" name="producto_id" value="' . $producto_id . '">
                                 <input type="hidden" name="cantidad_actual" value="' . $cantidad . '">
-                                <p>Producto: ' . $nombre . ', Cantidad: <input type="text" name="nuevacantidad" id="nuevacantidad" value="' . $cantidad . '" style="width:50px;" class="align-middle text-center" size="1" maxlength="4"/> 
+                                <p>Producto: <span style="font-weight: bold;">' . $nombre . '</span> (Precio por cada botella: ' . $pvp . ' €)</p>
+                                <p>Cantidad: <input type="text" name="nuevacantidad" id="nuevacantidad" value="' . $cantidad . '" style="width:50px;" class="align-middle text-center" size="1" maxlength="4"/> 
                                 <button type="submit" class="btn btn-primary"><i class="bi bi-arrow-clockwise"></i></button></p>
                                 <div id="errorCantidad" style="color: red;"></div>
                               </form>';
-                            //creo tambien un form para poder eliminar el producto del pedido, o todos los productos del pedido
                         echo '<form action="eliminar_productopedido.php" method="POST">
                                 <input type="hidden" name="pedido_id" value="' . $pedido_id . '">
                                 <input type="hidden" name="producto_id" value="' . $producto_id . '">
-                                <button type="submit" class="btn btn-danger">Eliminar</button></br></br>
+                                <button type="submit" class="btn btn-danger"><i class="bi bi-bag-x-fill"></i>  &nbsp; Eliminar</button></br></br>
                               </form>';
-                              echo '<hr style="border-top: solid #007bff;">'; //Línea que separa en la misma tarjeta, más de un producto
+                        echo '<hr style="border-top: solid #007bff;">';
                     }
+                    echo '<div style="margin-top: 10px;">
+                            <p style="font-weight: bold;">Total de todos los productos: ' . $total . ' € <i class="bi bi-receipt" style="font-size: 4em;"></i></p>
+                          </div>';
                     echo '<a href="borrarpedido.php?pedido_id=' . $pedido_id . '" class="btn btn-danger">Borrar Pedido</a>
-                        <a href="indexpagar.php?pedido_id=' . $pedido_id . '" class="btn btn-success">Ir a Pagar</a>
-                        </div>';
+                            <a href="indexpagar.php?pedido_id=' . $pedido_id . '" class="btn btn-success">Ir a Pagar</a>
+                            </div>';
                 } else {
                     echo 'Error en la consulta';
                 }
             }
-
-            echo '</div></div></div>';
         } else {
-            echo '<div class="center mt-5">
-                    <div class="card pt-3">
-                        <p style="font-weight: bold; color: #0F6BB7; font-size: 22px;">Pedidos</p>
-                        <div class="container-fluid p-2" style="background-color: ghostwhite;">
-                            <p>No hay pedidos.</p>
-                        </div>
-                    </div>
-                </div>';
+            echo '<p style="font-weight: bold; color: #0F6BB7; font-size: 22px;"></p>
+                    <div class="container-fluid p-2" style="background-color: ghostwhite;">
+                        <p>Vaya...parece que no hay pedidos en tu carrito.</p>
+                    </div>';
         }
+
+        echo '</div></div></div>';
     } else {
         echo 'Error en la consulta de usuario';
     }
 } else {
-    echo 'Fallo.Usuario no autenticado.';
+    echo 'Fallo. Usuario no autentificado.';
 }
 ?>
 <div class="text-center mt-3">
 <a href="/TiendaVinos/vistauser/Indexvistauser.php" class="btn btn-primary">Volver a Productos</a>
 </body>
 </html>
-

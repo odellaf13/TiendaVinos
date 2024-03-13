@@ -31,7 +31,8 @@
           <a class="nav-link" href="/TiendaVinos/vistauser/indexpedidos.php">Pedidos</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="contactanos.php">Contáctanos</a>
+          <a class="nav-link active" aria-current="page" href="contactanos.php">
+            <i class="bi bi-headset"></i>&nbsp; Contáctanos</a>
         </li>
       </ul>
       <form class="d-flex" role="search" action="buscador.php">

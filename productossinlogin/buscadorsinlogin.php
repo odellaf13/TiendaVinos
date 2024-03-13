@@ -71,6 +71,6 @@ if (isset($_POST["buscar"])) {
 </div>
 </div></br>
 
-<a href="/TiendaVinos/menuvistauser.php" class="btn btn-primary">Volver</a>
+<a href="/TiendaVinos/menuvistauser.php" class="btn btn-primary">Volver a inicio</a>
 </body>
 </html>

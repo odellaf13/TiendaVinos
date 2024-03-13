@@ -45,7 +45,7 @@
     </h2>
     <div id="collapseThree" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
       <div class="accordion-body">
-        <strong>Solo deseamos su disfrute y satisfacción</strong>a la hora de poder elegir un producto, consultar su D.O., ficha técnica y añada,
+        <strong>Solo deseamos su disfrute y satisfacción</strong> a la hora de poder elegir un producto, consultar su D.O., ficha técnica y añada,
         y recibirlo en la puerta de su hogar.
       </div>
     </div>
@@ -53,7 +53,7 @@
 </div></br>
 
 <div class="text-center">
-<a href="/TiendaVinos/menuvistauser.php" class="btn btn-primary">Volver</a>
+<a href="/TiendaVinos/indexvistauser.php" class="btn btn-primary">Volver</a>
 
 </body>
 </html>
