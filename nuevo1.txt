@@ -455,3 +455,6 @@ exit();
                 </div>
         </div>
 </div>
+
+
+<input name="cantidad" type="text" id="cantidad" style="width:50px;" class="align-middle text-center" value="<?php print $username[i$]["cantidad"]; ?>" size="1" maxlength="4"/>

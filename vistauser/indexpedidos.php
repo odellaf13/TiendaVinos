@@ -8,6 +8,17 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    <script>//voy a crear una función para validar si la cantidad es un número, y no un caracter o un símbolo
+        function validarCantidad() {
+            var cantidadInput = document.getElementById("nuevacantidad").value;
+            if (isNaN(cantidadInput) || cantidadInput <= 0) {
+                //Si la cantidad no es un número, o es menor/igual a cero, mostrar
+                document.getElementById("errorCantidad").innerText = "La cantidad ingresada no es válida.";
+                return false; //y se impide enviar el formulario
+            }
+            return true; //si no, se envía a actualizarcantidad.php
+        }
+    </script>
 </head>
 <body>
 <?php
@@ -74,19 +85,26 @@
                     FROM linea_pedido lp
                     JOIN producto p ON lp.fk_producto = p.producto_id
                     WHERE lp.fk_pedido = '$pedido_id'");
-
+ //hacemos una consulta de linea_pedido
                 if ($consultaLineaPedido) {
                     echo '<div class="mb-3">
                             <h5>Pedido ID: ' . $pedido_id . '</h5>
                             <p>Total: ' . $total . ' €</p>
                             <p>Fecha: ' . $fecha . '</p>';
-
+                        //hacemos una consulta de linea_pedido
                     while ($linea = mysqli_fetch_assoc($consultaLineaPedido)) {
                         $nombre = $linea['nombre'];
                         $cantidad = $linea['cantidad'];
-                        $producto_id = $linea['producto_id']; // Asegúrate de obtener también el ID del producto
-                        echo '<p>Producto: ' . $nombre . ', Cantidad: ' . $cantidad . '</p>';
-                        
+                        $producto_id = $linea['producto_id']; //llamamos también al id del producto
+                        echo '<form action="actualizarcantidad.php" method="POST" onsubmit="return validarCantidad()">
+                                <input type="hidden" name="pedido_id" value="' . $pedido_id . '">
+                                <input type="hidden" name="producto_id" value="' . $producto_id . '">
+                                <input type="hidden" name="cantidad_actual" value="' . $cantidad . '">
+                                <p>Producto: ' . $nombre . ', Cantidad: <input type="text" name="nuevacantidad" id="nuevacantidad" value="' . $cantidad . '" style="width:50px;" class="align-middle text-center" size="1" maxlength="4"/> 
+                                <button type="submit" class="btn btn-primary"><i class="bi bi-arrow-clockwise"></i></button></p>
+                                <div id="errorCantidad" style="color: red;"></div>
+                              </form>';
+                            //creo tambien un form para poder eliminar el producto del pedido, o todos los productos del pedido
                         echo '<form action="eliminar_productopedido.php" method="POST">
                                 <input type="hidden" name="pedido_id" value="' . $pedido_id . '">
                                 <input type="hidden" name="producto_id" value="' . $producto_id . '">
@@ -97,8 +115,7 @@
                         <a href="pagar.php?pedido_id=' . $pedido_id . '" class="btn btn-success">Ir a Pagar</a>
                         </div>';
                 } else {
-                    // Manejar error en la consulta de línea de pedido
-                    echo 'Error en la consulta de línea de pedido.';
+                    echo 'Error en la consulta';
                 }
             }
 
@@ -114,14 +131,13 @@
                 </div>';
         }
     } else {
-        // Manejar error en la consulta de usuario
-        echo 'Error en la consulta de usuario.';
+        echo 'Error en la consulta de usuario';
     }
 } else {
-    // Manejar caso en el que el usuario no está autenticado
-    echo 'Usuario no autenticado.';
+    echo 'Fallo.Usuario no autenticado.';
 }
 ?>
 <a href="/TiendaVinos/vistauser/Indexvistauser.php" class="btn btn-primary">Volver a inicio</a>
 </body>
 </html>
+
