@@ -153,7 +153,9 @@ if (isset($_SESSION['username'])) {
 }
 ?>
 <div class="text-center mt-3">
+<a href="/TiendaVinos/vistauser/indexpedidos.php" class="btn btn-primary">Volver a Pedidos</a>
 <a href="/TiendaVinos/vistauser/Indexvistauser.php" class="btn btn-primary">Volver a Productos</a>
+
 </div>
 </body>
 </html>

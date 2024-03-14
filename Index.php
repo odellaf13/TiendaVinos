@@ -17,9 +17,7 @@
     <script>
 
     function eliminar(){
-
         var respuesta= confirm("¿Deseas eliminar el producto?");
-
         return respuesta;
     }
 
@@ -32,6 +30,8 @@
 
     document.getElementById('nuevoProducto').style.display = 'none';
     }
+
+
 
     </script>
 
@@ -63,8 +63,6 @@
     }
 
     ?>
-
-
     <div class="container-fluid row">
 
         <div class="col-8 p-4 mx-auto">
@@ -84,10 +82,7 @@
 
                 <tbody>
                 <?php
-
-
                     include "Conexion.php";
-
                     $sql = $conexion->query("SELECT * FROM producto");
                                 if (!$sql) {
                                 die("Error en la consulta: " . $conexion->error);
@@ -102,7 +97,6 @@
                             <td><?= $datos->stock ?></td>
                             <td><?= $datos->do ?></td>
                             <td>
-
                             <a href="vistaadmin/categoria_producto.php?id=<?= $datos->producto_id ?>"><i class="bi bi-arrow-up-right-square-fill"></i>Ficha del producto</a>
                             <a href="vistaadmin/modificar_producto.php?id=<?= $datos->producto_id ?>" class="btn-warning"><i class="bi bi-pencil-square"></i>Editar</a>
                             <a onclick="return eliminar()" href="Index.php?id=<?= $datos->producto_id ?>" class="btn-danger"><i class="bi bi-trash3-fill"></i>Eliminar</a>
@@ -113,9 +107,6 @@
                     ?>
 </tbody>
                 </table>
-
-
-
 
         <button class="btn btn-primary" onclick="mostrarF()">Nuevo producto</button>
             </div>
@@ -163,12 +154,10 @@
                 <textarea id="exampleFormControlTextarea1" class="form-control" name="descripcion" rows="10"></textarea>
             </div>
 
-
             <button type="submit" class="btn btn-primary" name="botonaplicar" value="ok">Aplicar</button>
             <button class="btn btn-primary" onclick="cerrarF()">Cancelar</button>
-
         </form>
-                </div>
+            </div>
 
 </body>
 </html>
