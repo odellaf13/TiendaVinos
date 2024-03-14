@@ -18,6 +18,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     //Vemos si se han insertado los datos correctamente
     if (mysqli_stmt_affected_rows($insertardatosEnvio) > 0) {
+         // Actualizar el estado del pedido a "en envío"
+         $pedido_id = $_POST["pedido_id"]; // Obtener el ID del pedido
+         $actualizarEstado = mysqli_prepare($conexion, "UPDATE pedido SET estado = 'en envío' WHERE pedido_id = ?");
+ 
+         mysqli_stmt_bind_param($actualizarEstado, "i", $pedido_id);
+         mysqli_stmt_execute($actualizarEstado);
         echo "¡Pedido finalizado! Gracias por su compra.";
         header("refresh:3;url=Indexvistauser.php");
         exit();

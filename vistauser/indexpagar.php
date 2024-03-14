@@ -132,6 +132,7 @@ if (isset($_SESSION['username'])) {
                                     <label for="telefono" class="form-label">Teléfono</label>
                                     <input type="tel" class="form-control" id="telefono" name="telefono" required>
                                 </div>
+                                <input type="hidden" name="pedido_id" value="' . $pedido_id . '">
                                 <button type="submit" class="btn btn-primary">Pagar y Finalizar</button>
                             </form>
                         </div>
