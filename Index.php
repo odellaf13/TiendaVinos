@@ -47,8 +47,8 @@
 
     include "vistaadmin/controladoreliminarproducto.php";
 
-    if(isset($_SESSION['username'])) {
-        $user = $_SESSION['username'];
+    if(isset($_SESSION["username"])) {
+        $user = $_SESSION["username"];
           //clases de bootstrap para centrar el botón de contenido y proporcionar un boton para cerrar la sesión
           echo '<div class="text-center d-flex flex-column align-items-center" style="margin-top: 20px;">
           <h3 class="text-secondary mb-3"><i class="bi bi-person-check" style="color: #3498db !important;"></i>
@@ -56,7 +56,7 @@
           </h3>';
   
           //botón de cierre sesión
-          echo '<a href="cerrarsesion.php" class="btn btn-danger">Cerrar Sesión</a>
+          echo '<a href="/TiendaVinos/phplogin/cerrarsesion.php" class="btn btn-danger">Cerrar Sesión</a></br></br>
           </div>';
   
   

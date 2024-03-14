@@ -80,7 +80,7 @@ if(isset($_SESSION["username"])) {
     </h3>';
 
     //botón de cierre sesión
-    echo '<a href="cerrarsesion.php" class="btn btn-danger">Cerrar Sesión</a></br></br>
+    echo '<a href="/TiendaVinos/phplogin/cerrarsesion.php" class="btn btn-danger">Cerrar Sesión</a></br></br>
     </div>';  
 }
 if (isset($_GET["exito"]) && $_GET["exito"] == 1) {

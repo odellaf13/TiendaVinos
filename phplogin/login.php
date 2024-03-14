@@ -1,4 +1,6 @@
 <?php
+//iniciamos sesión
+session_start();
 include "../Conexion.php";
 
 if(isset($_POST['submit'])){
@@ -9,22 +11,24 @@ if(isset($_POST['submit'])){
     $result = mysqli_query($conexion, $sql);
     $row = mysqli_fetch_array($result, MYSQLI_ASSOC);
     if ($row) {
-        session_start();
-        //Almacenamos el nombre del usuario y el rol en variables de sesión
-        $_SESSION["username"] = $username;
-        $_SESSION["rol"] = $row['rol']; // Campo en la base de datos llamado rol
+        //Guardamos la información del usuario en la sesión
+        $_SESSION["username"] = $row["username"];
+        $_SESSION["usuario_id"] = $row["usuario_id"];
+        $_SESSION["rol"] = $row["rol"];
 
-        //Consultamos y almacenamos el id del usuario en la sesión iniciad
-        $queryUsuario = mysqli_query($conexion, "SELECT usuario_id FROM usuario WHERE username = '$username'");
-        if ($queryUsuario) {
-            $usuario = mysqli_fetch_assoc($queryUsuario);
-            $_SESSION['usuario_id'] = $usuario['usuario_id']; //se gaaurda el id para futuro pedido/compra
-        }
         //Redirigimos al usuario según su rol
         if ($row['rol'] == 'admin') {
             header("Location: /TiendaVinos/Index.php"); //Vamos a Index como administrador
             exit();
         } else {
+            //Consultamos los datos de los pedidos y los detalles del pedido del usuario
+            //y los guardamos en sesión
+            $queryPedido = mysqli_query($conexion, "SELECT * FROM pedido WHERE fk_usuario = '".$_SESSION['usuario_id']."'");
+            $_SESSION['pedido'] = mysqli_fetch_assoc($queryPedido);
+
+            $queryDetallesPedido = mysqli_query($conexion, "SELECT * FROM linea_pedido WHERE fk_pedido = '".$_SESSION['pedido']['pedido_id']."'");
+            $_SESSION['detalles_pedido'] = mysqli_fetch_assoc($queryDetallesPedido);
+
             header("Location: /TiendaVinos/vistauser/Indexvistauser.php");  //Vamos a la vista de Usuario
             exit();
         }
@@ -36,4 +40,6 @@ if(isset($_POST['submit'])){
     }
 }
 ?>
+
+
 

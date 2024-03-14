@@ -53,21 +53,21 @@ include "../Conexion.php";
 </nav>
 
 <?php
-if (isset($_SESSION['username'])) {
-    $username = $_SESSION['username'];
+if (isset($_SESSION["username"])) {
+    $username = $_SESSION["username"];
     //consulta para saber el nombre del usuario y obtener el id
-    $queryUsuario = mysqli_query($conexion, "SELECT usuario_id FROM usuario WHERE username = '$username'");
+    $consultaUsuario = mysqli_query($conexion, "SELECT usuario_id FROM usuario WHERE username = '$username'");
 
-    if ($queryUsuario) {
-        $usuario = mysqli_fetch_assoc($queryUsuario);
-        $usuario_id = $usuario['usuario_id'];
+    if ($consultaUsuario) {
+        $usuario = mysqli_fetch_assoc($consultaUsuario);
+        $usuario_id = $usuario["usuario_id"];
         //si la consulta se hace, te saluda
         echo '<div class="text-center d-flex flex-column align-items-center" style="margin-top: 20px;">
             <h3 class="text-secondary mb-3"><i class="bi bi-person-check" style="color: #3498db !important;"></i>
                 Bienvenido/a, ' . $username . ', a la tienda de vinos selectos
             </h3>';
 
-        echo '<a href="cerrarsesion.php" class="btn btn-danger">Cerrar Sesión</a></br>
+            echo '<a href="/TiendaVinos/phplogin/cerrarsesion.php" class="btn btn-danger">Cerrar Sesión</a></br></br>
             </div>';
 
         $consultaPedidos = mysqli_query($conexion, "SELECT * FROM pedido WHERE fk_usuario = '$usuario_id'");
