@@ -53,7 +53,7 @@
 </div></br>
 
 <div class="text-center">
-<a href="/TiendaVinos/indexvistauser.php" class="btn btn-primary">Volver</a>
+<a href="/TiendaVinos/vistauser/Indexvistauser.php" class="btn btn-primary">Volver</a>
 
 </body>
 </html>

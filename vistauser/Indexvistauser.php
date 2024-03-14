@@ -13,6 +13,34 @@
 <?php
     session_start();
     include "../Conexion.php";
+
+    //Voy a crear una función para construir la URL para poder filtar vinos por D.O
+    function construirURLFiltrado($do) {
+        $url = $_SERVER['PHP_SELF']; //url actual
+        $parametros = $_GET; //con parámetros actuales
+        if ($do !== null) 
+        {
+            $parametros['do'] = $do; //actualizamos el parámetro 'do' en la URL
+        } else {
+            unset($parametros['do']); //y si no, eliminamos 'do' de la URL si es null
+        }
+
+        $query = http_build_query($parametros); //se transforman los parámetros en una consulta
+        if ($query) {
+            $url .= '?' . $query; //se agrega la consulta a la url
+        }
+        return $url;
+    }
+    //creamos una función par aactivar el botón del do clickado
+    function isActiveDO($siocurreDO) {
+        if (!isset($_GET['do']) && $siocurreDO === null) {
+            return 'active'; //Si no hay parámetros de D.O en la url anterior, es null y se activará TODOS
+        }
+        if (isset($_GET['do']) && $_GET['do'] === $siocurreDO) {
+            return 'active'; //Si el parámetro do en la URL coincide con la D.O. actual, el botón se activará
+        }
+        return ''; //inactivo
+    }
 ?>
 <nav class="navbar navbar-expand-lg" style="background-color: #e3f2fd;">
   <div class="container-fluid">
@@ -88,12 +116,35 @@ if (isset($_GET["exito"]) && $_GET["exito"] == 1) {
             <div class="container-fluid p-2" style="background-color: ghostwhite;">
 
                 <?php
-                $busqueda = mysqli_query($conexion, "SELECT * FROM producto ");
+                //creamos una consulta a la base de datos basado en do, si existe en la url
+                $dondeencontremos = '';
+                if (isset($_GET['do'])) {
+                    $do = $_GET['do'];
+                    $dondeencontremos = "WHERE do = '$do'";
+                }
+                //creamos una consultaa la base de datos que se llam $busqueda y coja de producto, todos los do con whereClause
+                $busqueda = mysqli_query($conexion, "SELECT * FROM producto $dondeencontremos");
                 $numero = mysqli_num_rows($busqueda);
                 ?>
 
                 <h5 class="card-tittle">Resultados (<?php echo $numero; ?>)</h5>
-                <!--agregamos 3 productos por línea-->
+
+                <!-- div para los botones do de activado-->
+                <div class="mb-3">
+                    <a class="btn btn-primary <?php echo isActiveDO(null); ?>" href="<?php echo construirURLFiltrado(null); ?>">Todos</a>
+                    <?php
+                    //Obtenemos las D.O. de la BBDD
+                    $sql = "SELECT DISTINCT do FROM producto";
+                    $resultados = mysqli_query($conexion, $sql);
+                    while ($row = mysqli_fetch_assoc($resultados)) {
+                        $do = $row['do']; //mientras, si se activa, vendrá do de la BBDD por línea a construirse, y se imprimirá en el div
+                        
+                        echo '<a class="btn btn-primary '.isActiveDO($do).'" href="'.construirURLFiltrado($do).'" style="margin-right: 5px;">'.$do.'</a>';
+                    }
+                    ?>
+                </div></br>
+
+                <!-- agregamos 3 productos por línea -->
                 <div class="row custom-row">
                     <?php while ($resultado = mysqli_fetch_assoc($busqueda)) { ?>
                         <div class="col mb-4 custom-card">
