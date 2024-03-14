@@ -55,7 +55,7 @@ if(isset($_SESSION["username"])) {
     echo '<a href="cerrarsesion.php" class="btn btn-danger">Cerrar Sesión</a></br></br>
     </div>';  
 }
-if (isset($_GET['exito']) && $_GET['exito'] == 1) {
+if (isset($_GET["exito"]) && $_GET["exito"] == 1) {
     echo '<div class="alert alert-success" role="alert">
             Producto añadido al carrito exitosamente.
           </div>';
@@ -63,6 +63,7 @@ if (isset($_GET['exito']) && $_GET['exito'] == 1) {
 
 ?>
     <?php
+        include "modalcarrito.php";
     include "navcarrito.php";
     ?>
 <style>

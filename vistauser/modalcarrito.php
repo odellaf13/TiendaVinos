@@ -10,41 +10,56 @@
                 <div class="p-2">
                     <ul class="list-group mb-3">
                         <?php
-                        $totalcantidad = 0;
-                        // Verifica si hay productos en el carrito
-                        if (isset($_SESSION['username']) && is_array($_SESSION['username']) && !empty($_SESSION['username'])) {
-                            foreach ($_SESSION['username'] as $producto) {
-                                ?>
-                                <li class="list-group-item d-flex justify-content-between lh-condensed">
-                                    <div class="col-6" style="text-align: left; color: #000000;">
-                                        <h6 class="my-0"><?php echo $producto["nombre"]; ?></h6>
-                                        <small class="text-muted">Cantidad: <?php echo $producto["cantidad"]; ?></small>
-                                    </div>
-                                    <div class="col-6" style="text-align: right; color: #000000;">
-                                        <span class="text-muted"><?php echo $producto["pvp"] * $producto["cantidad"]; ?> €</span>
-                                    </div>
-                                </li>
-                                <?php
-                                // Suma el total
-                                $totalcantidad += $producto["pvp"] * $producto["cantidad"];
+                        $total = 0;
+                        //Consultamos a la BBDD cuales son los productos que tiene el usuario en la sesión actual
+                        $username = $_SESSION["username"];
+                        $consultaUsuario = mysqli_query($conexion, "SELECT usuario_id FROM usuario WHERE username = '$username'");
+                        $filaUsuario = mysqli_fetch_assoc($consultaUsuario);
+
+                        if ($filaUsuario) {
+                            $usuario_id = $filaUsuario["usuario_id"];
+
+                            // Obtener el pedido del usuario actual
+                            $consultaPedido = mysqli_query($conexion, "SELECT pedido_id FROM pedido WHERE fk_usuario = $usuario_id");
+                            $filaPedido = mysqli_fetch_assoc($consultaPedido);
+//consultamos el id del pedido insertado
+                            if ($filaPedido) {
+                                $pedido_id = $filaPedido["pedido_id"];
+                                //obtenemos los productos dl pedido del usuario
+                                $consultaProductos = mysqli_query($conexion, "SELECT p.nombre, p.pvp, lp.cantidad FROM producto p JOIN linea_pedido lp ON p.producto_id = lp.fk_producto WHERE lp.fk_pedido = $pedido_id");
+
+                                //se muestran y calculamos el total
+                                while ($producto = mysqli_fetch_assoc($consultaProductos)) {
+                                    //Mostraos en el modal, al clickar en el icono rojo
+                                    echo "<li class='list-group-item d-flex justify-content-between lh-condensed'>";
+                                    echo "<div class='col-6' style='text-align: left; color: #000000;'>";
+                                    echo "<h6 class='my-0'>" . $producto["nombre"] . "</h6>";
+                                    echo "<small class='text-muted'>Cantidad: " . $producto["cantidad"] . "</small>";
+                                    echo "</div>";
+                                    echo "<div class='col-6' style='text-align: right; color: #000000;'>";
+                                    echo "<span class='text-muted'>" . $producto["pvp"] * $producto["cantidad"] . " €</span>";
+                                    echo "</div>";
+                                    echo "</li>";
+
+                                    $total += $producto["pvp"] * $producto["cantidad"];
+                                }
+                            } else {
+                                echo "<p>No hay productos añadidos en el carrito.</p>";
                             }
                         } else {
-                            // Si no hay productos en el carrito
-                            echo "<p>No hay productos en el carrito.</p>";
+                            echo "Error al obtener el id del usuario.";
                         }
                         ?>
                         <li class="list-group-item d-flex justify-content-between">
                             <span style="text-align: left; color: #000000;">Total (Euros)</span>
-                            <strong style="text-align: right; color: #000000;"><?php echo $totalcantidad; ?> €</strong>
+                            <strong style="text-align: right; color: #000000;"><?php echo $total; ?> €</strong>
                         </li>
                     </ul>
                 </div>
             </div>
-
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Seguir comprando</button>
                 <a type="button" class="btn btn-secondary" href="borrarcarrito.php">Vaciar carrito</a>
-                <a type="button" class="btn btn-secondary" href="realizarpedido.php">Realizar pedido</a>
             </div>
         </div>
     </div>
