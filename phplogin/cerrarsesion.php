@@ -9,6 +9,6 @@ unset($_SESSION["usuario_id"]);
 unset($_SESSION["rol"]);
 
 // Redirige al usuario a la página de inicio de sesión
-header("Location: /TiendaVinos/phplogin/indexlogin.php");
+header("Location: /TiendaVinos/menuvistauser.php");
 exit();
 ?>

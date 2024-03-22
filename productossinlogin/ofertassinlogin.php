@@ -53,7 +53,6 @@
 <div class="text-center">
 <a href="/TiendaVinos/menuvistauser.php" class="btn btn-primary">Volver al inicio</a>
 </div></br>
-
 <style>
     .custom-row {
         display: flex;
@@ -74,10 +73,12 @@
         <p style="font-weight: bold; color: #0F6BB7; font-size: 22px;">Carrito de la compra</p>
         <div class="container-fluid p-2" style="background-color: ghostwhite;">
 
-            <?php
-            $busqueda = mysqli_query($conexion, "SELECT * FROM producto ");
+
+        
+        <?php
+            $busqueda = mysqli_query($conexion, "SELECT * FROM producto WHERE do IN ('Lotes', 'Colección')");
             $numero = mysqli_num_rows($busqueda);
-            ?>
+        ?>
 
             <h5 class="card-tittle">Resultados (<?php echo $numero; ?>)</h5>
               <!--agregamos 3 productos por línea-->
@@ -122,7 +123,7 @@
 <script>
 function addToCart() {
     alert('Necesita iniciar sesión para comenzar su compra');
-    window.location.href = '/TiendaVinos/productossinlogin/productossinlogin.php';
+    window.location.href = '/TiendaVinos/productossinlogin/ofertassinlogin.php';
     return false;
 }
 </script>

@@ -44,10 +44,13 @@
           <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             Productos
           </a>
-          <ul class="dropdown-menu">
+        <ul class="dropdown-menu">
             <li><a class="dropdown-item" href="/TiendaVinos/productossinlogin/productossinlogin.php">Nuestros vinos</a></li>
             <li><hr class="dropdown-divider"></li>
-            <li><a class="dropdown-item" href="ofertas.php">Ofertas</a></li>
+            <li>
+            <a class="dropdown-item" href="/TiendaVinos/productossinlogin/ofertassinlogin.php">Ofertas <i class="bi bi-percent"></i>
+            </a>
+        </li>
           </ul>
         <li class="nav-item">
           <a class="nav-link active" aria-current="page" href="/TiendaVinos/productossinlogin/contactanossinlogin.php">

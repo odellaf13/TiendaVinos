@@ -60,7 +60,7 @@
             Productos
           </a>
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="/TiendaVinos/vistauser/Indexvistauser.php">Nuestros vinos</a></li>
+          <li><a class="dropdown-item" href="/TiendaVinos/vistauser/Indexvistauser.php">Nuestros vinos</a></li>
             <li><hr class="dropdown-divider"></li>
             <li>
             <a class="dropdown-item" href="/TiendaVinos/vistauser/ofertas.php">Ofertas <i class="bi bi-percent"></i>
@@ -127,77 +127,52 @@ if (isset($_GET["exito"]) && $_GET["exito"] == 1) {
             <p style="font-weight: bold; color: #0F6BB7; font-size: 22px;">Carrito de la compra</p>
             <div class="container-fluid p-2" style="background-color: ghostwhite;">
 
-                <?php
-                //creamos una consulta a la base de datos basado en do, si existe en la url
-                $dondeencontremos = '';
-                if (isset($_GET['do'])) {
-                    $do = $_GET['do'];
-                    $dondeencontremos = "WHERE do = '$do'";
-                }
-                //creamos una consultaa la base de datos que se llam $busqueda y coja de producto, todos los do con whereClause
-                $busqueda = mysqli_query($conexion, "SELECT * FROM producto $dondeencontremos");
-                $numero = mysqli_num_rows($busqueda);
-                ?>
+                
+        <?php
+            $busqueda = mysqli_query($conexion, "SELECT * FROM producto WHERE do IN ('Lotes', 'Colección')");
+            $numero = mysqli_num_rows($busqueda);
+        ?>
 
-                <h5 class="card-tittle">Resultados (<?php echo $numero; ?>)</h5>
-
-                <!-- div para los botones do de activado-->
-                <div class="mb-3">
-                    <a class="btn btn-primary <?php echo isActiveDO(null); ?>" href="<?php echo construirURLFiltrado(null); ?>">Todos</a>
-                    <?php
-                    //Obtenemos las D.O. de la BBDD
-                    $sql = "SELECT DISTINCT do FROM producto";
-                    $resultados = mysqli_query($conexion, $sql);
-                    while ($row = mysqli_fetch_assoc($resultados)) {
-                        $do = $row['do']; //mientras, si se activa, vendrá do de la BBDD por línea a construirse, y se imprimirá en el div
-                        
-                        echo '<a class="btn btn-primary '.isActiveDO($do).'" href="'.construirURLFiltrado($do).'" style="margin-right: 5px;">'.$do.'</a>';
-                    }
-                    ?>
-                </div></br>
-
-                <!-- agregamos 3 productos por línea -->
-                <div class="row custom-row">
-                    <?php while ($resultado = mysqli_fetch_assoc($busqueda)) { ?>
-                        <div class="col mb-4 custom-card">
-                            <form id="formulariocarrito" method="POST" action="carrito.php" onsubmit="alert('Producto añadido al carrito');" enctype="multipart/form-data">
-                                <div class="card">
-                                    <img src="<?php echo $resultado["url_imagen"]; ?>" class="card-img-top" style="max-width: 100%; max-height: 150px; object-fit: contain;">
-                                    <div class="card-body">
-                                        <a class="category" style="color: #008080; font-size: 1.2em; font-weight: bold;">
-                                            <?php echo $resultado["pvp"]; ?> €
-                                        </a>
-                                        <h5 class="card-title"><?php echo $resultado["nombre"]; ?>
-                                            <small class="text-muted"><strong>(<?php echo $resultado["do"]; ?>)</strong>
-                                            </small>                              
-                                        </h5>
-                                        <p class="card-text" style="max-height: 120px; overflow: hidden;"><?php echo $resultado["descripcion"]; ?></p>
-                                        <!--creamos un botón donde nada más clickar, hagamos que se verifique un formulario del stock, por si es 0 -->
-                                        <button class="btn btn-primary" type="submit" onclick="return validarFormulario(<?php echo $resultado['stock']; ?>);">
-                                        <i class="bi bi-cart-plus-fill"></i>Añadir al carrito
-                                            </button>
-                                    </div>
+            <h5 class="card-tittle">Resultados (<?php echo $numero; ?>)</h5>
+              <!--agregamos 3 productos por línea-->
+            <div class="row custom-row">
+                <?php while ($resultado = mysqli_fetch_assoc($busqueda)) { ?>
+                    <div class="col mb-4 custom-card">
+                        <form id="formulariocarrito" method="POST" action="carrito.php" onsubmit="alert('Producto añadido al carrito');" enctype="multipart/form-data">
+                            <div class="card">
+                                <img src="<?php echo $resultado["url_imagen"]; ?>" class="card-img-top" style="max-width: 100%; max-height: 150px; object-fit: contain;">
+                                <div class="card-body">
+                                    <a class="category" style="color: #008080; font-size: 1.2em; font-weight: bold;">
+                                        <?php echo $resultado["pvp"]; ?> €
+                                    </a>
+                                    <h5 class="card-title"><?php echo $resultado["nombre"]; ?>
+                                    <small class="text-muted"><strong>(<?php echo $resultado["do"]; ?>)</strong>
+                                    </small>                     
+                                    </h5>
+                                    <p class="card-text" style="max-height: 120px; overflow: hidden;"><?php echo $resultado["descripcion"]; ?></p>
+                                    <button class="btn btn-primary" type="submit"><i class="bi bi-cart-plus-fill"></i>Añadir al carrito</button>
                                 </div>
+                            </div>
+                            <input name="producto_id" type="hidden" value="<?php echo $resultado["producto_id"]; ?>" />
+          
+                            <div class="text-content">
                                 <input name="producto_id" type="hidden" value="<?php echo $resultado["producto_id"]; ?>" />
-              
-                                <div class="text-content">
-                                    <input name="producto_id" type="hidden" value="<?php echo $resultado["producto_id"]; ?>" />
-                                    <input name="nombre" type="hidden" value="<?php echo $resultado["nombre"]; ?>" />
-                                    <input name="pvp" type="hidden" value="<?php echo $resultado["pvp"]; ?>" />
-                                    <input name="stock" type="hidden" value="<?php echo $resultado["stock"]; ?>" />
-                                    <input name="do" type="hidden" value="<?php echo $resultado["do"]; ?>" />
-                                    <input name="descripcion" type="hidden" value="<?php echo $resultado["descripcion"]; ?>" />
-                                    <input name="url_imagen" type="hidden" value="<?php echo $resultado["url_imagen"]; ?>" />
-                                    <input name="cantidad" class="cantidadInput" type="number" value="1" class="pl-2" min="1" required />
-                                
-                                </div>
-                            </form>
-                        </div>
-                    <?php } ?>
-                </div>
+                                <input name="nombre" type="hidden" value="<?php echo $resultado["nombre"]; ?>" />
+                                <input name="pvp" type="hidden" value="<?php echo $resultado["pvp"]; ?>" />
+                                <input name="stock" type="hidden" value="<?php echo $resultado["stock"]; ?>" />
+                                <input name="do" type="hidden" value="<?php echo $resultado["do"]; ?>" />
+                                <input name="descripcion" type="hidden" value="<?php echo $resultado["descripcion"]; ?>" />
+                                <input name="url_imagen" type="hidden" value="<?php echo $resultado["url_imagen"]; ?>" />
+                                <input name="cantidad" type="number" value="1" class="pl-2" min="1" required />
+                            
+                            </div>
+                        </form>
+                    </div>
+                <?php } ?>
             </div>
         </div>
     </div>
+</div>
 
     <script>
     function validarFormulario(stockDisponible) {
