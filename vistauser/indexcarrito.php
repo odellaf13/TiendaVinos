@@ -74,7 +74,7 @@ if (isset($_SESSION["username"])) {
                 <div class="card pt-3" style="max-width: 600px; margin: 0 auto; border: 2px solid #ccc; box-shadow: 2px 2px 20px 2px rgba(0,0,0,0.2);">
                 <div style="background-color: ghostwhite; padding: 10px;">
                 <p style="font-weight: bold; color: #0F6BB7; font-size: 22px;">
-                <i class="bi bi-card-list" style="font-size: 2em; margin-right: 10px;"></i>Pedidos</p>
+                <i class="bi bi-card-list" style="font-size: 2em; margin-right: 10px;"></i>Mi carrito</p>
                 <div class="container-fluid p-2" style="background-color: ghostwhite;">';
 
         //Verificaremos si hay pedidos, y si no, te manda al else donde te dirá que no existen pedidos.
@@ -91,7 +91,6 @@ if (isset($_SESSION["username"])) {
 
                 if ($consultaLineaPedido) {
                     echo '<div class="mb-3">
-                            <h5>Pedido ID: ' . $pedido_id . '</h5>
                             <p>Fecha: ' . $fecha . '</p>';
                     while ($linea = mysqli_fetch_assoc($consultaLineaPedido)) {
                         $nombre = $linea["nombre"];
@@ -107,7 +106,7 @@ if (isset($_SESSION["username"])) {
                                 <button type="submit" class="btn btn-primary"><i class="bi bi-arrow-clockwise"></i></button></p>
                                 <div id="errorCantidad" style="color: red;"></div>
                               </form>';
-                        echo '<form action="eliminar_productopedido.php" method="POST">
+                        echo '<form action="eliminar_productocarrito.php" method="POST">
                                 <input type="hidden" name="pedido_id" value="' . $pedido_id . '">
                                 <input type="hidden" name="producto_id" value="' . $producto_id . '">
                                 <button type="submit" class="btn btn-danger"><i class="bi bi-bag-x-fill"></i>  &nbsp; Eliminar</button></br></br>
@@ -117,7 +116,7 @@ if (isset($_SESSION["username"])) {
                     echo '<div style="margin-top: 10px;">
                             <p style="font-weight: bold;">Total de todos los productos: ' . $total . ' € <i class="bi bi-receipt" style="font-size: 4em;"></i></p>
                           </div>';
-                    echo '<a href="borrarpedido.php?pedido_id=' . $pedido_id . '" class="btn btn-danger">Borrar Pedido</a>
+                    echo '<a href="borrarcarrito2.php?pedido_id=' . $pedido_id . '" class="btn btn-danger">Borrar carrito</a>
                             <a href="indexpagar.php?pedido_id=' . $pedido_id . '" class="btn btn-success">Ir a Pagar</a>
                             </div>';
                 } else {

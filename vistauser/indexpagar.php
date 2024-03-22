@@ -39,9 +39,6 @@ include "../Conexion.php";
           <a class="nav-link active" aria-current="page" href="quienessomos.php">Quiénes somos</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="indexpedidos.php">Pedidos</a>
-        </li>
-        <li class="nav-item">
           <a class="nav-link active" aria-current="page" href="contactanos.php">Contáctanos</a>
         </li>
       </ul>
@@ -77,7 +74,7 @@ if (isset($_SESSION["username"])) {
             <div class="card pt-3" style="max-width: 600px; margin: 0 auto; border: 2px solid #ccc; box-shadow: 2px 2px 20px 2px rgba(0,0,0,0.2);">
                 <div style="background-color: ghostwhite; padding: 10px;">
                 <p style="font-weight: bold; color: #0F6BB7; font-size: 22px;">
-                <i class="bi bi-card-list" style="font-size: 2em; margin-right: 10px;"></i>Pedidos</p>
+                <i class="bi bi-card-list" style="font-size: 2em; margin-right: 10px;"></i>Mi carrito</p>
                 <div class="container-fluid p-2" style="background-color: ghostwhite;">';
             while ($pedido = mysqli_fetch_assoc($consultaPedidos)) {
                 $pedido_id = $pedido['pedido_id'];
@@ -91,7 +88,6 @@ if (isset($_SESSION["username"])) {
 
                 if ($consultaLineaPedido) {
                     echo '<div class="mb-3">
-                            <h5>Pedido ID: ' . $pedido_id . '</h5>
                             <p>Fecha: ' . $fecha . '</p>';
                     while ($linea = mysqli_fetch_assoc($consultaLineaPedido)) {
                         $nombre = $linea["nombre"];
@@ -153,7 +149,7 @@ if (isset($_SESSION["username"])) {
 }
 ?>
 <div class="text-center mt-3">
-<a href="/TiendaVinos/vistauser/indexpedidos.php" class="btn btn-primary">Volver a Pedidos</a>
+<a href="/TiendaVinos/vistauser/indexcarrito.php" class="btn btn-primary">Volver a Mi carrito</a>
 <a href="/TiendaVinos/vistauser/Indexvistauser.php" class="btn btn-primary">Volver a Productos</a>
 
 </div>

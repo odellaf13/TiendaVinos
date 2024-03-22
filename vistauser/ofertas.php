@@ -126,13 +126,10 @@ if (isset($_GET["exito"]) && $_GET["exito"] == 1) {
         <div class="card pt-3">
             <p style="font-weight: bold; color: #0F6BB7; font-size: 22px;">Carrito de la compra</p>
             <div class="container-fluid p-2" style="background-color: ghostwhite;">
-
-                
         <?php
             $busqueda = mysqli_query($conexion, "SELECT * FROM producto WHERE do IN ('Lotes', 'Colección')");
             $numero = mysqli_num_rows($busqueda);
         ?>
-
             <h5 class="card-tittle">Resultados (<?php echo $numero; ?>)</h5>
               <!--agregamos 3 productos por línea-->
             <div class="row custom-row">
@@ -184,7 +181,6 @@ if (isset($_GET["exito"]) && $_GET["exito"] == 1) {
             alert('Lo sentimos. No hay stock disponible del producto');
             return false;
         }
-
         return true; //Si es verdadero, que es > a 0, se envía todo a carrito.php
     }
 </script>

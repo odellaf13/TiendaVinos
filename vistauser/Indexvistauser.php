@@ -68,6 +68,9 @@
         </li>
           </ul>
         <li class="nav-item">
+          <a class="nav-link" href="/TiendaVinos/vistauser/indexcarrito.php">Mi carrito</a>
+        </li>
+        <li class="nav-item">
           <a class="nav-link" href="/TiendaVinos/vistauser/indexpedidos.php">Pedidos</a>
         </li>
         <li class="nav-item">

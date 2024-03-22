@@ -31,7 +31,7 @@ if (isset($_POST["pedido_id"]) && isset($_POST["producto_id"]) && isset($_POST["
         $query_actualizar_total = "UPDATE pedido SET total = $nuevototal WHERE pedido_id = $pedido_id";
         mysqli_query($conexion, $query_actualizar_total);
 
-        header("Location: /TiendaVinos/vistauser/indexpedidos.php");
+        header("Location: /TiendaVinos/vistauser/indexcarrito.php");
         exit();
     } else {
         echo "Error: La cantidad ingresada no es correcta";

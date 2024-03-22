@@ -37,7 +37,7 @@ include "../Conexion.php";
             $query_eliminar_pedido = "DELETE FROM pedido WHERE pedido_id = $pedido_id";
             mysqli_query($conexion, $query_eliminar_pedido);
         }
-        header("Location: /TiendaVinos/vistauser/indexpedidos.php");
+        header("Location: /TiendaVinos/vistauser/indexcarrito.php");
         exit();
     } else {
         echo "Error: No se pudo recuperar la cantidad eliminada del producto.";
