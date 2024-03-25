@@ -15,7 +15,6 @@ if(isset($_POST['submit'])){
         $_SESSION["username"] = $row["username"];
         $_SESSION["usuario_id"] = $row["usuario_id"];
         $_SESSION["rol"] = $row["rol"];
-
         //Redirigimos al usuario según su rol
         if ($row['rol'] == 'admin') {
             header("Location: /TiendaVinos/Index.php"); //Vamos a Index como administrador

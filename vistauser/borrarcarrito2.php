@@ -39,7 +39,7 @@ if (isset($_GET['pedido_id'])) {
         header("Location: /TiendaVinos/vistauser/Indexvistauser.php");
         exit();
     } else {
-        echo 'Error al borrar el pedido.';
+        echo 'Error al borrar el carrito.';
     }
 } else {
     echo 'No se proporcionó un ID de pedido.';

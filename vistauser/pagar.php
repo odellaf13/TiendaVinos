@@ -108,9 +108,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         //aquí es donde se guarda, en el servidor
         $pdf->Output('F', $nombre_archivo);
 
-        //redirigimos a indexpedidos.php despues de unos segundos
+        $_SESSION["pedido"] = array();
+        $_SESSION["linea_pedido"] = array();
+        
+        //redirigiremos al usuario a Indexvistauser.php después de unos segundos
+        echo '<script>alert("Pago procesado con éxito. Se ha generado la factura.");</script>';
         echo '<script>window.open("' . $nombre_archivo . '", "_blank");</script>';
-        echo '<script>setTimeout(function(){ window.location.href = "indexpedidos.php"; }, 5000);</script>';
+
+        echo '<script>setTimeout(function(){ window.location.href = "/TiendaVinos/vistauser/Indexvistauser.php"; }, 3000);</script>';
         exit();
     } else {
         echo "Error al procesar el pago. Inténtelo de nuevo. Gracias";
