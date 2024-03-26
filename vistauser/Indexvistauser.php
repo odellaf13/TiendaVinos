@@ -11,7 +11,8 @@
 </head>
 
 <?php
-    session_start();
+session_start();
+
     include "../Conexion.php";
 
     //Voy a crear una función para construir la URL para poder filtar vinos por D.O
@@ -98,6 +99,7 @@ if(isset($_SESSION["username"])) {
     echo '<a href="/TiendaVinos/phplogin/cerrarsesion.php" class="btn btn-danger">Cerrar Sesión</a></br></br>
     </div>';  
 }
+
 if (isset($_GET["exito"]) && $_GET["exito"] == 1) {
     echo '<div class="alert alert-success" role="alert">
             Producto añadido al carrito exitosamente.

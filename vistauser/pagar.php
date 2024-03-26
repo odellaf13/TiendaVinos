@@ -20,11 +20,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     //Verificamos si se han insertado los datos correctamente
     if (mysqli_stmt_affected_rows($insertardatosEnvio) > 0) {
-         //Se actualiza el estado del pedido a completado/para enviar
-         $pedido_id = $_POST["pedido_id"]; //Obtenemos el ID del pedido
-         $actualizarEstado = mysqli_prepare($conexion, "UPDATE pedido SET estado = 'completado/para enviar' WHERE pedido_id = ?");
-         mysqli_stmt_bind_param($actualizarEstado, "i", $pedido_id);
-         mysqli_stmt_execute($actualizarEstado);
+       //Se actualiza el estado del pedido a completado/para enviar
+       $pedido_id = $_POST["pedido_id"]; //Obtenemos el ID del pedido
+       $actualizarEstado = mysqli_prepare($conexion, "UPDATE pedido SET estado = 'completado/para enviar' WHERE pedido_id = ?");
+       mysqli_stmt_bind_param($actualizarEstado, "i", $pedido_id);
+       mysqli_stmt_execute($actualizarEstado);
+
         
         //Consulta para obtener el nombre del producto, la cantidad y el total de la factura
         $consulta = "SELECT p.nombre, lp.cantidad, SUM(p.pvp * lp.cantidad) AS total FROM linea_pedido lp INNER JOIN producto p ON lp.fk_producto = p.producto_id WHERE lp.fk_pedido = ?";
@@ -108,9 +109,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         //aquí es donde se guarda, en el servidor
         $pdf->Output('F', $nombre_archivo);
 
-        $_SESSION["pedido"] = array();
-        $_SESSION["linea_pedido"] = array();
-        
         //redirigiremos al usuario a Indexvistauser.php después de unos segundos
         echo '<script>alert("Pago procesado con éxito. Se ha generado la factura.");</script>';
         echo '<script>window.open("' . $nombre_archivo . '", "_blank");</script>';
