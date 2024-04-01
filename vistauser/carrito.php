@@ -2,7 +2,7 @@
 session_start();
 include "../Conexion.php";
 
-// Verifica si el usuario ha iniciado sesión
+//Verificamos si el usuario ha iniciado sesión
 if(isset($_SESSION["username"])) {
     //Obtenemos la información del producto
     if (isset($_POST["producto_id"])) {
@@ -32,18 +32,14 @@ if(isset($_SESSION["username"])) {
                 //Si existe un pedido pero no está completo, utilizar el pedido existente
                 $pedido_id = $filaPedido["pedido_id"];
             } else {
-                // Si no existe un pedido o el pedido existente está completo, crear un nuevo pedido
+                //Si no existe un pedido o el pedido existente está completo, crear un nuevo pedido
                 $fecha = date('Y-m-d H:i:s');
                 $query = "INSERT INTO pedido (fecha, total, fk_usuario) VALUES ('$fecha', 0, $usuario_id)";
                 mysqli_query($conexion, $query);
                 $pedido_id = mysqli_insert_id($conexion);
             }
 
-            // Limpiar el carrito y el pedido (opcional)
-            // unset($_SESSION["carrito"]);
-            // unset($_SESSION["pedido"]);
-
-            // Actualizar la variable de sesión username (opcional)
+            //Actualizamos la variable de sesión username
             $_SESSION["username"] = $_SESSION["username"];
 
             //Igual. Nos aseguramos si ya existe una línea de pedido para este producto en el pedido actual
@@ -67,19 +63,6 @@ if(isset($_SESSION["username"])) {
             //Actualizamos el total en la tabla pedidos
             $query = "UPDATE pedido SET total = (SELECT SUM(p.pvp * lp.cantidad) FROM producto p JOIN linea_pedido lp ON p.producto_id = lp.fk_producto WHERE lp.fk_pedido = $pedido_id) WHERE pedido_id = $pedido_id";
             mysqli_query($conexion, $query);
-
-            // Agregar producto al carrito (opcional)
-            // $_SESSION["carrito"][] = array(
-            //     "producto_id" => $producto_id,
-            //     "nombre" => $nombre,
-            //     "pvp" => $pvp,
-            //     "stock" => $stock,
-            //     "do" => $do,
-            //     "descripcion" => $descripcion,
-            //     "url_imagen" => $url_imagen,
-            //     "cantidad" => $cantidad,
-            // );
-            // Redirigir a la página del carrito con mensaje de éxito
             header("Location: /TiendaVinos/vistauser/Indexvistauser.php?exito=1");
             exit();
         } else {
