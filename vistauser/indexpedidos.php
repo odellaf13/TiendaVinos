@@ -97,11 +97,18 @@ if(isset($_SESSION["username"])) {
         }
         echo '</div>';
     } else {
-        echo '<p style="font-weight: bold; color: #0F6BB7; font-size: 22px;"></p>
-            <div class="container-fluid p-2" style="background-color: ghostwhite;">
-                <p>No hay pedidos completados/para enviar.</p>
-            </div>';
+      echo '<div class="center mt-5">';
+      echo '<div class="card pt-3" style="max-width: 600px; margin: 0 auto; border: 2px solid #ccc; box-shadow: 2px 2px 20px 2px rgba(0,0,0,0.2);">
+              <div style="background-color: ghostwhite; padding: 10px;">
+                  <p style="font-weight: bold; color: #0F6BB7; font-size: 22px;">
+                      <i class="bi bi-card-list" style="font-size: 2em; margin-right: 10px;"></i>Mis pedidos completados</p>
+                  <div class="container-fluid p-2" style="background-color: ghostwhite;">';
+                  echo '<p>No hay pedidos completados/para enviar.</p>';
+      echo '</div></div></div>';
+      echo '</div>';
     }
+    echo '</div></div></div>';
+
 } else {
     echo 'Fallo. Usuario no autentificado.';
 }

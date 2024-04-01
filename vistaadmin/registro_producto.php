@@ -23,7 +23,7 @@ if(!empty($_POST["botonaplicar"])) {
              // Producto registrado correctamente, redirigir a Index.php
              echo '<script>
              setTimeout(function() {
-                 window.location.href = "/TiendaVinos/Index.php";
+                 window.location.href = "/TiendaVinos/vistaadmin/Index.php";
              }, 1000); // 1000 milisegundos = 1 segundo
            </script>';
            exit();
@@ -34,7 +34,7 @@ if(!empty($_POST["botonaplicar"])) {
         
 
     }else{
-        echo '<div class="alert alert-warning">Alguno de los campos están vacidos</div>';
+        echo '<div class="alert alert-warning">Alguno de los campos están vacíos</div>';
     }
 
 }

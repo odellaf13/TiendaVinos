@@ -17,7 +17,7 @@ if(isset($_POST['submit'])){
         $_SESSION["rol"] = $row["rol"];
         //Redirigimos al usuario según su rol
         if ($row['rol'] == 'admin') {
-            header("Location: /TiendaVinos/Index.php"); //Vamos a Index como administrador
+            header("Location: /TiendaVinos/vistaadmin/Index.php"); //Vamos a Index como administrador
             exit();
         } else {
             //Consultamos los datos de los pedidos y los detalles del pedido del usuario

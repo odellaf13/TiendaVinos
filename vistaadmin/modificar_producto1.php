@@ -16,7 +16,7 @@ if (!empty($_POST["botonaplicar"])) {
         descripcion= '$descripcion' where producto_id= $id");
 
         if($sql==1) {
-         header("Location: /TiendaVinos/Index.php");
+         header("Location: /TiendaVinos/vistaadmin/Index.php");
 
         }else {
         echo "<div class='alert-danger'>Error al modificar el producto</div>";

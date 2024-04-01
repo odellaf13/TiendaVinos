@@ -81,7 +81,7 @@ $sql = $conexion->query(" select * from producto where producto_id=$id ");
 
         <button type="submit" class="btn btn-primary" name="botonaplicar" value="ok">Aplicar</button>
 
-        <a href="/TiendaVinos/Index.php" class="btn btn-primary">Volver</a>
+        <a href="/TiendaVinos/vistaadmin/Index.php" class="btn btn-primary">Volver</a>
 
     </form>
 

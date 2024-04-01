@@ -30,22 +30,19 @@
 
     document.getElementById('nuevoProducto').style.display = 'none';
     }
-
-
-
     </script>
 
   
 
     <?php
 
-    include "Conexion.php";
+include "../Conexion.php";
     
 
     session_start();
 
 
-    include "vistaadmin/controladoreliminarproducto.php";
+    include "controladoreliminarproducto.php";
 
     if(isset($_SESSION["username"])) {
         $user = $_SESSION["username"];
@@ -82,7 +79,7 @@
 
                 <tbody>
                 <?php
-                    include "Conexion.php";
+                    include "../Conexion.php";
                     $sql = $conexion->query("SELECT * FROM producto");
                                 if (!$sql) {
                                 die("Error en la consulta: " . $conexion->error);
@@ -97,8 +94,8 @@
                             <td><?= $datos->stock ?></td>
                             <td><?= $datos->do ?></td>
                             <td>
-                            <a href="vistaadmin/categoria_producto.php?id=<?= $datos->producto_id ?>"><i class="bi bi-arrow-up-right-square-fill"></i>Ficha del producto</a>
-                            <a href="vistaadmin/modificar_producto.php?id=<?= $datos->producto_id ?>" class="btn-warning"><i class="bi bi-pencil-square"></i>Editar</a>
+                            <a href="categoria_producto.php?id=<?= $datos->producto_id ?>"><i class="bi bi-arrow-up-right-square-fill"></i>Ficha del producto</a>
+                            <a href="modificar_producto.php?id=<?= $datos->producto_id ?>" class="btn-warning"><i class="bi bi-pencil-square"></i>Editar</a>
                             <a onclick="return eliminar()" href="Index.php?id=<?= $datos->producto_id ?>" class="btn-danger"><i class="bi bi-trash3-fill"></i>Eliminar</a>
                         </td>
                     </tr> 
@@ -109,6 +106,8 @@
                 </table>
 
         <button class="btn btn-primary" onclick="mostrarF()">Nuevo producto</button>
+        <button class="btn btn-primary" onclick="window.location.href='pedidosusuarios.php'">Abrir pedidos de usuarios</button>
+
             </div>
         </div>
 
@@ -120,7 +119,7 @@
 
         <?php
 
-        include "vistaadmin/registro_producto.php";
+        include "registro_producto.php";
 
         ?>
 

@@ -77,9 +77,9 @@ if (isset($_SESSION["username"])) {
                 <i class="bi bi-card-list" style="font-size: 2em; margin-right: 10px;"></i>Mi carrito</p>
                 <div class="container-fluid p-2" style="background-color: ghostwhite;">';
             while ($pedido = mysqli_fetch_assoc($consultaPedidos)) {
-                $pedido_id = $pedido['pedido_id'];
-                $total = $pedido['total'];
-                $fecha = $pedido['fecha'];
+                $pedido_id = $pedido["pedido_id"];
+                $total = $pedido["total"];
+                $fecha = $pedido["fecha"];
 
                 $consultaLineaPedido = mysqli_query($conexion, "SELECT p.producto_id, p.nombre, p.pvp, lp.cantidad
                     FROM linea_pedido lp
@@ -127,6 +127,10 @@ if (isset($_SESSION["username"])) {
                                 <div class="mb-3">
                                     <label for="telefono" class="form-label">Teléfono</label>
                                     <input type="tel" class="form-control" id="telefono" name="telefono" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="correo" class="form-label">Correo</label>
+                                    <input type="text" class="form-control" id="correo" name="correo" required>
                                 </div>
                                 <input type="hidden" name="pedido_id" value="' . $pedido_id . '">
                                 <button type="submit" class="btn btn-primary">Pagar y Finalizar</button>

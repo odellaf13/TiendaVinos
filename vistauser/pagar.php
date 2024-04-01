@@ -11,11 +11,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $apellidos = $_POST["apellidos"];
     $direccion = $_POST["direccion"];
     $telefono = $_POST["telefono"];
+    $correo = $_POST["correo"];
     $usuario_id = $_SESSION["usuario_id"]; //coger el id del usuario de la sesión
 
     //Insertarmos los datos de envío en la base de datos
-    $insertardatosEnvio = mysqli_prepare($conexion, "INSERT INTO datosenvio (fk_usuario, nombre, apellidos, direccion, telefono) VALUES (?, ?, ?, ?, ?)");
-    mysqli_stmt_bind_param($insertardatosEnvio, "issss", $usuario_id, $nombre, $apellidos, $direccion, $telefono);
+    $insertardatosEnvio = mysqli_prepare($conexion, "INSERT INTO datosenvio (fk_usuario, nombre, apellidos, direccion, telefono, correo) VALUES (?, ?, ?, ?, ?, ?)");
+    mysqli_stmt_bind_param($insertardatosEnvio, "isssss", $usuario_id, $nombre, $apellidos, $direccion, $telefono, $correo);
     mysqli_stmt_execute($insertardatosEnvio);
 
     //Verificamos si se han insertado los datos correctamente

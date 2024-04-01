@@ -59,7 +59,7 @@ while ($datos = $sql->fetch_object()) { ?>
 
 ?>
 
-<a href="/TiendaVinos/Index.php" class="btn btn-primary">Inicio</a>
+<a href="/TiendaVinos/vistaadmin/Index.php" class="btn btn-primary">Inicio</a>
 </form>
 
 </body>
