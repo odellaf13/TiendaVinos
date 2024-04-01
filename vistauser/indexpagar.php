@@ -67,7 +67,7 @@ if (isset($_SESSION["username"])) {
             echo '<a href="/TiendaVinos/phplogin/cerrarsesion.php" class="btn btn-danger">Cerrar Sesión</a></br></br>
             </div>';
 
-        $consultaPedidos = mysqli_query($conexion, "SELECT * FROM pedido WHERE fk_usuario = '$usuario_id'");
+        $consultaPedidos = mysqli_query($conexion, "SELECT * FROM pedido WHERE fk_usuario = '$usuario_id' AND estado != 'completado/para enviar'");
 
         if (mysqli_num_rows($consultaPedidos) > 0) {
             echo '<div class="center mt-5">
