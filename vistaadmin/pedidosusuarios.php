@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html>
 <head>
 	<meta charset="utf-8">
@@ -10,7 +9,6 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 </head>
-
 
 <body id="body">
 
@@ -32,7 +30,7 @@
   
     }
 
-// Consultar la base de datos para obtener los pedidos completados/para enviar
+//Consultamos a la bbdd con join los pedidos que contengan el estado "completado/para enviar"
 $sql_pedidos = "SELECT pedido.pedido_id, usuario.usuario_id, usuario.username, producto.nombre, pedido.total, linea_pedido.cantidad, producto.do, pedido.estado
                 FROM pedido
                 INNER JOIN linea_pedido ON pedido.pedido_id = linea_pedido.fk_pedido
@@ -41,7 +39,7 @@ $sql_pedidos = "SELECT pedido.pedido_id, usuario.usuario_id, usuario.username, p
                 WHERE pedido.estado = 'completado/para enviar'";
 
 $resultado_pedidos = $conexion->query($sql_pedidos);
-
+//los mostramos en un formulario, con el id del pedido y el usuario, para llevar un control, así como poder ver los datos de envio de cada cliente
 if ($resultado_pedidos && $resultado_pedidos->num_rows > 0) {
     echo '<h3 class="text-center text-secondary">Pedidos de los usuarios</h3>';
     echo '<table class="table table-striped">';

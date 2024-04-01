@@ -29,48 +29,41 @@ if (isset($_SESSION["username"])) {
 
     // Verificar si se ha enviado el formulario
     if (isset($_POST["verDatosEnvio"])) {
-        // Consultar la base de datos para obtener los datos de envío
-        $sql_datosenvio = "SELECT * FROM datosenvio";
-        $resultado_datosenvio = $conexion->query($sql_datosenvio);
+        // Consultar la base de datos para obtener los pedidos completados/para enviar
+        $sql_pedidos = "SELECT pedido_id FROM pedido WHERE estado = 'completado/para enviar'";
+        $resultado_pedidos = $conexion->query($sql_pedidos);
 
-        if ($resultado_datosenvio && $resultado_datosenvio->num_rows > 0) {
-            $datosenvio = $resultado_datosenvio->fetch_assoc();
+        if ($resultado_pedidos && $resultado_pedidos->num_rows > 0) { // Verificar si se encontraron pedidos
+            // Mostrar el formulario para seleccionar un pedido
             echo '<div class="container">
-                    <h3 class="text-center">Datos de Envío del cliente</h3>
-                    <form method="POST" action="enviarcorreo.php">
-                    <div class="mb-3">
-                    <label for="Usuario ID" class="form-label">Usuario ID</label>
-                    <input type="text" class="form-control" id="fk_usuario" name="fk_usuario" value="' . $datosenvio['fk_usuario'] . '" readonly>
-                        </div>
-                        <div class="mb-3">
-                            <label for="nombre" class="form-label">Nombre</label>
-                            <input type="text" class="form-control" id="nombre" name="nombre" value="' . $datosenvio['nombre'] . '" readonly>
-                        </div>
-                        <div class="mb-3">
-                            <label for="apellidos" class="form-label">Apellidos</label>
-                            <input type="text" class="form-control" id="apellidos" name="apellidos" value="' . $datosenvio['apellidos'] . '" readonly>
-                        </div>
-                        <div class="mb-3">
-                            <label for="direccion" class="form-label">Dirección de envío</label>
-                            <input type="text" class="form-control" id="direccion" name="direccion" value="' . $datosenvio['direccion'] . '" readonly>
-                        </div>
-                        <div class="mb-3">
-                            <label for="telefono" class="form-label">Teléfono</label>
-                            <input type="text" class="form-control" id="telefono" name="telefono" value="' . $datosenvio['telefono'] . '" readonly>
-                        </div>
-                        <div class="mb-3">
-                            <label for="correo" class="form-label">Correo</label>
-                            <input type="text" class="form-control" id="correo" name="correo" value="' . $datosenvio['correo'] . '" readonly>
-                        </div>
-                        <button type="submit" class="btn btn-primary" name="enviarCorreo">Enviar Correo</button>
-                        <a href="pedidosusuarios.php" class="btn btn-secondary">Volver a Pedidos</a>
-                    </form>
+                <h3 class="text-center">Selecciona el pedido para ver los datos de envío</h3>
+
+                <form method="POST" action="mostrardatosenvio1.php">';
+            
+            // Crear una lista desplegable de pedidos
+            echo '<div class="mb-3">
+                    <label for="pedido" class="form-label">Selecciona el pedido:</label>
+                    <select class="form-select" name="pedido" required>';
+
+            while ($pedido = $resultado_pedidos->fetch_assoc()) { // Iterar sobre los resultados
+                echo '<option value="' . $pedido['pedido_id'] . '">' . $pedido['pedido_id'] . '</option>';
+            }
+
+            echo '</select>
+                  </div>
+                  <button type="submit" class="btn btn-primary" name="verDatosEnvio">Ver Datos de Envío</button>
+                  </form>
                   </div>';
         } else {
-            echo '<p class="text-center">No hay datos de envío disponibles.</p>';
+            // Si no hay pedidos completados/para enviar, mostrar un mensaje
+            echo '<p class="text-center">No hay pedidos completados/para enviar.</p>';
         }
+    } else {
+        // Si no se ha enviado el formulario, mostrar un mensaje para iniciar la selección
+        echo '<p class="text-center">Por favor, selecciona un pedido para ver los datos de envío.</p>';
     }
 } else {
+    // Si el usuario no está autenticado, mostrar un mensaje de error
     echo 'Fallo. Usuario no autentificado.';
 }
 ?>
