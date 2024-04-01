@@ -25,10 +25,10 @@ if(isset($_SESSION["username"])) {
             $usuario_id = $filaUsuario["usuario_id"];
 
             //Vemos si existe algún pedido en cola para el usuario
-            $consultaPedido = mysqli_query($conexion, "SELECT pedido_id, estado FROM pedido WHERE fk_usuario = $usuario_id");
+            $consultaPedido = mysqli_query($conexion, "SELECT pedido_id, estado FROM pedido WHERE fk_usuario = $usuario_id AND estado != 'completado/para enviar'");
             $filaPedido = mysqli_fetch_assoc($consultaPedido);
 
-            if ($filaPedido && $filaPedido["estado"] != 'completado/para enviar') {
+            if ($filaPedido) {
                 //Si existe un pedido pero no está completo, utilizar el pedido existente
                 $pedido_id = $filaPedido["pedido_id"];
             } else {

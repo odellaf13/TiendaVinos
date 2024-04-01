@@ -11,7 +11,7 @@ if (isset($_SESSION["username"])) {
         $usuario_id = $filaUsuario['usuario_id'];
 
         //obtenemos la cantidad total del carrito desde la base de datos
-        $consultaCantidad = mysqli_query($conexion, "SELECT SUM(lp.cantidad) as total_cantidad FROM linea_pedido lp JOIN pedido p ON lp.fk_pedido = p.pedido_id WHERE p.fk_usuario = $usuario_id");
+        $consultaCantidad = mysqli_query($conexion, "SELECT SUM(lp.cantidad) as total_cantidad FROM linea_pedido lp JOIN pedido p ON lp.fk_pedido = p.pedido_id WHERE p.fk_usuario = $usuario_id AND p.estado = 'en trámite'");
         $filaCantidad = mysqli_fetch_assoc($consultaCantidad);
 
         if ($filaCantidad && $filaCantidad['total_cantidad']) {

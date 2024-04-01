@@ -20,7 +20,7 @@
                             $usuario_id = $filaUsuario["usuario_id"];
 
                             // Obtener el pedido del usuario actual
-                            $consultaPedido = mysqli_query($conexion, "SELECT pedido_id FROM pedido WHERE fk_usuario = $usuario_id");
+                            $consultaPedido = mysqli_query($conexion, "SELECT pedido_id FROM pedido WHERE fk_usuario = $usuario_id AND estado = 'en trámite'");
                             $filaPedido = mysqli_fetch_assoc($consultaPedido);
 //consultamos el id del pedido insertado
                             if ($filaPedido) {
