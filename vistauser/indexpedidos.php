@@ -41,15 +41,73 @@
 
 <?php
 if(isset($_SESSION["username"])) {
-  $user = $_SESSION["username"];
-    //clases de bootstrap para centrar el botón de contenido y proporcionar un boton para cerrar la sesión
-    echo '<div class="text-center d-flex flex-column align-items-center" style="margin-top: 20px;">
-    <h3 class="text-secondary mb-3"><i class="bi bi-person-check" style="color: #3498db !important;"></i>
-        Bienvenido/a, ' . $user . ', a la tienda de vinos selectos
-    </h3>';
+  $username = $_SESSION["username"];
+  //consulta para saber el nombre del usuario y obtener el id
+  $consultaUsuario = mysqli_query($conexion, "SELECT usuario_id FROM usuario WHERE username = '$username'");
 
-    //botón de cierre sesión
-    echo '<a href="/TiendaVinos/phplogin/cerrarsesion.php" class="btn btn-danger">Cerrar Sesión</a></br></br>
-    </div>';  
+  if ($consultaUsuario) {
+      $usuario = mysqli_fetch_assoc($consultaUsuario);
+      $usuario_id = $usuario["usuario_id"];
+      //si la consulta se hace, te saluda
+      echo '<div class="text-center d-flex flex-column align-items-center" style="margin-top: 20px;">
+          <h3 class="text-secondary mb-3"><i class="bi bi-person-check" style="color: #3498db !important;"></i>
+              Bienvenido/a, ' . $username . ', a la tienda de vinos selectos
+          </h3>';
+
+          echo '<a href="/TiendaVinos/phplogin/cerrarsesion.php" class="btn btn-danger">Cerrar Sesión</a></br></br>
+          </div>';
+    //Consulta de pedidos completados/para enviar en la bbdd
+    $consultaPedidos = mysqli_query($conexion, "SELECT * FROM pedido WHERE fk_usuario = '$usuario_id' AND estado = 'completado/para enviar'");
+
+    if ($consultaPedidos && mysqli_num_rows($consultaPedidos) > 0) {
+        echo '<div class="center mt-5">';
+        while ($pedido = mysqli_fetch_assoc($consultaPedidos)) {
+            $pedido_id = $pedido["pedido_id"];
+            $total = $pedido["total"];
+            $fecha = $pedido["fecha"];
+
+            $consultaLineaPedido = mysqli_query($conexion, "SELECT p.producto_id, p.nombre, p.pvp, lp.cantidad
+                    FROM linea_pedido lp
+                JOIN producto p ON lp.fk_producto = p.producto_id
+                WHERE lp.fk_pedido = '$pedido_id'");
+
+            if ($consultaLineaPedido) {
+                echo '<div class="card mb-3" style="max-width: 600px; margin: 0 auto; border: 2px solid #ccc; box-shadow: 2px 2px 20px 2px rgba(0,0,0,0.2);">
+                        <div style="background-color: ghostwhite; padding: 10px;">
+                            <p style="font-weight: bold; color: #0F6BB7; font-size: 22px;">
+                                <i class="bi bi-card-list" style="font-size: 2em; margin-right: 10px;"></i>Mis pedidos completados</p>
+                            <div class="container-fluid p-2" style="background-color: ghostwhite;">';
+                            echo '<p>Fecha: ' . $fecha . '</p>';
+                            while ($linea = mysqli_fetch_assoc($consultaLineaPedido)) {
+                                $nombre = $linea["nombre"];
+                                $cantidad = $linea["cantidad"];
+                                $pvp = $linea["pvp"];
+                                $producto_id = $linea['producto_id'];
+                                echo '<p>Producto: <span style="font-weight: bold;">' . $nombre . '</span> (Precio por cada botella: ' . $pvp . ' €)</p>
+                                      <p>Cantidad: ' . $cantidad . '</p>';
+                                echo '<hr style="border-top: solid #007bff;">';
+                            }
+                            echo '<div style="margin-top: 10px;">
+                                    <p style="font-weight: bold;">Total de todos los productos: ' . $total . ' € <i class="bi bi-receipt" style="font-size: 4em;"></i></p>
+                                </div>';
+                echo '</div></div></div>';
+            } else {
+                echo 'Error en la consulta';
+            }
+        }
+        echo '</div>';
+    } else {
+        echo '<p style="font-weight: bold; color: #0F6BB7; font-size: 22px;"></p>
+            <div class="container-fluid p-2" style="background-color: ghostwhite;">
+                <p>No hay pedidos completados/para enviar.</p>
+            </div>';
+    }
+} else {
+    echo 'Fallo. Usuario no autentificado.';
+}
 }
 ?>
+<div class="text-center mt-3">
+<a href="/TiendaVinos/vistauser/Indexvistauser.php" class="btn btn-primary">Volver a Productos</a>
+</body>
+</html>
