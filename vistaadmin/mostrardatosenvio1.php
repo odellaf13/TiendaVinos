@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -18,59 +17,69 @@ session_start();
 
 if (isset($_SESSION["username"])) {
     $user = $_SESSION["username"];
-    // Clases de bootstrap para centrar el botón de contenido y proporcionar un botón para cerrar la sesión
+    //Clases de bootstrap para centrar el botón de contenido y proporcionar un botón para cerrar la sesión
     echo '<div class="text-center d-flex flex-column align-items-center" style="margin-top: 20px;">
     <h3 class="text-secondary mb-3"><i class="bi bi-person-check" style="color: #3498db !important;"></i>
         Bienvenido/a, ' . $user . ', a la tienda de vinos selectos
     </h3>';
 
-    // Botón de cierre de sesión
     echo '<a href="/TiendaVinos/phplogin/cerrarsesion.php" class="btn btn-danger">Cerrar Sesión</a></br></br>
     </div>';
 
-    // Verificar si se ha enviado el formulario
+    //Verificamos si se ha enviado el formulario y si se recibe
     if (isset($_POST["verDatosEnvio"])) {
-        // Consultar la base de datos para obtener los datos de envío
-        $sql_datosenvio = "SELECT * FROM datosenvio";
-        $resultado_datosenvio = $conexion->query($sql_datosenvio);
+        //obtenemos el ID del pedido seleccionado y se almacena
+        $pedido_id = $_POST["pedido"];
 
-        if ($resultado_datosenvio && $resultado_datosenvio->num_rows > 0) {
-            $datosenvio = $resultado_datosenvio->fetch_assoc();
-            echo '<div class="container">
-                    <h3 class="text-center">Datos de Envío del cliente</h3>
-                    <form method="POST" action="enviarcorreo.php">
-                    <div class="mb-3">
-                    <label for="Usuario ID" class="form-label">Usuario ID</label>
-                    <input type="text" class="form-control" id="fk_usuario" name="fk_usuario" value="' . $datosenvio['fk_usuario'] . '" readonly>
-                        </div>
+        //ahora cogemos el id del envio con la fk del usuario, a través del pedido_id
+        $sql_envio_id = "SELECT * FROM datosenvio WHERE fk_usuario = (SELECT fk_usuario FROM pedido WHERE pedido_id = $pedido_id)";
+        $resultado_envio_id = $conexion->query($sql_envio_id);
+
+        if ($resultado_envio_id && $resultado_envio_id->num_rows > 0) {
+            $fila_envio_id = $resultado_envio_id->fetch_assoc();
+            $envio_id = $fila_envio_id["envio_id"];
+            //Consulta para sacar los datos de envío asociados al envio_id
+            $sql_datosenvio = "SELECT * FROM datosenvio WHERE envio_id = $envio_id";
+            $resultado_datosEnvio = $conexion->query($sql_datosenvio);
+
+            if ($resultado_datosEnvio && $resultado_datosEnvio->num_rows > 0) {
+                $datosenvio = $resultado_datosEnvio->fetch_assoc();
+                echo '<div class="container">
+                        <h3 class="text-center">Datos de Envío del cliente</h3>
+                        <form method="POST" action="enviarcorreo.php">
                         <div class="mb-3">
-                            <label for="nombre" class="form-label">Nombre</label>
-                            <input type="text" class="form-control" id="nombre" name="nombre" value="' . $datosenvio['nombre'] . '" readonly>
-                        </div>
-                        <div class="mb-3">
-                            <label for="apellidos" class="form-label">Apellidos</label>
-                            <input type="text" class="form-control" id="apellidos" name="apellidos" value="' . $datosenvio['apellidos'] . '" readonly>
-                        </div>
-                        <div class="mb-3">
-                            <label for="direccion" class="form-label">Dirección de envío</label>
-                            <input type="text" class="form-control" id="direccion" name="direccion" value="' . $datosenvio['direccion'] . '" readonly>
-                        </div>
-                        <div class="mb-3">
-                            <label for="telefono" class="form-label">Teléfono</label>
-                            <input type="text" class="form-control" id="telefono" name="telefono" value="' . $datosenvio['telefono'] . '" readonly>
-                        </div>
-                        <div class="mb-3">
-                            <label for="correo" class="form-label">Correo</label>
-                            <input type="text" class="form-control" id="correo" name="correo" value="' . $datosenvio['correo'] . '" readonly>
-                        </div>
-                        <button type="submit" class="btn btn-primary" name="enviarCorreo">Enviar Correo</button>
-                        <a href="pedidosusuarios.php" class="btn btn-secondary">Volver a Pedidos</a>
+                        <label for="Usuario ID" class="form-label">Usuario ID</label>
+                        <input type="text" class="form-control" id="fk_usuario" name="fk_usuario" value="' . $datosenvio["fk_usuario"] . '" readonly>
+                            </div>
+                            <div class="mb-3">
+                                <label for="nombre" class="form-label">Nombre</label>
+                                <input type="text" class="form-control" id="nombre" name="nombre" value="' . $datosenvio["nombre"] . '" readonly>
+                            </div>
+                            <div class="mb-3">
+                                <label for="apellidos" class="form-label">Apellidos</label>
+                                <input type="text" class="form-control" id="apellidos" name="apellidos" value="' . $datosenvio["apellidos"] . '" readonly>
+                            </div>
+                            <div class="mb-3">
+                                <label for="direccion" class="form-label">Dirección de envío</label>
+                                <input type="text" class="form-control" id="direccion" name="direccion" value="' . $datosenvio["direccion"] . '" readonly>
+                            </div>
+                            <div class="mb-3">
+                                <label for="telefono" class="form-label">Teléfono</label>
+                                <input type="text" class="form-control" id="telefono" name="telefono" value="' . $datosenvio["telefono"] . '" readonly>
+                            </div>
+                            <div class="mb-3">
+                                <label for="correo" class="form-label">Correo</label>
+                                <input type="text" class="form-control" id="correo" name="correo" value="' . $datosenvio["correo"] . '" readonly>
+                            </div>
+                            <button type="submit" class="btn btn-primary" name="enviarCorreo">Enviar correo</button>
+                            <a href="pedidosusuarios.php" class="btn btn-secondary">Volver a Pedidos</a>
 
 
-                    </form>
-                  </div>';
-        } else {
-            echo '<p class="text-center">No hay datos de envío disponibles.</p>';
+                        </form>
+                      </div>';
+            } else {
+                echo '<p class="text-center">No hay datos de envío disponibles para el pedido seleccionado.</p>';
+            }
         }
     }
 } else {

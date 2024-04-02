@@ -23,48 +23,39 @@ if (isset($_SESSION["username"])) {
         Bienvenido/a, ' . $user . ', a la tienda de vinos selectos
     </h3>';
 
-    // Botón de cierre de sesión
     echo '<a href="/TiendaVinos/phplogin/cerrarsesion.php" class="btn btn-danger">Cerrar Sesión</a></br></br>
     </div>';
 
-    // Verificar si se ha enviado el formulario
-    if (isset($_POST["verDatosEnvio"])) {
-        // Consultar la base de datos para obtener los pedidos completados/para enviar
-        $sql_pedidos = "SELECT pedido_id FROM pedido WHERE estado = 'completado/para enviar'";
-        $resultado_pedidos = $conexion->query($sql_pedidos);
+    //Consultamos la base de datos para obtener los pedidos completados/para enviar
+    $sql_pedidos = "SELECT pedido_id FROM pedido WHERE estado = 'completado/para enviar'";
+    $resultado_pedidos = $conexion->query($sql_pedidos);
 
-        if ($resultado_pedidos && $resultado_pedidos->num_rows > 0) { // Verificar si se encontraron pedidos
-            // Mostrar el formulario para seleccionar un pedido
-            echo '<div class="container">
-                <h3 class="text-center">Selecciona el pedido para ver los datos de envío</h3>
+    if ($resultado_pedidos && $resultado_pedidos->num_rows > 0) { //si se encuentran pedidos, entramos en el form y se muestran
+        //Mostrar en el formulario para seleccionar un pedido
+        echo '<div class="container">
+            <h3 class="text-center">Selecciona el pedido para ver los datos de envío</h3>
 
-                <form method="POST" action="mostrardatosenvio1.php">';
-            
-            // Crear una lista desplegable de pedidos
-            echo '<div class="mb-3">
-                    <label for="pedido" class="form-label">Selecciona el pedido:</label>
-                    <select class="form-select" name="pedido" required>';
+            <form method="POST" action="mostrardatosenvio1.php">';
+        
+        //desplegable para pedidos y se envía con el action y POST a mostrardatosenvio1.php
+        echo '<div class="mb-3">
+                <label for="pedido" class="form-label">Selecciona el pedido:</label>
+                <select class="form-select" name="pedido" required>';
 
-            while ($pedido = $resultado_pedidos->fetch_assoc()) { // Iterar sobre los resultados
-                echo '<option value="' . $pedido['pedido_id'] . '">' . $pedido['pedido_id'] . '</option>';
-            }
-
-            echo '</select>
-                  </div>
-                  <button type="submit" class="btn btn-primary" name="verDatosEnvio">Ver Datos de Envío</button>
-                  </form>
-                  </div>';
-        } else {
-            // Si no hay pedidos completados/para enviar, mostrar un mensaje
-            echo '<p class="text-center">No hay pedidos completados/para enviar.</p>';
+        while ($pedido = $resultado_pedidos->fetch_assoc()) { //a cada pedido, se muestra el ID
+            echo '<option value="' . $pedido['pedido_id'] . '">' . $pedido['pedido_id'] . '</option>';
         }
+
+        echo '</select>
+              </div>
+              <button type="submit" class="btn btn-primary" name="verDatosEnvio">Ver Datos de Envío</button>
+              </form>
+              </div>';
     } else {
-        // Si no se ha enviado el formulario, mostrar un mensaje para iniciar la selección
-        echo '<p class="text-center">Por favor, selecciona un pedido para ver los datos de envío.</p>';
+        echo '<p class="text-center">No hay pedidos completados/para enviar.</p>';
     }
 } else {
-    // Si el usuario no está autenticado, mostrar un mensaje de error
-    echo 'Fallo. Usuario no autentificado.';
+    echo 'Fallo. Usuario no loggeado.';
 }
 ?>
 
