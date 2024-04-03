@@ -112,20 +112,28 @@ if (isset($_GET["exito"]) && $_GET["exito"] == 1) {
     include "navcarrito.php";
     ?>
 <style>
-    .custom-row {
+  .custom-row {
         display: flex;
         flex-wrap: wrap;
         justify-content: space-between;
     }
-    .custom-card {
+  .custom-card {
         flex: 0 0 calc(33.33% - 15px); /*Ajusta el ancho de las tarjetas según el número de columnas*/
         margin-bottom: 15px;
     }
-    .card{
-      height: 425px;
+      .card{
+      height: 475px;}
+    .card-body {
+        height: calc(100% - 110px); /*Resta el espacio ocupado por el precio, el nombre del vino y el botón de añadir*/
+        overflow-y: auto; /*scroll vertical. Acúerdate, Óscar*/
+    }
+    .card-footer {
+        position: absolute;
+        bottom: 10px;
+        left: 50%;
+        transform: translateX(-50%);
     }
 </style>
-
 <body>
     <div class="center mt-5">
         <div class="card pt-3">
@@ -135,8 +143,8 @@ if (isset($_GET["exito"]) && $_GET["exito"] == 1) {
                 <?php
                 //creamos una consulta a la base de datos basado en do, si existe en la url
                 $dondeencontremos = '';
-                if (isset($_GET['do'])) {
-                    $do = $_GET['do'];
+                if (isset($_GET["do"])) {
+                    $do = $_GET["do"];
                     $dondeencontremos = "WHERE do = '$do'";
                 }
                 //creamos una consultaa la base de datos que se llam $busqueda y coja de producto, todos los do con whereClause
@@ -154,7 +162,7 @@ if (isset($_GET["exito"]) && $_GET["exito"] == 1) {
                     $sql = "SELECT DISTINCT do FROM producto";
                     $resultados = mysqli_query($conexion, $sql);
                     while ($row = mysqli_fetch_assoc($resultados)) {
-                        $do = $row['do']; //mientras, si se activa, vendrá do de la BBDD por línea a construirse, y se imprimirá en el div
+                        $do = $row["do"]; //mientras, si se activa, vendrá do de la BBDD por línea a construirse, y se imprimirá en el div
                         
                         echo '<a class="btn btn-primary '.isActiveDO($do).'" href="'.construirURLFiltrado($do).'" style="margin-right: 5px;">'.$do.'</a>';
                     }
@@ -176,11 +184,12 @@ if (isset($_GET["exito"]) && $_GET["exito"] == 1) {
                                             <small class="text-muted"><strong>(<?php echo $resultado["do"]; ?>)</strong>
                                             </small>                              
                                         </h5>
-                                        <p class="card-text" style="max-height: 120px; overflow: hidden;"><?php echo $resultado["descripcion"]; ?></p>
+                                        <p class="card-text" style="max-height: 500px; overflow: hidden;"><?php echo $resultado["descripcion"]; ?></p>
                                         <!--creamos un botón donde nada más clickar, hagamos que se verifique un formulario del stock, por si es 0 -->
+                                        <div class="card-footer">
                                         <button class="btn btn-primary" type="submit" onclick="return validarFormulario(<?php echo $resultado['stock']; ?>);">
-                                        <i class="bi bi-cart-plus-fill"></i>Añadir al carrito
-                                            </button>
+                                        <i class="bi bi-cart-plus-fill"></i>Añadir al carrito</button>
+                                            </div>
                                     </div>
                                 </div>
                                 <input name="producto_id" type="hidden" value="<?php echo $resultado["producto_id"]; ?>" />

@@ -107,20 +107,28 @@ if (isset($_GET["exito"]) && $_GET["exito"] == 1) {
     include "navcarrito.php";
     ?>
 <style>
-    .custom-row {
+  .custom-row {
         display: flex;
         flex-wrap: wrap;
         justify-content: space-between;
     }
-    .custom-card {
+  .custom-card {
         flex: 0 0 calc(33.33% - 15px); /*Ajusta el ancho de las tarjetas según el número de columnas*/
         margin-bottom: 15px;
     }
-    .card{
-      height: 425px;
+      .card{
+      height: 475px;}
+    .card-body {
+        height: calc(100% - 110px); /*Resta el espacio ocupado por el precio, el nombre del vino y el botón de añadir*/
+        overflow-y: auto; /*scroll vertical. Acúerdate, Óscar*/
+    }
+    .card-footer {
+        position: absolute;
+        bottom: 10px;
+        left: 50%;
+        transform: translateX(-50%);
     }
 </style>
-
 <body>
     <div class="center mt-5">
         <div class="card pt-3">
@@ -146,9 +154,13 @@ if (isset($_GET["exito"]) && $_GET["exito"] == 1) {
                                     <small class="text-muted"><strong>(<?php echo $resultado["do"]; ?>)</strong>
                                     </small>                     
                                     </h5>
-                                    <p class="card-text" style="max-height: 120px; overflow: hidden;"><?php echo $resultado["descripcion"]; ?></p>
-                                    <button class="btn btn-primary" type="submit"><i class="bi bi-cart-plus-fill"></i>Añadir al carrito</button>
+                                    <p class="card-text" style="max-height: 500px; overflow: hidden;"><?php echo $resultado["descripcion"]; ?></p>
+                                    <div class="card-footer">
+                                    <button class="btn btn-primary" type="submit" onclick="return validarFormulario(<?php echo $resultado['stock']; ?>);">
+                                    <i class="bi bi-cart-plus-fill"></i>Añadir al carrito</button>
+                                    </div>
                                 </div>
+                                            
                             </div>
                             <input name="producto_id" type="hidden" value="<?php echo $resultado["producto_id"]; ?>" />
           
@@ -160,7 +172,7 @@ if (isset($_GET["exito"]) && $_GET["exito"] == 1) {
                                 <input name="do" type="hidden" value="<?php echo $resultado["do"]; ?>" />
                                 <input name="descripcion" type="hidden" value="<?php echo $resultado["descripcion"]; ?>" />
                                 <input name="url_imagen" type="hidden" value="<?php echo $resultado["url_imagen"]; ?>" />
-                                <input name="cantidad" type="number" value="1" class="pl-2" min="1" required />
+                                <input name="cantidad" id="cantidadInput" type="number" value="1" class="pl-2" min="1" required />
                             
                             </div>
                         </form>
@@ -173,16 +185,16 @@ if (isset($_GET["exito"]) && $_GET["exito"] == 1) {
 
     <script>
     function validarFormulario(stockDisponible) {
-        //vemos la cantidad seleccionada
-        var cantidadSeleccionada = parseInt(document.querySelector('.cantidadInput').value);
-        console.log('Cantidad seleccionada:', cantidadSeleccionada);
-        //Hacemos con un if un cálculo de si la cantidad seleccionada es mayor al stock disponible (que será 0, si no hay productos)
-        if (cantidadSeleccionada > stockDisponible) {
-            alert('Lo sentimos. No hay stock disponible del producto');
-            return false;
-        }
-        return true; //Si es verdadero, que es > a 0, se envía todo a carrito.php
+    //vemos la cantidad seleccionada
+    var cantidadSeleccionada = parseInt(document.querySelector('#cantidadInput').value);//cambiaremos el nombre de cantidadInput para que no utilice la misma clase en varios archivos
+    console.log('Cantidad seleccionada:', cantidadSeleccionada);
+    //Hacemos con un if un cálculo de si la cantidad seleccionada es mayor al stock disponible (que será 0, si no hay productos)
+    if (cantidadSeleccionada > stockDisponible) {
+        alert('Lo sentimos. No hay stock disponible del producto');
+        return false;
     }
+    return true; //Si es verdadero, que es > a 0, se envía todo a carrito.php
+}
 </script>
 </body>
 </html>

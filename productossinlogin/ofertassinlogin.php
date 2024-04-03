@@ -54,17 +54,26 @@
 <a href="/TiendaVinos/menuvistauser.php" class="btn btn-primary">Volver al inicio</a>
 </div></br>
 <style>
-    .custom-row {
+  .custom-row {
         display: flex;
         flex-wrap: wrap;
         justify-content: space-between;
     }
-    .custom-card {
+  .custom-card {
         flex: 0 0 calc(33.33% - 15px); /*Ajusta el ancho de las tarjetas según el número de columnas*/
         margin-bottom: 15px;
     }
-    .card{
-      height: 425px;
+      .card{
+      height: 475px;}
+    .card-body {
+        height: calc(100% - 110px); /*Resta el espacio ocupado por el precio, el nombre del vino y el botón de añadir*/
+        overflow-y: auto; /*scroll vertical. Acúerdate, Óscar*/
+    }
+    .card-footer {
+        position: absolute;
+        bottom: 10px;
+        left: 50%;
+        transform: translateX(-50%);
     }
 </style>
 
@@ -96,8 +105,10 @@
                                     <small class="text-muted"><strong>(<?php echo $resultado["do"]; ?>)</strong>
                                     </small>                     
                                     </h5>
-                                    <p class="card-text" style="max-height: 120px; overflow: hidden;"><?php echo $resultado["descripcion"]; ?></p>
-                                    <button class="btn btn-primary" type="submit"><i class="bi bi-cart-plus-fill"></i>Añadir al carrito</button>
+                                    <p class="card-text" style="max-height: 500px; overflow: hidden;"><?php echo $resultado["descripcion"]; ?></p>
+                                    <div class="card-footer">
+                                    <button class="btn btn-primary" type="submit"><i class="bi bi-cart-plus-fill"></i> Añadir al carrito</button>
+                                </div>
                                 </div>
                             </div>
                             <input name="producto_id" type="hidden" value="<?php echo $resultado["producto_id"]; ?>" />
