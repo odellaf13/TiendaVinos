@@ -1,63 +1,70 @@
 <?php
-// Verificar si se ha enviado el formulario de actualización
+//se verifica si se envía correctamente el form actualizar
 if (isset($_POST["actualizar"])) {
-    // Incluir el archivo de conexión a la base de datos
     include "../Conexion.php";
-
-    // Obtener los datos del formulario
+    //recogemos datos del formulario
     $username = $_POST["username"];
     $password = $_POST["password"];
     $correo = $_POST["correo"];
-
-    // Verificar si se ha establecido la sesión del usuario
     session_start();
     if (!isset($_SESSION["username"])) {
         header("Location: login.php");
         exit();
     }
-
-    // Obtener el nombre de usuario de la sesión
+    //Obtenemos el nombre del user de la sesión
     $username_session = $_SESSION["username"];
-
-    // Consultar el usuario en la base de datos para obtener su ID
+    //consulta para reclamar la id del usuario de la sesión
     $query = "SELECT usuario_id FROM usuario WHERE username = ?";
     $stmt = $conexion->prepare($query);
     $stmt->bind_param("s", $username_session);
     $stmt->execute();
     $resultado = $stmt->get_result();
-
-    // Verificar si se obtuvieron resultados
+//verificar resultads
     if ($resultado->num_rows > 0) {
-        // Obtener el usuario
         $usuario = $resultado->fetch_assoc();
-        $id_usuario = $usuario['usuario_id'];
+        $id_usuario = $usuario["usuario_id"];
 
-        // Actualizar los datos del usuario en la base de datos
-        $query_actualizar = "UPDATE usuario SET username = ?, password = ?, correo = ? WHERE usuario_id = ?";
-        $stmt_actualizar = $conexion->prepare($query_actualizar);
+    //Ésta funcionalidad verifica si el username ha sido modificado
+        if ($username != $username_session) {
+            //hacemos una consulta para ver si el nuevo username está elegido o siendo usado
+            $query_username = "SELECT usuario_id FROM usuario WHERE username = ?";
+            $stmt_username = $conexion->prepare($query_username);
+            $stmt_username->bind_param("s", $username);
+            $stmt_username->execute();
+            $resultado_username = $stmt_username->get_result();
+
+            if ($resultado_username->num_rows > 0) {
+                echo '<div class="alert alert-danger" role="alert">El nuevo nombre de usuario ya está en uso.</div>';
+                exit();
+            }
+        }
+
+        //Actualizamos los datos del usuario en la BBDD
+        $queryupdate = "UPDATE usuario SET username = ?, password = ?, correo = ? WHERE usuario_id = ?";
+        $stmt_actualizar = $conexion->prepare($queryupdate);
         $stmt_actualizar->bind_param("sssi", $username, $password, $correo, $id_usuario);
         $stmt_actualizar->execute();
 
-        // Verificar si la actualización fue exitosa
+    //Se verifica si tuvo éxito
         if ($stmt_actualizar->affected_rows > 0) {
-            // Redirigir de vuelta a perfilusuario.php
+            //Si username ha sido modificado, SE TIENE QUE ACTUALIZAR LA SESIÓN. OJO QUE PUEDE DAR PROBLEMAS SI NO SE HACE ESTO!!
+            if ($username != $username_session) {
+                $_SESSION["username"] = $username;
+            }
             header("Location: perfilusuario.php");
             exit();
         } else {
             echo '<div class="alert alert-danger" role="alert">Error al actualizar los datos del usuario.</div>';
         }
 
-        // Cerrar la consulta preparada
         $stmt_actualizar->close();
     } else {
         echo '<div class="alert alert-danger" role="alert">Error: No se encontró el usuario en la base de datos.</div>';
     }
-
-    // Cerrar la consulta preparada
     $stmt->close();
 } else {
-    // Si no se ha enviado el formulario, redirigir a algún lugar apropiado
-    header("Location: alguna_pagina.php");
+    //si no se envía el formulario, redirigiremos a Indexvistauser.php mismo, para que se sepa que no se recibe por POST el form
+    header("Location: Indexvistauser.php");
     exit();
 }
 ?>

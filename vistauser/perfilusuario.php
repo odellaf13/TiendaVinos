@@ -1,54 +1,46 @@
 <?php
 session_start();
-// Verificar si el usuario está autenticado
+//Verificamos si el usuario esta identificado para utilizar su sesión
 if (!isset($_SESSION["username"])) {
     header("Location: login.php");
     exit();
 }
-
-// Incluir el archivo de conexión a la base de datos
 include "../Conexion.php";
-
-// Obtener el nombre de usuario de la sesión
+//almacenamos username en la variable sessión
 $username = $_SESSION["username"];
-
-// Consultar el usuario en la base de datos para obtener su ID
-$query = "SELECT usuario_id FROM usuario WHERE username = ?";
+    //Consultamos el usuario en la base de datos para obtener su id
+$query = " SELECT usuario_id FROM usuario WHERE username = ? ";
 $stmt = $conexion->prepare($query);
 $stmt->bind_param("s", $username);
 $stmt->execute();
-$resultado = $stmt->get_result();
+$resultados = $stmt->get_result();
 
-// Verificar si se obtuvieron resultados
-if ($resultado->num_rows > 0) {
-    // Obtener el usuario
-    $usuario = $resultado->fetch_assoc();
-    $id_usuario = $usuario['usuario_id'];
+//verificamos si tras la consulta, se obtuvieron resultados
+if ($resultados->num_rows > 0) {
+    //cogemos ususario
+    $usuario = $resultados->fetch_assoc();
+    $id_usuario = $usuario["usuario_id"];
 
-    // Consultar los datos del usuario
+    //consultamos sus datos
     $query_datos = "SELECT * FROM usuario WHERE usuario_id = ?";
     $stmt_datos = $conexion->prepare($query_datos);
     $stmt_datos->bind_param("i", $id_usuario);
     $stmt_datos->execute();
-    $resultado_datos = $stmt_datos->get_result();
+    $resultadodatos = $stmt_datos->get_result();
 
-    // Verificar si se obtuvieron resultados
-    if ($resultado_datos->num_rows > 0) {
-        // Asignar los datos del usuario a la variable $usuario
-        $usuario = $resultado_datos->fetch_assoc();
+   //igual que antes, verificamos tras la consulta si se obtuvieron rows/resultados/líneas de datos
+    if ($resultadodatos->num_rows > 0) {
+        //Asignamos los datos del usuario a la variable $usuario
+        $usuario = $resultadodatos->fetch_assoc();
     } else {
-        echo '<div class="alert alert-danger" role="alert">Error: No se encontraron datos del usuario.</div>';
+        echo '<div class="alert alert-danger" role="alert">No se encontraron datos del usuario.</div>';
         exit();
     }
-
-    // Cerrar la consulta preparada
     $stmt_datos->close();
 } else {
-    echo '<div class="alert alert-danger" role="alert">Error: No se encontró el usuario en la base de datos.</div>';
+    echo '<div class="alert alert-danger" role="alert">No se encuentra el usuario en la base de datos.</div>';
     exit();
 }
-
-// Cerrar la consulta preparada
 $stmt->close();
 ?>
 
