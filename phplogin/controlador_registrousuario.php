@@ -1,7 +1,7 @@
 <?php
 
 if(!empty($_POST["registro"])) {
-    if(empty($_POST["nombre"]) or empty($_POST["pass"])) {
+    if(empty($_POST["nombre"]) or empty($_POST["pass"]) or empty($_POST["correo"])){
         echo '<script>
         window.location.href = "registro_usuario.php";
         alert("Alguno(s) de los campos está sin completar")
@@ -19,6 +19,7 @@ if(!empty($_POST["registro"])) {
         $nombre=$_POST["nombre"];
         $pass=$_POST["pass"];
         $rol= "user";
+        $correo = $_POST["correo"];
 
         /*$sql=$conexion->query(" insert into usuario (usuario_id, username, password, rol) values('$id, '$nombre', '$pass', '$rol')");
 
@@ -31,9 +32,9 @@ if(!empty($_POST["registro"])) {
             </script>';
             */
 
-            $stmt = $conexion->prepare("INSERT INTO usuario (usuario_id, username, password, rol) VALUES (?, ?, ?, ?)");
+            $stmt = $conexion->prepare("INSERT INTO usuario (usuario_id, username, password, rol, correo) VALUES (?, ?, ?, ?, ?)");
 
-            $stmt->bind_param("isss", $newUserId, $nombre, $pass, $rol);
+            $stmt->bind_param("issss", $newUserId, $nombre, $pass, $rol, $correo);
             $stmt->execute();
 
         if ($stmt->affected_rows > 0) {

@@ -78,6 +78,9 @@ session_start();
           <a class="nav-link active" aria-current="page" href="contactanos.php">
             <i class="bi bi-headset"></i>&nbsp; Contáctanos</a>
         </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/TiendaVinos/vistauser/perfilusuario.php">Perfil de usuario</a>
+        </li>
       </ul>
       <form class="d-flex" role="search" action="buscador.php">
         <button class="btn btn-outline-success" type="submit" action="buscador.php">Search</button>

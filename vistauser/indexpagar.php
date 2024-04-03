@@ -129,8 +129,8 @@ if (isset($_SESSION["username"])) {
                                     <input type="tel" class="form-control" id="telefono" name="telefono" required>
                                 </div>
                                 <div class="mb-3">
-                                    <label for="correo" class="form-label">Correo</label>
-                                    <input type="text" class="form-control" id="correo" name="correo" required>
+                                    <label for="correoenvio" class="form-label">Correo de contacto de incidencias con envíos</label>
+                                    <input type="text" class="form-control" id="correoenvio" name="correoenvio" required>
                                 </div>
                                 <input type="hidden" name="pedido_id" value="' . $pedido_id . '">
                                 <button type="submit" class="btn btn-primary">Pagar y Finalizar</button>
