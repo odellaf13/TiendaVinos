@@ -45,7 +45,7 @@
           <a class="nav-link active" aria-current="page" href="/TiendaVinos/phplogin/indexlogin.php">Iniciar sesión</a>
         </li></ul>
       <form class="d-flex" role="search" action="/TiendaVinos/productossinlogin/buscadorsinlogin.php">
-        <button class="btn btn-outline-success" type="submit" action="/TiendaVinos/productossinlogin/buscadorsinlogin.php">Search</button>
+        <button class="btn btn-outline-success" type="submit" action="/TiendaVinos/productossinlogin/buscadorsinlogin.php">Buscador</button>
       </form>
     </div>
   </div>
@@ -79,8 +79,8 @@
 </style>
 
 <div class="center mt-5">
-    <div class="card pt-3">
-        <p style="font-weight: bold; color: #0F6BB7; font-size: 22px;">Carrito de la compra</p>
+    <div class="card pt-3 text-center">
+        <p style="font-weight: bold; color: #0F6BB7; font-size: 22px;">Elige por D.O de vino:</p>
         <div class="container-fluid p-2" style="background-color: ghostwhite;">
 
             <?php

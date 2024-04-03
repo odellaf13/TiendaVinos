@@ -61,7 +61,7 @@
         </li>
         <ul><ul><ul><ul>
       <form class="d-flex" role="search" action="productossinlogin/buscadorsinlogin.php">
-        <button class="btn btn-outline-success" type="submit" action="productossinlogin/buscadorsinlogin.php">Search</button>
+        <button class="btn btn-outline-success" type="submit" action="productossinlogin/buscadorsinlogin.php">Buscador</button>
       </form>
       </ul></ul></ul></ul>
     </div>

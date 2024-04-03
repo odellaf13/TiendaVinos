@@ -74,9 +74,17 @@
           <a class="nav-link active" aria-current="page" href="contactanos.php">
             <i class="bi bi-headset"></i>&nbsp; Contáctanos</a>
         </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/TiendaVinos/vistauser/perfilusuario.php">Perfil de usuario</a>
+        </li>
       </ul>
-      <form class="d-flex" role="search" action="buscador.php">
-        <button class="btn btn-outline-success" type="submit" action="buscador.php">Search</button>
+
+      <?php
+        include "modalcarrito.php";
+    include "navcarrito.php";
+    ?>
+      <form class="d-flex" role="search" action="buscador.php" style="margin-left: 20px; margin-right: 20px;">
+        <button class="btn btn-outline-success" type="submit" action="buscador.php">Buscador</button>
       </form>
     </div>
   </div>
@@ -102,10 +110,6 @@ if (isset($_GET["exito"]) && $_GET["exito"] == 1) {
 }
 
 ?>
-    <?php
-        include "modalcarrito.php";
-    include "navcarrito.php";
-    ?>
 <style>
   .custom-row {
         display: flex;
@@ -131,8 +135,8 @@ if (isset($_GET["exito"]) && $_GET["exito"] == 1) {
 </style>
 <body>
     <div class="center mt-5">
-        <div class="card pt-3">
-            <p style="font-weight: bold; color: #0F6BB7; font-size: 22px;">Carrito de la compra</p>
+        <div class="card pt-3 text-center">
+            <p style="font-weight: bold; color: #0F6BB7; font-size: 22px;">Elige por D.O de vino:</p>
             <div class="container-fluid p-2" style="background-color: ghostwhite;">
         <?php
             $busqueda = mysqli_query($conexion, "SELECT * FROM producto WHERE do IN ('Lotes', 'Colección')");

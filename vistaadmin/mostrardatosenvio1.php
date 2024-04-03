@@ -68,10 +68,10 @@ if (isset($_SESSION["username"])) {
                                 <input type="text" class="form-control" id="telefono" name="telefono" value="' . $datosenvio["telefono"] . '" readonly>
                             </div>
                             <div class="mb-3">
-                                <label for="correo" class="form-label">Correo</label>
-                                <input type="text" class="form-control" id="correo" name="correo" value="' . $datosenvio["correo"] . '" readonly>
+                                <label for="correo" class="form-label">Email de contacto</label>
+                                <input type="email" class="form-control" id="correo" name="correo" value="' . $datosenvio["correoenvio"] . '" readonly>
                             </div>
-                            <button type="submit" class="btn btn-primary" name="enviarCorreo">Enviar correo</button>
+                            <a href="mailto:' . $datosenvio["correoenvio"] . '?subject=Asunto del correo&body=Cuerpo del mensaje" class="btn btn-primary" name="enviarCorreo">Enviar correo</a>
                             <a href="pedidosusuarios.php" class="btn btn-secondary">Volver a Pedidos</a>
 
 

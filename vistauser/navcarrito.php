@@ -21,9 +21,9 @@ if (isset($_SESSION["username"])) {
 }
 ?>
 
-<nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #112956;">
+<nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #112956; border-radius: 25px;">
     <div class="container-fluid">
-        <a class="navbar-brand" href="#">Mi tienda</a>
+        <a class="navbar-brand" href="#">Mi carrito</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
             <i class="fas fa-shopping-cart"></i>
         </button>

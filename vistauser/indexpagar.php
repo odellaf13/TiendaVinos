@@ -43,7 +43,7 @@ include "../Conexion.php";
         </li>
       </ul>
       <form class="d-flex" role="search" action="buscador.php">
-        <button class="btn btn-outline-success" type="submit" action="buscador.php">Search</button>
+        <button class="btn btn-outline-success" type="submit" action="buscador.php">Buscador</button>
       </form>
     </div>
   </div>
