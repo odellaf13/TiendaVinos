@@ -18,9 +18,8 @@
 
             <h5 class="card-title">Buzón de sugerencias</h5>
             <p class="card-text">Deseamos su opinión</p>
-
     
-            <a href="/TiendaVinos/vistauser/Indexvistauser.php" class="btn btn-primary">Escríbanos</a>
+            <a href="mailto:odellaf13@gmail.com?subject=Asunto del correo&body=Cuerpo del mensaje" class="btn btn-primary">Escríbanos</a>
             <a href="/TiendaVinos/vistauser/Indexvistauser.php" class="btn btn-primary">Volver a inicio</a>
         </div>
     </div>
