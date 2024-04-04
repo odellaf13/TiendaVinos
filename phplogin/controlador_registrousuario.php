@@ -19,7 +19,7 @@ if (!empty($_POST["registro"])) {
         $stmtverificar->execute();
         $stmtverificar->store_result();
 
-        if ($stmt_verificar->num_rows > 0) {
+        if ($stmtverificar->num_rows > 0) {
             //actualización del estado si ya existe
             $stmt_actualizar = $conexion->prepare("UPDATE usuario SET estado = ? WHERE username = ? OR correo = ?");
             $stmt_actualizar->bind_param("iss", $estadoactivo, $nombre, $correo);

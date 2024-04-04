@@ -1,36 +1,36 @@
 <?php
 session_start();
-//Verificamos si el usuario está identificado para utilizar su sesión
+// Verificamos si el usuario está identificado para utilizar su sesión
 if (!isset($_SESSION["username"])) {
     header("Location: login.php");
     exit();
 }
 include "../Conexion.php";
-//Almacenamos el nombre de usuario en la variable de sesión
+// Almacenamos el nombre de usuario en la variable de sesión
 $username = $_SESSION["username"];
-//Consultamos el usuario en la base de datos para obtener su id
+// Consultamos el usuario en la base de datos para obtener su id
 $query = "SELECT usuario_id FROM usuario WHERE username = ?";
 $stmt = $conexion->prepare($query);
 $stmt->bind_param("s", $username);
 $stmt->execute();
 $resultados = $stmt->get_result();
 
-//Verificamos si, tras la consulta, se obtuvieron resultados
+// Verificamos si, tras la consulta, se obtuvieron resultados
 if ($resultados->num_rows > 0) {
-    //Cogemos el usuario
+    // Cogemos el usuario
     $usuario = $resultados->fetch_assoc();
     $id_usuario = $usuario["usuario_id"];
 
-    //Consultamos sus datos
+    // Consultamos sus datos
     $query_datos = "SELECT * FROM usuario WHERE usuario_id = ?";
     $stmt_datos = $conexion->prepare($query_datos);
     $stmt_datos->bind_param("i", $id_usuario);
     $stmt_datos->execute();
     $resultadodatos = $stmt_datos->get_result();
 
-    //Igual que antes, verificamos tras la consulta si se obtuvieron filas de datos
+    // Igual que antes, verificamos tras la consulta si se obtuvieron filas de datos
     if ($resultadodatos->num_rows > 0) {
-        //Asignamos los datos del usuario a la variable $usuario
+        // Asignamos los datos del usuario a la variable $usuario
         $usuario = $resultadodatos->fetch_assoc();
     } else {
         echo '<div class="alert alert-danger" role="alert">No se encontraron datos del usuario.</div>';
@@ -43,15 +43,15 @@ if ($resultados->num_rows > 0) {
 }
 $stmt->close();
 
-//esto es una verificación para saber si hubo errores en borrarusuario1.php, con el alert de lo que ocurre.
+// Esto es una verificación para saber si hubo errores en borrarusuario1.php, con el alert de lo que ocurre.
 if (isset($_GET["error"])) {
-  $error = $_GET["error"];
-  if ($error === "delete") {
+    $error = $_GET["error"];
+    if ($error === "delete") {
 
-      echo '<div class="alert alert-danger" role="alert">Hubo un error al eliminar el usuario. Por favor, inténtalo de nuevo.</div>';
-  } elseif ($error === "datos") {
-      echo '<div class="alert alert-danger" role="alert">Falta de datos para eliminar el usuario. Por favor, inténtalo de nuevo.</div>';
-  }
+        echo '<div class="alert alert-danger" role="alert">Hubo un error al eliminar el usuario. Por favor, inténtalo de nuevo.</div>';
+    } elseif ($error === "datos") {
+        echo '<div class="alert alert-danger" role="alert">Falta de datos para eliminar el usuario. Por favor, inténtalo de nuevo.</div>';
+    }
 }
 ?>
 
@@ -68,49 +68,49 @@ if (isset($_GET["error"])) {
 </head>
 
 <nav class="navbar navbar-expand-lg" style="background-color: #e3f2fd;">
-  <div class="container-fluid">
-    <a class="navbar-brand" href="#">
-    <img src="../9d9d02d012924b04b7f1b2a98dc18f83.png" alt="logo" width="200px">
-    </a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="quienessomos.php">Quiénes somos</a>
-        </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Productos
-          </a>
-          <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="/TiendaVinos/vistauser/Indexvistauser.php">Nuestros vinos</a></li>
-            <li><hr class="dropdown-divider"></li>
-            <li>
-            <a class="dropdown-item" href="/TiendaVinos/vistauser/ofertas.php">Ofertas <i class="bi bi-percent"></i>
-            </a>
-        </li>
-          </ul>
-        <li class="nav-item">
-          <a class="nav-link" href="/TiendaVinos/vistauser/indexcarrito.php">Mi carrito</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="/TiendaVinos/vistauser/indexpedidos.php">Pedidos</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="contactanos.php">
-            <i class="bi bi-headset"></i>&nbsp; Contáctanos</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="/TiendaVinos/vistauser/perfilusuario.php">Perfil de usuario</a>
-        </li>
-      </ul>
-      <form class="d-flex" role="search" action="buscador.php">
-        <button class="btn btn-outline-success" type="submit" action="buscador.php">Search</button>
-      </form>
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">
+            <img src="../9d9d02d012924b04b7f1b2a98dc18f83.png" alt="logo" width="200px">
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="quienessomos.php">Quiénes somos</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Productos
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="/TiendaVinos/vistauser/Indexvistauser.php">Nuestros vinos</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li>
+                            <a class="dropdown-item" href="/TiendaVinos/vistauser/ofertas.php">Ofertas <i class="bi bi-percent"></i>
+                            </a>
+                        </li>
+                    </ul>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/TiendaVinos/vistauser/indexcarrito.php">Mi carrito</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/TiendaVinos/vistauser/indexpedidos.php">Pedidos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="contactanos.php">
+                            <i class="bi bi-headset"></i>&nbsp; Contáctanos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/TiendaVinos/vistauser/perfilusuario.php">Perfil de usuario</a>
+                    </li>
+            </ul>
+            <form class="d-flex" role="search" action="buscador.php">
+                <button class="btn btn-outline-success" type="submit" action="buscador.php">Search</button>
+            </form>
+        </div>
     </div>
-  </div>
 </nav>
 <body>
 
@@ -136,14 +136,14 @@ if (isset($_GET["error"])) {
     </form>
 </div>
 
-    <!--he creado un formulario oculto para enviar datos a borrarusuario1.php y aprovechar la plantilla del anterior formulario -->
+<!-- Formulario oculto para enviar datos a borrarusuario1.php -->
 <form id="formborrarUsuario" action="borrarusuario1.php" method="POST">
     <input type="hidden" name="username" value="<?php echo $usuario["username"]; ?>">
     <input type="hidden" name="password" value="<?php echo $usuario["password"]; ?>">
     <input type="hidden" name="correo" value="<?php echo $usuario["correo"]; ?>">
 </form>
 
-      <!-- Modal de confirmación para eliminar usuario -->
+<!-- Modal de confirmación para eliminar usuario -->
 <div class="modal fade" id="confirmarBorrado" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -157,7 +157,7 @@ if (isset($_GET["error"])) {
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
                 <!-- Al hacer clic en este botón, se envían los datos al formulario oculto y luego se envía el formulario -->
-                <button type="submit" class="btn btn-danger" form="formBorrarUsuario">Eliminar cuenta</button>
+                <button type="submit" class="btn btn-danger" form="formborrarUsuario">Eliminar cuenta</button>
             </div>
         </div>
     </div>

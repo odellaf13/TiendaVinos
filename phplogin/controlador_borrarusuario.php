@@ -24,7 +24,7 @@ if (!empty($_POST["borrar"])) { //Verificamos que no se haya enviado el formular
         } else {
             echo '<script>
             window.location.href = "indexlogin.php";
-            alert("El usuario no ha podido ser eliminado");
+            alert("El usuario no existe o no ha podido ser eliminado");
             </script>';
         }
         $stmt->close();
