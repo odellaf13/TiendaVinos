@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1:3307:3307
--- Tiempo de generación: 03-04-2024 a las 18:51:55
+-- Tiempo de generación: 04-04-2024 a las 12:15:25
 -- Versión del servidor: 10.4.28-MariaDB
 -- Versión de PHP: 8.2.4
 
@@ -42,7 +42,7 @@ CREATE TABLE `datosenvio` (
 --
 
 INSERT INTO `datosenvio` (`envio_id`, `fk_usuario`, `nombre`, `apellidos`, `direccion`, `telefono`, `correoenvio`) VALUES
-(104, 2, 'Laura', 'Díez Romero', 'Alcalá de Guadaira', '121212', 'l.diezromero@gmail.com');
+(105, 0, 'vladi', 'Gutierrez Gomez', 'Bar Quini, Viso del Alcor', '234324', 'odellaf13@gmail.com');
 
 -- --------------------------------------------------------
 
@@ -61,8 +61,8 @@ CREATE TABLE `linea_pedido` (
 --
 
 INSERT INTO `linea_pedido` (`fk_pedido`, `fk_producto`, `cantidad`) VALUES
-(371, 3, 2),
-(373, 1, 1);
+(380, 1, 2),
+(382, 0, 1);
 
 -- --------------------------------------------------------
 
@@ -83,8 +83,8 @@ CREATE TABLE `pedido` (
 --
 
 INSERT INTO `pedido` (`pedido_id`, `fecha`, `total`, `fk_usuario`, `estado`) VALUES
-(371, '2024-04-03 16:04:28', 18.50, 2, 'completado/para enviar'),
-(373, '2024-04-03 16:44:22', 7.25, 5, 'en trámite');
+(380, '2024-04-04 10:03:28', 14.50, 0, 'completado/para enviar'),
+(382, '2024-04-04 10:10:43', 9.75, 0, 'en trámite');
 
 -- --------------------------------------------------------
 
@@ -107,8 +107,8 @@ CREATE TABLE `producto` (
 --
 
 INSERT INTO `producto` (`producto_id`, `nombre`, `pvp`, `stock`, `do`, `descripcion`, `url_imagen`) VALUES
-(0, 'Beronia', 9.75, 97, 'Rioja', 'Intenso color cereza picota, limpio y muy brillante. Intensa nariz rica en matices donde destacan notas de frutas rojas y aromas florales perfectamente ensamblados con toques minerales y cacao. Equilibrado, goloso persistente y bien estructurado, destacan la fruta y el regaliz sobre un fondo de chocolate y café.', 'https://www.vinosycavasonline.es/images/products/vino-tinto-beronia-reserva.jpg'),
-(1, 'Ébano', 7.25, 97, 'Ribera del Duero', 'Un vino joven con la expresión frutal muy presente. La crianza de 6 meses en roble francés permite que exprese su carácter ribereño junto a un paladar envolvente, untuoso y muy largo.', 'https://www.vinoseleccion.com/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/e/b/ebano-2018.jpg'),
+(0, 'Beronia', 9.75, 93, 'Rioja', 'Intenso color cereza picota, limpio y muy brillante. Intensa nariz rica en matices donde destacan notas de frutas rojas y aromas florales perfectamente ensamblados con toques minerales y cacao. Equilibrado, goloso persistente y bien estructurado, destacan la fruta y el regaliz sobre un fondo de chocolate y café.', 'https://www.vinosycavasonline.es/images/products/vino-tinto-beronia-reserva.jpg'),
+(1, 'Ébano', 7.25, 90, 'Ribera del Duero', 'Un vino joven con la expresión frutal muy presente. La crianza de 6 meses en roble francés permite que exprese su carácter ribereño junto a un paladar envolvente, untuoso y muy largo.', 'https://www.vinoseleccion.com/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/e/b/ebano-2018.jpg'),
 (2, 'Arbocala', 11.25, 0, 'Toro', 'Aromas de fruta roja madura (fresa y cereza), notas florales todavía presentes y aromas propios de su paso por madera (vainilla, café y coco). Tanino sedoso, que hace su paso por boca largo y agradable. La crianza en roble americano y francés le aporta esa golosidad y estructura equilibrada con la fruta.', 'https://de-scorche.com/wp-content/uploads/2022/02/Arbocala-Toro-Crianza-de-Palacio-de-Villachica-1.png'),
 (3, 'OchoDosDos', 9.25, 40, 'Ribera del Duero', 'Su color rojo intenso anuncia una experiencia inigualable. En nariz, se despliegan notas de frutos rojos maduros, como la mora y la cereza, acompañados de matices especiados y toques sutiles de roble. En boca, la textura sedosa se combina con taninos elegantes y una acidez equilibrada.', 'https://marianomadrueno.es/wp-content/uploads/2023/11/ocho-dos-dos-vino-tinto.png'),
 (4, 'Fuentespina', 8.00, 100, 'Ribera del Duero', 'Es un vino elaborado exclusivamente con uvas de la variedad Tempranillo que proceden de viñedos con más de 50 años de edad. Crianza de 12 meses en barricas de roble francés y americano nuevas. Fuentespina Crianza expresa todo  el potencial que se espera de un Ribera del Duero desde el primer momento lo que le hace ideal tanto para acompañar tapas o carnes y guisos en la mesa.', 'https://marianomadrueno.es/wp-content/uploads/2013/05/fuentespina-crianza-comprar-vino-tinto-ribera-del-duero.png'),
@@ -141,21 +141,22 @@ CREATE TABLE `usuario` (
   `username` varchar(60) DEFAULT NULL,
   `password` varchar(60) DEFAULT NULL,
   `rol` varchar(60) NOT NULL DEFAULT 'user',
-  `correo` varchar(50) DEFAULT NULL
+  `correo` varchar(50) DEFAULT NULL,
+  `estado` tinyint(1) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Volcado de datos para la tabla `usuario`
 --
 
-INSERT INTO `usuario` (`usuario_id`, `username`, `password`, `rol`, `correo`) VALUES
-(1, 'Oscar', 'afronea92', 'admin', 'odellaf13@gmail.com'),
-(2, 'laura', '1234', 'user', 'l.diezromero@gmail.com'),
-(3, 'lucia', 'lucia', 'user', 'asdsad@gmail.com'),
-(4, 'sinu', 'sinu', 'user', 'asdsad@gmail.com'),
-(5, 'vladimir', 'vladimir', 'user', 'abajoyankilandia@gmail.com'),
-(6, 'migue', 'migue', 'user', 'asdsad@gmail.com'),
-(7, 'vicentesss', 'vicentr', 'user', 'asdad@gmail.com');
+INSERT INTO `usuario` (`usuario_id`, `username`, `password`, `rol`, `correo`, `estado`) VALUES
+(0, 'migue', 'migue', 'user', 'tallerserrano@hotmail.com', 1),
+(1, 'Oscar', 'afronea92', 'admin', 'odellaf13@gmail.com', 1),
+(2, 'laura', '1234', 'user', 'l.diezromero@gmail.com', 1),
+(3, 'lucia', 'lucia', 'user', 'asdsad@gmail.com', 1),
+(4, 'sinu', 'sinu', 'user', 'asdsad@gmail.com', 1),
+(5, 'vladimir', 'vladimir', 'user', 'abajoyankilandia@gmail.com', 1),
+(7, 'vicentesss', 'vicentr', 'user', 'asdad@gmail.com', 1);
 
 --
 -- Índices para tablas volcadas
@@ -203,13 +204,13 @@ ALTER TABLE `usuario`
 -- AUTO_INCREMENT de la tabla `datosenvio`
 --
 ALTER TABLE `datosenvio`
-  MODIFY `envio_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=105;
+  MODIFY `envio_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=106;
 
 --
 -- AUTO_INCREMENT de la tabla `pedido`
 --
 ALTER TABLE `pedido`
-  MODIFY `pedido_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=374;
+  MODIFY `pedido_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=383;
 
 --
 -- Restricciones para tablas volcadas

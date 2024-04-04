@@ -28,7 +28,7 @@ include "../Conexion.php";
 
         <a href="registro_usuario.php" class="btn btn-primary">¿Aún no te has registrado?</a></br></br>
 
-        <a href="borrarusuario.php" class= "btn btn-primary">Borrar usuario</a>
+        <!--<a href="borrarusuario.php" class= "btn btn-primary">Borrar usuario</a>-->
     </form>
 
 
