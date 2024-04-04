@@ -1,34 +1,34 @@
 <?php
 session_start();
-//Verificamos si el usuario esta identificado para utilizar su sesión
+//Verificamos si el usuario está identificado para utilizar su sesión
 if (!isset($_SESSION["username"])) {
     header("Location: login.php");
     exit();
 }
 include "../Conexion.php";
-//almacenamos username en la variable sessión
+//Almacenamos el nombre de usuario en la variable de sesión
 $username = $_SESSION["username"];
-    //Consultamos el usuario en la base de datos para obtener su id
-$query = " SELECT usuario_id FROM usuario WHERE username = ? ";
+//Consultamos el usuario en la base de datos para obtener su id
+$query = "SELECT usuario_id FROM usuario WHERE username = ?";
 $stmt = $conexion->prepare($query);
 $stmt->bind_param("s", $username);
 $stmt->execute();
 $resultados = $stmt->get_result();
 
-//verificamos si tras la consulta, se obtuvieron resultados
+//Verificamos si, tras la consulta, se obtuvieron resultados
 if ($resultados->num_rows > 0) {
-    //cogemos ususario
+    //Cogemos el usuario
     $usuario = $resultados->fetch_assoc();
     $id_usuario = $usuario["usuario_id"];
 
-    //consultamos sus datos
+    //Consultamos sus datos
     $query_datos = "SELECT * FROM usuario WHERE usuario_id = ?";
     $stmt_datos = $conexion->prepare($query_datos);
     $stmt_datos->bind_param("i", $id_usuario);
     $stmt_datos->execute();
     $resultadodatos = $stmt_datos->get_result();
 
-   //igual que antes, verificamos tras la consulta si se obtuvieron rows/resultados/líneas de datos
+    //Igual que antes, verificamos tras la consulta si se obtuvieron filas de datos
     if ($resultadodatos->num_rows > 0) {
         //Asignamos los datos del usuario a la variable $usuario
         $usuario = $resultadodatos->fetch_assoc();
@@ -42,6 +42,17 @@ if ($resultados->num_rows > 0) {
     exit();
 }
 $stmt->close();
+
+//esto es una verificación para saber si hubo errores en borrarusuario1.php, con el alert de lo que ocurre.
+if (isset($_GET["error"])) {
+  $error = $_GET["error"];
+  if ($error === "delete") {
+
+      echo '<div class="alert alert-danger" role="alert">Hubo un error al eliminar el usuario. Por favor, inténtalo de nuevo.</div>';
+  } elseif ($error === "datos") {
+      echo '<div class="alert alert-danger" role="alert">Falta de datos para eliminar el usuario. Por favor, inténtalo de nuevo.</div>';
+  }
+}
 ?>
 
 <!DOCTYPE html>
@@ -108,19 +119,48 @@ $stmt->close();
     <form action="actualizarusuario.php" method="POST">
         <div class="mb-3">
             <label for="username" class="form-label">Nombre de usuario:</label>
-            <input type="text" class="form-control" id="username" name="username" value="<?php echo $usuario['username']; ?>">
+            <input type="text" class="form-control" id="username" name="username" value="<?php echo $usuario["username"]; ?>">
         </div>
         <div class="mb-3">
             <label for="password" class="form-label">Contraseña:</label>
-            <input type="password" class="form-control" id="password" name="password" value="<?php echo $usuario['password']; ?>">
+            <input type="password" class="form-control" id="password" name="password" value="<?php echo $usuario["password"]; ?>">
         </div>
         <div class="mb-3">
-            <label for="correo" class="form-label">Correo electrónico:</label>
-            <input type="email" class="form-control" id="correo" name="correo" value="<?php echo $usuario['correo']; ?>">
+            <label for="correo" class="form-label">Email:</label>
+            <input type="email" class="form-control" id="correo" name="correo" value="<?php echo $usuario["correo"]; ?>">
         </div>
         <button type="submit" class="btn btn-primary" name="actualizar">Actualizar perfil</button>
+        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#confirmarBorrado">Eliminar cuenta</button>
+
         <a href="/TiendaVinos/vistauser/Indexvistauser.php" class="btn btn-primary">Volver a Productos</a>
     </form>
+</div>
+
+    <!--he creado un formulario oculto para enviar datos a borrarusuario1.php y aprovechar la plantilla del anterior formulario -->
+<form id="formborrarUsuario" action="borrarusuario1.php" method="POST">
+    <input type="hidden" name="username" value="<?php echo $usuario["username"]; ?>">
+    <input type="hidden" name="password" value="<?php echo $usuario["password"]; ?>">
+    <input type="hidden" name="correo" value="<?php echo $usuario["correo"]; ?>">
+</form>
+
+      <!-- Modal de confirmación para eliminar usuario -->
+<div class="modal fade" id="confirmarBorrado" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Confirmación</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                ¿Estás seguro de que deseas eliminar tu cuenta?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <!-- Al hacer clic en este botón, se envían los datos al formulario oculto y luego se envía el formulario -->
+                <button type="submit" class="btn btn-danger" form="formBorrarUsuario">Eliminar cuenta</button>
+            </div>
+        </div>
+    </div>
 </div>
 
 </body>

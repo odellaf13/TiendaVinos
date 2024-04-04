@@ -40,7 +40,7 @@
         <input type="password" class="form-control" name="pass" />
 </br>
     <div class="mb-3">
-        <label for="exampleInputEmail1" class="form-label">Correo</label>
+        <label for="exampleInputEmail1" class="form-label">Email</label>
         <input type="email" class="form-control" name="correo" />
 </div>
 

@@ -15,7 +15,7 @@
 
     <div class="container">
     <form action="" method="POST" class="formulario">
-    <h3 class="text-center text-secondary">Ingrese su usuario y contraseña para eliminar</h3>
+    <h3 class="text-center text-secondary">Ingrese su usuario, contraseña y email para eliminar</h3>
 
     <?php
     include "../Conexion.php";
@@ -37,20 +37,22 @@
 
     <div class="mb-3">
         <label for="exampleInputEmail1" class="form-label">Contraseña</label>
-        <input type="password" class="form-control" name="pass" />
+        <input type="password" class="form-control" name="pass" /></div>
+        <div class="mb-3">
+        <label for="exampleInputEmail1" class="form-label">Email</label>
+        <input type="email" class="form-control" name="correo" /></div>
 
 
     <div class="mb-3">
     <label for="exampleInputEmail1" class="form-label"></label>
     <input type="hidden" name="rol">
-    </div>
-    
+</div>
         <div class="cuenta">
         <button type="submit" class="btn btn-primary" value="borrar usuario" name="borrar">Borrar usuario</button>
         <a href="indexlogin.php" class="btn btn-primary">Volver a inicio de sesión</a>
 
         </div>
-    </div>
+
     
 </form>
 </body>

@@ -1,54 +1,48 @@
 <?php
 
-if(!empty($_POST["registro"])) {
-    if(empty($_POST["nombre"]) or empty($_POST["pass"]) or empty($_POST["correo"])){
+if (!empty($_POST["registro"])) {
+    if (empty($_POST["nombre"]) || empty($_POST["pass"]) || empty($_POST["correo"])) {
         echo '<script>
         window.location.href = "registro_usuario.php";
         alert("Alguno(s) de los campos está sin completar")
         </script>';
-
     } else {
-        // Obtén el último usuario_id existente
-        $lastUserIdQuery = $conexion->query("SELECT MAX(usuario_id) AS lastUserId FROM usuario");
-        $lastUserIdData = $lastUserIdQuery->fetch_assoc();
-        $lastUserId = $lastUserIdData['lastUserId'];
-
-        // Asigna un valor único para el nuevo usuario
-        $newUserId = $lastUserId + 1;
-
-        $nombre=$_POST["nombre"];
-        $pass=$_POST["pass"];
-        $rol= "user";
+        $nombre = $_POST["nombre"];
+        $pass = $_POST["pass"];
+        $rol = "user";
         $correo = $_POST["correo"];
+        $estadoactivo = 1; //lo insertamos como estado activo al usuario
 
-        /*$sql=$conexion->query(" insert into usuario (usuario_id, username, password, rol) values('$id, '$nombre', '$pass', '$rol')");
+        //Si existiese uno inactivo con el mismo username o correo, se le pasa a activo
+            $stmtverificar = $conexion->prepare("SELECT usuario_id FROM usuario WHERE username = ? OR correo = ?");
+        $stmtverificar->bind_param("ss", $nombre, $correo);
+        $stmtverificar->execute();
+        $stmtverificar->store_result();
 
-        if ($sql==1) {
-            echo '<div class="success">Usuario registrado correctamente</div>';
+        if ($stmt_verificar->num_rows > 0) {
+            //actualización del estado si ya existe
+            $stmt_actualizar = $conexion->prepare("UPDATE usuario SET estado = ? WHERE username = ? OR correo = ?");
+            $stmt_actualizar->bind_param("iss", $estadoactivo, $nombre, $correo);
+            $stmt_actualizar->execute();
 
-        } else{
-           echo '<script>
-            alert("Error al registrar")
-            </script>';
-            */
-
-            $stmt = $conexion->prepare("INSERT INTO usuario (usuario_id, username, password, rol, correo) VALUES (?, ?, ?, ?, ?)");
-
-            $stmt->bind_param("issss", $newUserId, $nombre, $pass, $rol, $correo);
-            $stmt->execute();
-
-        if ($stmt->affected_rows > 0) {
-            echo '<div class="success">Usuario registrado correctamente</div>';
+            echo '<div class="success">La cuenta ha sido reactivada correctamente.</div>';
         } else {
-            echo '<script>
-            alert("Error al registrar")
-            </script>';
-        }
+            //y si no existe, se le crea una cuenta nueva/registra todo nuevo.
+            $stmt_insertar = $conexion->prepare("INSERT INTO usuario (username, password, rol, correo, estado) VALUES (?, ?, ?, ?, ?)");
+            $stmt_insertar->bind_param("ssssi", $nombre, $pass, $rol, $correo, $estadoactivo);
+            $stmt_insertar->execute();
 
-        $stmt->close();
+            if ($stmt_insertar->affected_rows > 0) {
+                echo '<div class="success">Usuario registrado correctamente</div>';
+            } else {
+                echo '<script>
+                alert("Error al registrar el usuario")
+                </script>';
+            }
+            $stmt_insertar->close();
         }
-    
-    
+        $stmtverificar->close();
+    }
 }
 
 ?>

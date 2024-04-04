@@ -20,7 +20,7 @@
             <p class="card-text">Deseamos su opinión</p>
 
     
-            <a href="/TiendaVinos/menuvistauser.php" class="btn btn-primary">Escríbanos</a>
+            <a href="/TiendaVinos/phplogin/indexlogin.php" class="btn btn-primary">Escríbanos</a>
             <a href="/TiendaVinos/menuvistauser.php" class="btn btn-primary">Volver a inicio</a>
         </div>
     </div>

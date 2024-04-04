@@ -1,6 +1,6 @@
 <?php
-if (!empty($_POST["borrar"])) {
-    if (empty($_POST["nombre"]) or empty($_POST["pass"])) {
+if (!empty($_POST["borrar"])) { //Verificamos que no se haya enviado el formulario vacío
+    if (empty($_POST["nombre"]) || empty($_POST["pass"]) || empty($_POST["correo"])) {
         echo '<script>
         window.location.href = "borrarusuario.php";
         alert("Alguno(s) de los campos está sin completar")
@@ -8,15 +8,17 @@ if (!empty($_POST["borrar"])) {
     } else {
         $nombre = isset($_POST["nombre"]) ? $_POST["nombre"] : null;
         $pass = isset($_POST["pass"]) ? $_POST["pass"] : null;
-
-        // Utilizar consultas preparadas para evitar inyección SQL
-        $stmt = $conexion->prepare("DELETE FROM usuario WHERE username = ? AND password = ?");
-        $stmt->bind_param("ss", $nombre, $pass);
+        $correo = isset($_POST["correo"]) ? $_POST["correo"] : null;
+        
+        //ejecutamos la consulta para actualizar el estado del usuario a inactivo
+        $stmt = $conexion->prepare("UPDATE usuario SET estado = 0 WHERE username = ? AND password = ? AND correo = ?");
+        $stmt->bind_param("sss", $nombre, $pass, $correo);
         $stmt->execute();
 
+        //Verificamos si se afectaron filas y redirigimos según el resultado
         if ($stmt->affected_rows > 0) {
             echo '<script>
-            window.location.href = "indexlogin.php";
+            window.location.href = "/TiendaVinos/menuvistauser.php";
             alert("El usuario se eliminó correctamente");
             </script>';
         } else {
@@ -25,11 +27,7 @@ if (!empty($_POST["borrar"])) {
             alert("El usuario no ha podido ser eliminado");
             </script>';
         }
-
-        // Cerrar la consulta preparada
         $stmt->close();
     }
 }
 ?>
-
-
