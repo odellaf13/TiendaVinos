@@ -27,6 +27,7 @@ include "../Conexion.php";
         <input type="submit" id="btn" value="Login" name="submit"/>
 
         <a href="registro_usuario.php" class="btn btn-primary">¿Aún no te has registrado?</a></br></br>
+        <a href="/TiendaVinos/menuvistauser.php" class="btn btn-primary">Volver a menú principal</a></br></br>
 
         <!--<a href="borrarusuario.php" class= "btn btn-primary">Borrar usuario</a>-->
     </form>
