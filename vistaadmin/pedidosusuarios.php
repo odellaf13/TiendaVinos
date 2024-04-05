@@ -41,7 +41,7 @@ if(isset($_SESSION["username"])) {
 }
 
 //Consultamos a la bbdd con join los pedidos que contengan el estado "completado/para enviar"
-$sql_pedidos = "SELECT pedido.pedido_id, usuario.usuario_id, usuario.username, producto.nombre, pedido.total, linea_pedido.cantidad, producto.do, pedido.estado
+$sql_pedidos = "SELECT pedido.pedido_id, usuario.usuario_id, usuario.username, producto.nombre, pedido.total, linea_pedido.cantidad, producto.do, pedido.estado AS estadopedido, usuario.estado AS estadousuario
                 FROM pedido
                 INNER JOIN linea_pedido ON pedido.pedido_id = linea_pedido.fk_pedido
                 INNER JOIN producto ON linea_pedido.fk_producto = producto.producto_id
@@ -73,7 +73,9 @@ if (!empty($pedidos)) {
                 <th>Total</th>
                 <th>Cantidad</th>
                 <th>D.O</th>
-                <th>Estado</th>
+                <th>Estado usuario</th>
+                <th>Estado del pedido</th>
+
             </tr>
           </thead>';
     echo '<tbody>';
@@ -88,7 +90,8 @@ if (!empty($pedidos)) {
         echo '<td>' . $pedido['total'] . '</td>';
         echo '<td>' . $pedido['cantidad'] . '</td>';
         echo '<td>' . $pedido['do'] . '</td>';
-        echo '<td>' . $pedido['estado'] . '</td>';
+        echo '<td>' . ($pedido['estadousuario'] == 1 ? 'Activo' : 'Inactivo') . '</td>';
+        echo '<td>' . $pedido['estadopedido'] . '</td>';
         echo '</tr>';
     }
     echo '</tbody>';
