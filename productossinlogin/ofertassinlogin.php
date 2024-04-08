@@ -79,7 +79,7 @@
 
 <div class="center mt-5">
     <div class="card pt-3 text-center">
-        <p style="font-weight: bold; color: #0F6BB7; font-size: 22px;">Elige por D.O de vino:</p>
+        <p style="font-weight: bold; color: #0F6BB7; font-size: 22px;">Elige por Ofertas de colecciones/lotes:</p>
         <div class="container-fluid p-2" style="background-color: ghostwhite;">
 
 
