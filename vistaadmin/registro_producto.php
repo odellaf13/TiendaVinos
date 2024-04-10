@@ -20,7 +20,7 @@ if(!empty($_POST["botonaplicar"])) {
         $sql=$conexion->query(" insert into producto(producto_id, nombre, pvp, stock, do, descripcion) values($id,'$nombre',$pvp, $stock, '$do', '$descripcion') ");
 
         if ($sql==1) {
-             // Producto registrado correctamente, redirigir a Index.php
+            //si funciona, redirige
              echo '<script>
              setTimeout(function() {
                  window.location.href = "/TiendaVinos/vistaadmin/Index.php";
@@ -28,7 +28,7 @@ if(!empty($_POST["botonaplicar"])) {
            </script>';
            exit();
         } else {
-            
+            //sino, manda el error
             echo '<div class="alert alert-danger">Producto no registrado correctamente</div>';
         }
         

@@ -36,7 +36,7 @@ include "../Conexion.php";
 </div>
 
 
-<script>
+<script>//con este script, lo que vamos a hacer es una iteración para verificar si los campos están rellenos y son válidos.
     function isvalid(){
         var user = document.form.user.value;
         var pass= document.form.pass.value;

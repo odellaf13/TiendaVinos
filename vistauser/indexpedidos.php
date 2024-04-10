@@ -61,7 +61,7 @@ if(isset($_SESSION["username"])) {
           </div>';
     //Consulta de pedidos completados/para enviar en la bbdd
     $consultaPedidos = mysqli_query($conexion, "SELECT * FROM pedido WHERE fk_usuario = '$usuario_id' AND estado = 'completado/para enviar'");
-
+      //se localizan datos de Pedidos y Linea_pedido, y se insertan en un form
     if ($consultaPedidos && mysqli_num_rows($consultaPedidos) > 0) {
         echo '<div class="center mt-5">';
         while ($pedido = mysqli_fetch_assoc($consultaPedidos)) {

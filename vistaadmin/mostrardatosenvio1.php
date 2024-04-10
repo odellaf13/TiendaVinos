@@ -41,7 +41,7 @@ if (isset($_SESSION["username"])) {
             //Consulta para sacar los datos de envío asociados al envio_id
             $sql_datosenvio = "SELECT * FROM datosenvio WHERE envio_id = $envio_id";
             $resultado_datosEnvio = $conexion->query($sql_datosenvio);
-
+                //si resultados datos de envío es mayor a 0 en número de datos/líneas, me los insertas en el formulario
             if ($resultado_datosEnvio && $resultado_datosEnvio->num_rows > 0) {
                 $datosenvio = $resultado_datosEnvio->fetch_assoc();
                 echo '<div class="container">

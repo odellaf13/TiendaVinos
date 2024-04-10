@@ -21,7 +21,8 @@ if (!empty($_POST["borrar"])) { //Verificamos que no se haya enviado el formular
             window.location.href = "/TiendaVinos/menuvistauser.php";
             alert("El usuario se eliminó correctamente");
             </script>';
-        } else {
+            
+    } else {
             echo '<script>
             window.location.href = "indexlogin.php";
             alert("El usuario no existe o no ha podido ser eliminado");

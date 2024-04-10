@@ -15,7 +15,7 @@
 <body id="body">
 
     <script>
-
+//funciones para eliminar producto, mostrar al pulsar el botón el form del nuevo producto y para cerrar el mismo
     function eliminar(){
         var respuesta= confirm("¿Deseas eliminar el producto?");
         return respuesta;
@@ -86,7 +86,7 @@ include "../Conexion.php";
                                 }
 
                    while ($datos = $sql->fetch_object()) { ?>
-
+                         <!-- mientras haya datos recogidos enn $sql, quiero que los muestre en la siguiente tabla -->
                             <tr>
                             <td><?= $datos->producto_id ?></td>
                             <td><?= $datos->nombre ?></td>

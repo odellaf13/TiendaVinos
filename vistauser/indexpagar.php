@@ -66,9 +66,9 @@ if (isset($_SESSION["username"])) {
 
             echo '<a href="/TiendaVinos/phplogin/cerrarsesion.php" class="btn btn-danger">Cerrar Sesión</a></br></br>
             </div>';
-
+        //consulta para ver los estados de los pedidos
         $consultaPedidos = mysqli_query($conexion, "SELECT * FROM pedido WHERE fk_usuario = '$usuario_id' AND estado != 'completado/para enviar'");
-
+        //si hay éxito en la consulta, creamos un div y un form
         if (mysqli_num_rows($consultaPedidos) > 0) {
             echo '<div class="center mt-5">
             <div class="card pt-3" style="max-width: 600px; margin: 0 auto; border: 2px solid #ccc; box-shadow: 2px 2px 20px 2px rgba(0,0,0,0.2);">
@@ -76,16 +76,17 @@ if (isset($_SESSION["username"])) {
                 <p style="font-weight: bold; color: #0F6BB7; font-size: 22px;">
                 <i class="bi bi-card-list" style="font-size: 2em; margin-right: 10px;"></i>Plataforma de pago</p>
                 <div class="container-fluid p-2" style="background-color: ghostwhite;">';
-            while ($pedido = mysqli_fetch_assoc($consultaPedidos)) {
+            //mientras haya datos, los insertamos en las sig variables
+                while ($pedido = mysqli_fetch_assoc($consultaPedidos)) {
                 $pedido_id = $pedido["pedido_id"];
                 $total = $pedido["total"];
                 $fecha = $pedido["fecha"];
-
+                    //consulta a linea_pedidos para recoger los datos
                 $consultaLineaPedido = mysqli_query($conexion, "SELECT p.producto_id, p.nombre, p.pvp, lp.cantidad
                     FROM linea_pedido lp
                     JOIN producto p ON lp.fk_producto = p.producto_id
                     WHERE lp.fk_pedido = '$pedido_id'");
-
+                //igual, se inserta en las sig variables y se crea la tabla
                 if ($consultaLineaPedido) {
                     echo '<div class="mb-3">
                             <p>Fecha: ' . $fecha . '</p>';
@@ -103,14 +104,14 @@ if (isset($_SESSION["username"])) {
                 } else {
                     echo 'Error en la consulta';
                 }
-            }
+            }//dentro del form, creamos otro div donde haremos un formulario con datos de envío y el botón de pagar y finalizar el proceso
             echo '<div class="card pt-3 mt-5" style="max-width: 600px; margin: 0 auto; border: 2px solid #ccc; box-shadow: 2px 2px 20px 2px rgba(0,0,0,0.2);">
                     <div style="background-color: ghostwhite; padding: 10px;">
                         <p style="font-weight: bold; color: #0F6BB7; font-size: 22px;">
                             <i class="bi bi-truck" style="font-size: 2em; margin-right: 10px;"></i>Datos de Envío
-                        </p>
+                        </p>  
                         <div class="container-fluid p-2" style="background-color: ghostwhite;">
-                        <!--Formulario dedatos de envío-->
+                        <!--Formulario dedatos de envío con controlador pagar.php-->
                             <form action="pagar.php" method="POST">
                                 <div class="mb-3">
                                     <label for="nombre" class="form-label">Nombre</label>
@@ -133,7 +134,7 @@ if (isset($_SESSION["username"])) {
                                     <input type="text" class="form-control" id="correoenvio" name="correoenvio" required>
                                 </div>
                                 <input type="hidden" name="pedido_id" value="' . $pedido_id . '">
-                                <button type="submit" class="btn btn-primary">Pagar y Finalizar</button>
+                                <button type="submit" class="btn btn-primary">Pagar y finalizar el proceso</button>
                             </form>
                         </div>
                     </div>

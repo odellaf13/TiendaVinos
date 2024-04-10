@@ -22,7 +22,6 @@
     include "controlador_borrarusuario.php";
     ?>
 
-
 <form>
 
     <div class="mb-3">

@@ -16,7 +16,7 @@ if(isset($_SESSION["username"])) {
         $url_imagen = $_POST["url_imagen"];
         $cantidad = $_POST["cantidad"];
 
-        //Guardamos el id del usuario actual en la variable de sesión
+        //guardamos el id del usuario actual en la variable de sesión
         $username = $_SESSION["username"];
         $consultaUsuario = mysqli_query($conexion, "SELECT usuario_id FROM usuario WHERE username = '$username'");
         $filaUsuario = mysqli_fetch_assoc($consultaUsuario);
@@ -24,7 +24,7 @@ if(isset($_SESSION["username"])) {
         if ($filaUsuario) {
             $usuario_id = $filaUsuario["usuario_id"];
 
-            //Vemos si existe algún pedido en cola para el usuario
+            //vemos si existe algún pedido en cola para el usuario
             $consultaPedido = mysqli_query($conexion, "SELECT pedido_id, estado FROM pedido WHERE fk_usuario = $usuario_id AND estado != 'completado/para enviar'");
             $filaPedido = mysqli_fetch_assoc($consultaPedido);
 
@@ -39,7 +39,7 @@ if(isset($_SESSION["username"])) {
                 $pedido_id = mysqli_insert_id($conexion);
             }
 
-            //Actualizamos la variable de sesión username
+            //Actualizamos la variable de sesión username!! Acordarse siempre.
             $_SESSION["username"] = $_SESSION["username"];
 
             //Igual. Nos aseguramos si ya existe una línea de pedido para este producto en el pedido actual

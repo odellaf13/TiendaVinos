@@ -30,7 +30,7 @@ $sql = $conexion->query(" select * from producto where producto_id=$id ");
         include "modificar_producto1.php";
 
         while ($datos = $sql->fetch_object()) { ?>
-
+         <!-- usamos el controlador que modifica los productos -->
             <div class="mb-3">
                 <label for="exampleInputEmail1" class="form-label">Nombre del Producto a modificar</label>
                 <input type="text" class="form-control" name="nombre" value="<?= $datos->nombre ?>" />
