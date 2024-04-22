@@ -46,31 +46,28 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $this->SetLeftMargin(10);
                 $this->SetRightMargin(10);
             }
-            //Cabecera del PDF
+        //cabecera del PDF
             function Header()
             {
                 $this->SetX(10);//ajustes para separar la celda, logo, étc
                 $this->SetY(10);
-                //Logo
+                //parece ser que es la imagen del logo
                 $this->Image('9d9d02d012924b04b7f1b2a98dc18f83.png', 10, 8, 33);
                 //Título
                 $this->SetY(10);
-                $this->SetX(60); // Ajusta según tu diseño
+                $this->SetX(60);
                 $this->Cell(30, 10, 'Factura', 1, 0, 'C');
-                //Salto de línea
                 $this->Ln(20);
             }
             //comienza el pie de página
             function Footer()
             {
-            //Posición: a 1,5 cm del final
                 $this->SetY(-15);
-                //fuente
+                //fuente usada a través de la carpeta FONT
                 $this->SetFont('Arial', 'I', 8);
-                //numeración de página
+        //numeración de página
                 $this->Cell(0, 10, 'Page ' . $this->PageNo() . '/{nb}', 0, 0, 'C');
             }
-
             //hacemos una función para agregar los datos de envío a la factura
             function AddFacturaData($nombre, $apellidos, $direccion, $productos, $total_factura)
             {

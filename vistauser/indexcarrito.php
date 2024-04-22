@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html><!--vista para ver los productos que tenemos en el carrito. Distinto al modal o a navcarrito.php, aunque la misma idea -->
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -72,7 +72,7 @@ if (isset($_SESSION["username"])) {
             </div>';
 
         $consultaPedidos = mysqli_query($conexion, "SELECT * FROM pedido WHERE fk_usuario = '$usuario_id' AND estado != 'completado/para enviar'");
-
+//igual que en indexpedidos. Creamos una tarjeta para recoger los resultados del carrito del yusuario
         echo '<div class="center mt-5">
                 <div class="card pt-3" style="max-width: 600px; margin: 0 auto; border: 2px solid #ccc; box-shadow: 2px 2px 20px 2px rgba(0,0,0,0.2);">
                 <div style="background-color: ghostwhite; padding: 10px;">
@@ -80,12 +80,12 @@ if (isset($_SESSION["username"])) {
                 <i class="bi bi-card-list" style="font-size: 2em; margin-right: 10px;"></i>Mi carrito</p>
                 <div class="container-fluid p-2" style="background-color: ghostwhite;">';
 
-        //Verificaremos si hay pedidos, y si no, te manda al else donde te dirá que no existen pedidos.
+        //Verificaremos si hay pedidos, y si no, te manda al else donde te dirá que no existen productos en el carrito.
         if (mysqli_num_rows($consultaPedidos) > 0) {
             while ($pedido = mysqli_fetch_assoc($consultaPedidos)) {
-                $pedido_id = $pedido['pedido_id'];
-                $total = $pedido['total'];
-                $fecha = $pedido['fecha'];
+                $pedido_id = $pedido["pedido_id"];
+                $total = $pedido["total"];
+                $fecha = $pedido["fecha"];
 
                 $consultaLineaPedido = mysqli_query($conexion, "SELECT p.producto_id, p.nombre, p.pvp, lp.cantidad
                     FROM linea_pedido lp
@@ -99,7 +99,8 @@ if (isset($_SESSION["username"])) {
                         $nombre = $linea["nombre"];
                         $cantidad = $linea["cantidad"];
                         $pvp = $linea["pvp"];
-                        $producto_id = $linea['producto_id'];
+                        $producto_id = $linea["producto_id"];
+                        //se realiza un botón para actualizar la cantidad si se desea dentro del form
                         echo '<form action="actualizarcantidad.php" method="POST" onsubmit="return validarCantidad()">
                                 <input type="hidden" name="pedido_id" value="' . $pedido_id . '">
                                 <input type="hidden" name="producto_id" value="' . $producto_id . '">
@@ -135,10 +136,10 @@ if (isset($_SESSION["username"])) {
 
         echo '</div></div></div>';
     } else {
-        echo 'Error en la consulta de usuario';
+        echo "Error en la consulta de usuario";
     }
 } else {
-    echo 'Fallo. Usuario no autentificado.';
+    echo "Fallo. Usuario no autentificado";
 }
 ?>
 <div class="text-center mt-3">

@@ -65,7 +65,7 @@ include "../Conexion.php";
         <div class="col-8 p-4 mx-auto">
 
         <table class="table table-success table-striped mx-auto">
-
+<!--tabla para ver los datos de los productos traidos desde la base de datos-->
                 <thead>
                    <tr>
                         <th scope="col">ID</th>
@@ -120,7 +120,7 @@ include "../Conexion.php";
         <?php
 
         include "registro_producto.php";
-
+//desplegable que incluirá el controlador para introducir productos en la BBDD
         ?>
 
                 <div class="mb-3">

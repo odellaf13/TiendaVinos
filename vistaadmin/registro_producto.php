@@ -1,5 +1,5 @@
 <?php
-
+//controlador para introducir un nuevo producto en la base de datos a través de interfaz
 if(!empty($_POST["botonaplicar"])) {
 
     if (!empty($_POST["id"]) and !empty($_POST["nombre"]) and !empty($_POST["pvp"]) and !empty($_POST["stock"]) and !empty($_POST["do"])

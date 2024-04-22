@@ -13,7 +13,7 @@
     <div class="card text-center mx-5" style="max-width: 40rem;">
         <img src="/TiendaVinos/contactanos.png" class="card-img-top" alt="...">
         <div class="card-body">
-            <h5 class="card-title">¿Alguna incidencia con tu pedido?</h5>
+            <h5 class="card-title">¿Alguna incidencia con su pedido?</h5>
             <p class="card-text">Contacto: odellaf13@gmail.com Móvil +34 663 62 39 02</p>
 
             <h5 class="card-title">Buzón de sugerencias</h5>

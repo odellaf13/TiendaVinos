@@ -1,5 +1,6 @@
 <div class="modal fade" id="modalcarrito" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog">
+        <!--modal que he realizado para que muestre los productos que tiene el usuario añadidos a su carrito-->
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">Mi carrito</h5>

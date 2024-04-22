@@ -1,4 +1,5 @@
 <?php
+//vista para hacer una plataforma de pago y que genere una factura
 session_start();
 include "../Conexion.php";
 ?>

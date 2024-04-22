@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html><!--vista principal del visitante-->
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
@@ -24,6 +24,7 @@
 </head>
 <body>
 <?php
+//llamamos a conexión para que nos muestre los productos/ofertas cuando pinchemos en él, así como otras funcionalidades que requieren conexión
     session_start();
     include "Conexion.php";
 ?>
@@ -69,6 +70,7 @@
 </nav>
 <nav class="navbar navbar-expand-lg" style="background-color: #e3f2fd;">
 </nav>
+<!--imagen principal de la web-->
 <div class="wine-images-container">
     <img src="6b3786a9-f191-4d49-ad0f-0f2d863119eb_alta-aspect-ratio_default_0.jpg" class="wine-image rounded mx-auto d-block" alt="vino1">
 </div>

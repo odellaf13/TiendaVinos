@@ -53,7 +53,7 @@ if (isset($_POST["buscar"])) {
                         <?php
                         if (isset($_POST["buscar"])) {
                             while ($rowsql = mysqli_fetch_assoc($busqueda)) {
-                                //Llamar a los datos de búsqueda en la BBDD
+                                //Llamar a los datos de búsqueda en la BBDD e imprimir con echo
                                 echo "<tr>";
                                 echo "<td style='text-align: center;'>" . $rowsql["nombre"] . "</td>";
                                 echo "<td style='text-align: center;'>" . $rowsql["do"] . "</td>";

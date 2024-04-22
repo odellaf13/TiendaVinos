@@ -1,5 +1,5 @@
 <?php
-
+//controlador para modificar un producto en la tabla principal del admin, mediante post
 if (!empty($_POST["botonaplicar"])) {
 
     if(!empty($_POST["nombre"]) and !empty($_POST["pvp"] and !empty($_POST["stock"])) and !empty($_POST["do"])

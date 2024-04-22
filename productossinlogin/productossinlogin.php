@@ -141,7 +141,8 @@
             <div class="row custom-row">
                 <?php while ($resultado = mysqli_fetch_assoc($busqueda)) { ?>
                     <div class="col mb-4 custom-card">
-                        <form id="formulariocarrito" method="POST" action="carritosinlogin.php" onsubmit="return addToCart()">
+                        <form id="formulariocarrito" onsubmit="return addToCart()"><!--marcamos una función al pinchar añadir carrito
+                    que nos devuelva un mensaje de obligatoriedad  de inicio de sesión o que creemos un perfil de usuario-->
                             <div class="card">
                                 <img src="<?php echo $resultado["url_imagen"]; ?>" class="card-img-top" style="max-width: 100%; max-height: 150px; object-fit: contain;">
                                 <div class="card-body">
@@ -180,7 +181,7 @@
 </div>
 <script>
 function addToCart() {
-    alert('Necesita iniciar sesión para comenzar su compra');
+    alert("Necesita iniciar sesión para comenzar o continuar su compra anterior");
     window.location.href = '/TiendaVinos/productossinlogin/productossinlogin.php';
     return false;
 }

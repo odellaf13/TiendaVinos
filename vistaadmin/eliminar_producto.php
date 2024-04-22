@@ -1,5 +1,5 @@
 <?php
-
+//controlador para eliminar un producto de la tabla/form principal del Index de admin
 if (!empty($_GET["id"])) {
 
 	$id=$_GET["id"];

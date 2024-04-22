@@ -12,6 +12,7 @@
 <body>
 
 <?php
+//vista para imprimir los datos recogidos con el controlador mostrardatosenvio1.php
 include "../Conexion.php";
 session_start();
 

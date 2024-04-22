@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html> <!--vista para ver los pedidos completados del usuario, incluso antiguos -->
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -74,7 +74,7 @@ if(isset($_SESSION["username"])) {
                 JOIN producto p ON lp.fk_producto = p.producto_id
                 WHERE lp.fk_pedido = '$pedido_id'");
 
-            if ($consultaLineaPedido) {
+            if ($consultaLineaPedido) { //creamos una tarjeta para imprimir los resultados solicitados a bbdd
                 echo '<div class="card mb-3" style="max-width: 600px; margin: 0 auto; border: 2px solid #ccc; box-shadow: 2px 2px 20px 2px rgba(0,0,0,0.2);">
                         <div style="background-color: ghostwhite; padding: 10px;">
                             <p style="font-weight: bold; color: #0F6BB7; font-size: 22px;">

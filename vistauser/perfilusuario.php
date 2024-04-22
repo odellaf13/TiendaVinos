@@ -1,36 +1,37 @@
 <?php
 session_start();
-// Verificamos si el usuario está identificado para utilizar su sesión
+//Verificamos si el usuario está identificado para utilizar su sesión
 if (!isset($_SESSION["username"])) {
     header("Location: login.php");
     exit();
 }
 include "../Conexion.php";
-// Almacenamos el nombre de usuario en la variable de sesión
+//0almacenamos el nombre de usuario en la variable de sesión
 $username = $_SESSION["username"];
-// Consultamos el usuario en la base de datos para obtener su id
+    
+//Consultamos Al usuario en la base de datos para obtener su id
 $query = "SELECT usuario_id FROM usuario WHERE username = ?";
 $stmt = $conexion->prepare($query);
 $stmt->bind_param("s", $username);
 $stmt->execute();
 $resultados = $stmt->get_result();
 
-// Verificamos si, tras la consulta, se obtuvieron resultados
+    //erificamos si, tras la consulta, se obtuvieron resultados
 if ($resultados->num_rows > 0) {
-    // Cogemos el usuario
+    //Cogemos al usuario
     $usuario = $resultados->fetch_assoc();
     $id_usuario = $usuario["usuario_id"];
 
-    // Consultamos sus datos
+    //consulta de sus datos
     $query_datos = "SELECT * FROM usuario WHERE usuario_id = ?";
     $stmt_datos = $conexion->prepare($query_datos);
     $stmt_datos->bind_param("i", $id_usuario);
     $stmt_datos->execute();
     $resultadodatos = $stmt_datos->get_result();
 
-    // Igual que antes, verificamos tras la consulta si se obtuvieron filas de datos
+    //Igual que antes, verificamos tras la consulta si se obtuvieron filas de datos
     if ($resultadodatos->num_rows > 0) {
-        // Asignamos los datos del usuario a la variable $usuario
+        //Asignamos los datos del usuario a la variable $usuario
         $usuario = $resultadodatos->fetch_assoc();
     } else {
         echo '<div class="alert alert-danger" role="alert">No se encontraron datos del usuario.</div>';
@@ -143,7 +144,7 @@ if (isset($_GET["error"])) {
     <input type="hidden" name="correo" value="<?php echo $usuario["correo"]; ?>">
 </form>
 
-<!-- Modal de confirmación para eliminar usuario -->
+    <!-- Modal de confirmación para eliminar usuario -->
 <div class="modal fade" id="confirmarBorrado" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">

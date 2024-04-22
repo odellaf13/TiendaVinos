@@ -18,7 +18,8 @@ include "../Conexion.php";
 
 <div id="form">
 
-    <h1>Inicie sesión para realizar o buscar su pedido</h1>
+    <h1>Inicio de sesión</h1>
+</br>
     <form name= "form" action="login.php" onsubmit="return isvalid()" method="POST">
         <label>Nombre de usuario: </label>
         <input type="text" id="user" name="user"></br></br>

@@ -78,7 +78,7 @@ session_start();
           <a class="nav-link active" aria-current="page" href="contactanos.php">
             <i class="bi bi-headset"></i>&nbsp; Contáctanos</a>
         </li>
-        <li class="nav-item">
+        <li class="nav-item"><!--vista para gestionar el perfil de usuario-->
           <a class="nav-link" href="/TiendaVinos/vistauser/perfilusuario.php">Perfil de usuario</a>
         </li>
       </ul>
@@ -220,10 +220,10 @@ if (isset($_GET["exito"]) && $_GET["exito"] == 1) {
     function validarFormulario(stockDisponible) {
         //vemos la cantidad seleccionada
         var cantidadSeleccionada = parseInt(document.querySelector('.cantidadInput').value);
-        console.log('Cantidad seleccionada:', cantidadSeleccionada);
+        console.log("Cantidad seleccionada:", cantidadSeleccionada);
         //Hacemos con un if un cálculo de si la cantidad seleccionada es mayor al stock disponible (que será 0, si no hay productos)
         if (cantidadSeleccionada > stockDisponible) {
-            alert('Lo sentimos. No hay stock disponible del producto');
+            alert("Lo sentimos. No hay stock disponible del producto");
             return false;
         }
 

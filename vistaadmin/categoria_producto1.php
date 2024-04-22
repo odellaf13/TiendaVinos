@@ -1,5 +1,5 @@
 <?php
-
+//recibimos por post de la base de datos,  los datos que deseamos recibir, para imprimir
     if(!empty($_POST["nombre"]) and !empty($_POST["do"])and !empty($_POST["descripcion"])) {
 
         $id=$_POST["id"];

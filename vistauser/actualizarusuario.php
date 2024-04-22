@@ -1,4 +1,5 @@
 <?php
+//controlador para actualizar al usuario en perfilusuario
 //se verifica si se envía correctamente el form actualizar
 if (isset($_POST["actualizar"])) {
     include "../Conexion.php";

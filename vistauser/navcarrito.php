@@ -1,5 +1,6 @@
 <?php
-//Inicializamos totalcantidad
+//navegador que muestre la cantidad total de lo que el usuario tiene en el carrito/linea_pedido
+//inicializamos totalcantidad
 $totalcantidad = 0;
 //Contamos la cantidad total de productos en el carrito
 if (isset($_SESSION["username"])) {

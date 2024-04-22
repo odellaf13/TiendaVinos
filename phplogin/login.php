@@ -29,8 +29,8 @@ if(isset($_POST["submit"])){
                 header("Location: /TiendaVinos/vistaadmin/Index.php"); //Vamos a Index como administrador
                 exit();
             } else {
-                // Consultamos los datos de los pedidos y los detalles del pedido del usuario
-                // y los guardamos en sesión
+                //Consultamos los datos de los pedidos y los detalles del pedido del usuario
+                //y los guardamos en sesión
                 $queryPedido = mysqli_query($conexion, "SELECT * FROM pedido WHERE fk_usuario = '".$_SESSION['usuario_id']."'");
                 $_SESSION["pedido"] = mysqli_fetch_assoc($queryPedido);
 

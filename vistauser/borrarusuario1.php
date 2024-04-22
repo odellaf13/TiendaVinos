@@ -1,4 +1,5 @@
 <?php
+//controlador para inactivar al usuario en perfilusuario
 session_start();
 include "../Conexion.php";
 

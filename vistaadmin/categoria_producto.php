@@ -1,14 +1,12 @@
 <?php
-
+//conexión
 include "../Conexion.php";
 
 $id=$_GET["id"];
 
 $sql=$conexion->query(" select * from producto where producto_id= $id ");
 
-
 ?>
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -20,7 +18,7 @@ $sql=$conexion->query(" select * from producto where producto_id= $id ");
 </head>
 
 <body>
-
+<!--creamos un form que reciba los datos del controlador categoria_producto1 y los imprima desde la base de datos-->
 <div class="container-fluid row">
 <form class="col-4 mx-auto" method="POST">
 
@@ -28,13 +26,10 @@ $sql=$conexion->query(" select * from producto where producto_id= $id ");
 
 <input type="hidden" name="id" value="<?= $_GET["id"] ?>">
 
-
 <?php
-
 
 include "categoria_producto1.php";
 
-        
 while ($datos = $sql->fetch_object()) { ?>
 
             <div class="mb-3">
