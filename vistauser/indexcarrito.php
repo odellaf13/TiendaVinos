@@ -130,7 +130,7 @@ if (isset($_SESSION["username"])) {
         } else {
             echo '<p style="font-weight: bold; color: #0F6BB7; font-size: 22px;"></p>
                     <div class="container-fluid p-2" style="background-color: ghostwhite;">
-                        <p>Vaya...parece que no hay pedidos en tu carrito.</p>
+                        <p>Vaya...parece que no hay productos añadidos en tu carrito.</p>
                     </div>';
         }
 
