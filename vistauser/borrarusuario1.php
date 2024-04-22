@@ -22,7 +22,7 @@ if (!empty($_POST["username"]) && !empty($_POST["password"]) && !empty($_POST["c
             $estado_pedido = $row_pedido["estado"];
 
             //Si está en trámite, eliminamos el pedido y devolvemos el stock original al producto, para no perder stockaje si alguien elimina su cuenta
-            if ($estado_pedido === 'en trámite') {
+        if ($estado_pedido === "en trámite") {
                 //detalles detalles del pedido. Devolvemos stock al producto
                 $stmt_detalles = $conexion->prepare("SELECT fk_producto, cantidad FROM linea_pedido WHERE fk_pedido = ?");
                 $stmt_detalles->bind_param("i", $pedido_id);
@@ -46,7 +46,7 @@ if (!empty($_POST["username"]) && !empty($_POST["password"]) && !empty($_POST["c
             }
 
             //se ejecuta el delete
-            if ($estado_pedido === 'en trámite') {
+            if ($estado_pedido === "en trámite") {
                 $stmt_eliminar_pedido = $conexion->prepare("DELETE FROM pedido WHERE pedido_id = ?");
                 $stmt_eliminar_pedido->bind_param("i", $pedido_id);
                 $stmt_eliminar_pedido->execute();
@@ -61,10 +61,16 @@ if (!empty($_POST["username"]) && !empty($_POST["password"]) && !empty($_POST["c
 
     //verificar las filas afectadas y redirigir
     if ($stmt_inactivo->affected_rows > 0) {
-        //Redirigir a menuvistauser.php si se actualizó correctamente
+
+          //quiero que el usuario vea un mnsaje de éxito
+        $_SESSION["mensaje"] = "Perfil de usuario eliminado correctamente.";
         $stmt_inactivo->close();
-        header("Location: /TiendaVinos/menuvistauser.php");
-        exit();
+        echo "<script>
+
+                alert('Perfil de usuario eliminado correctamente.');
+                window.location.href = '/TiendaVinos/menuvistauser.php';
+              </script>";
+         exit();
     } else {
         //Mostrar mensaje de error si no se pudo actualizar el estado
         $stmt_inactivo->close();
